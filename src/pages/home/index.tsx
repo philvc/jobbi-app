@@ -10,12 +10,15 @@ import { Form, Formik } from "formik";
 import User from "../../components/shared/icons/user";
 import Button from "../../components/shared/actions/button";
 import Cross from "../../components/shared/icons/cross";
+import { useGetSearches } from "../../services/searches/searches";
 
 export default function Home() {
 	// Attributes
 	const router = useRouter();
 	const { t } = useTranslation();
-
+	const {data} = useGetSearches();
+	console.log("d");
+	
 	function handleProfileClicked() {
 		router.push("/home/profile");
 	}
@@ -42,24 +45,13 @@ export default function Home() {
 						<Cross onClick={handleNewQuestClicked} height={16} width={16} transform="rotate(45)" />
 					</Flex>
 					<Stack direction="row" spacing={2} overflow="auto">
-						<Box onClick={() => handleQuestClicked("1")} h={40} minW={32} bg="red" p={2}>
-							<Heading type={4}>Recherche 1</Heading>
-						</Box>
-						<Box h={40} minW={32} bg="red" p={2}>
-							<Heading type={4}>Recherche 1</Heading>
-						</Box>
-						<Box h={40} minW={32} bg="red" p={2}>
-							<Heading type={4}>Recherche 1</Heading>
-						</Box>
-						<Box h={40} minW={32} bg="red" p={2}>
-							<Heading type={4}>Recherche 1</Heading>
-						</Box>
-						<Box h={40} minW={32} bg="red" p={2}>
-							<Heading type={4}>Recherche 1</Heading>
-						</Box>
-						<Box h={40} minW={32} bg="red" p={2}>
-							<Heading type={4}>Recherche 1</Heading>
-						</Box>
+						{data?.map((search) => {
+							return (
+								<Box onClick={() => handleQuestClicked("1")} h={40} minW={32} bg="red" p={2}>
+								<Heading type={4}>{search.title}</Heading>
+							</Box>		
+							)
+						})}
 					</Stack>
 				</Stack>
 				<Box>
