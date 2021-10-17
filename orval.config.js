@@ -9,7 +9,7 @@ if (!process.env.CI) {
 module.exports = {
 	"resource-api": {
 		input: {
-			target: "http://localhost:57067/swagger.json",
+			target: "http://localhost:62338/swagger.json",
 		},
 		output: {
 			mode: "tags-split",

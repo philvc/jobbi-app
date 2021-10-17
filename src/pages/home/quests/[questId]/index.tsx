@@ -5,16 +5,13 @@ import { Box, Container, Flex, Stack } from "@chakra-ui/layout";
 import { useTranslation } from "react-i18next";
 import Paragraph from "../../../../components/shared/typography/paragraph";
 import Heading from "../../../../components/shared/typography/heading";
-import InputField from "../../../../components/shared/form/input-field";
-import { Form, Formik, FormikContext } from "formik";
-import Button from "../../../../components/shared/actions/button";
-import UserDTO from "../../../../types/UserDTO";
 import ArrowDown from "../../../../components/shared/icons/arrow-down";
 import { Avatar, AvatarBadge } from "@chakra-ui/avatar";
 import Cross from "../../../../components/shared/icons/cross";
 import { useDisclosure } from "@chakra-ui/hooks";
 import FriendshipDrawer from "../../../../components/friendship-drawer";
 import AnswerDrawer from "../../../../components/answer-drawer";
+import { useGetSearchById } from "../../../../services/search/search";
 
 export default function Quests() {
 	// Attributes
@@ -25,10 +22,14 @@ export default function Quests() {
 	const { isOpen: isNewOffreOpen, onOpen: openNewOffre, onClose: closeNewOffre } = useDisclosure();
 	const { isOpen: isNewCompanyOpen, onOpen: openNewCompany, onClose: closeNewCompany } = useDisclosure();
 	const { isOpen: isNewContactOpen, onOpen: openNewContact, onClose: closeNewContact } = useDisclosure();
-
+	const {data, isLoading} = useGetSearchById(questId as string, {query: {enabled: !!questId}});
 	// Function
 	function handleNewAnswer() {
 		router.back();
+	}
+
+	if(!data){
+		return null
 	}
 
 	return (
@@ -38,13 +39,14 @@ export default function Quests() {
 					<ArrowDown height="16px" width="16px" transform="rotate(90)" />
 				</Stack>
 				<Stack mt={8} spacing={5}>
+					
 					<Stack>
 						<Heading>Titre</Heading>
-						<Paragraph>Blabla</Paragraph>
+						<Paragraph>{data.title}</Paragraph>
 					</Stack>
 					<Stack>
 						<Heading>Description</Heading>
-						<Paragraph>Blabla</Paragraph>
+						<Paragraph>{data.description}</Paragraph>
 					</Stack>
 					<Stack>
 						<Flex justify="space-between" align="center" mr={2}>

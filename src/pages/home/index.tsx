@@ -27,7 +27,7 @@ export default function Home() {
 		router.push("/home/quests");
 	}
 
-	function handleQuestClicked(id: string) {
+	function handleQuestClicked(id: number) {
 		router.push(`/home/quests/${id}`);
 	}
 
@@ -47,7 +47,7 @@ export default function Home() {
 					<Stack direction="row" spacing={2} overflow="auto">
 						{data?.map((search) => {
 							return (
-								<Box onClick={() => handleQuestClicked("1")} h={40} minW={32} bg="red" p={2}>
+								<Box onClick={() => handleQuestClicked(search.id)} h={40} minW={32} bg="red" p={2}>
 								<Heading type={4}>{search.title}</Heading>
 							</Box>		
 							)

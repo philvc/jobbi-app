@@ -12,16 +12,14 @@ Schemes: [http, https]
  * An user
  */
 export interface ClientDTO {
-  amount?: number;
-  clientId?: number;
-  date?: string;
-  description?: string;
+  address?: string;
+  /** The e-mail */
+  email?: string;
   /** The id */
   id?: number;
-  /** The first name */
-  number?: string;
-  subTotal?: number;
-  total?: number;
-  type?: number;
-  vat?: number;
+  /** The name */
+  name?: string;
+  organisationdid?: number;
+  vatIncluded?: boolean;
+  vatNumber?: string;
 }
