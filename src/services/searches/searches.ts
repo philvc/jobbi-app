@@ -9,11 +9,15 @@ Schemes: [http, https]
  */
 import {
   useQuery,
+  useMutation,
   UseQueryOptions,
-  QueryFunction
+  UseMutationOptions,
+  QueryFunction,
+  MutationFunction
 } from 'react-query'
 import type {
-  SearchDTO
+  SearchDTO,
+  SearchDTOBody
 } from '../../types/dtos'
 import { customInstance } from '.././config'
 
@@ -57,3 +61,103 @@ export const useGetSearches = <TData = AsyncReturnType<typeof getSearches>, TErr
   }
 }
 
+/**
+ * type id struct
+Create search.
+Return search
+ */
+export const addSearch = (
+    searchDTOBody: SearchDTOBody,
+ ) => {
+      return customInstance<SearchDTO>(
+      {url: `/searches`, method: 'post',
+      data: searchDTOBody
+    },
+      );
+    }
+  
+
+
+    export const useAddSearch = <TError = void,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof addSearch>, TError,{data: SearchDTOBody}, TContext>, }
+) => {
+      const {mutation: mutationOptions} = options || {}
+
+      const mutationFn: MutationFunction<AsyncReturnType<typeof addSearch>, {data: SearchDTOBody}> = (props) => {
+          const {data} = props || {};
+
+          return  addSearch(data,)
+        }
+
+      return useMutation<AsyncReturnType<typeof addSearch>, TError, {data: SearchDTOBody}, TContext>(mutationFn, mutationOptions)
+    }
+    /**
+ * type id struct
+Get search by id.
+Return search
+ */
+export const getSearchById = (
+    searchId: string,
+ ) => {
+      return customInstance<SearchDTO>(
+      {url: `/searches/${searchId}`, method: 'get'
+    },
+      );
+    }
+  
+
+export const getGetSearchByIdQueryKey = (searchId: string,) => [`/searches/${searchId}`];
+
+    
+export const useGetSearchById = <TData = AsyncReturnType<typeof getSearchById>, TError = void>(
+ searchId: string, options?: { query?:UseQueryOptions<AsyncReturnType<typeof getSearchById>, TError, TData>, }
+
+  ) => {
+
+  const {query: queryOptions} = options || {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetSearchByIdQueryKey(searchId);
+  const queryFn: QueryFunction<AsyncReturnType<typeof getSearchById>> = () => getSearchById(searchId, );
+
+  const query = useQuery<AsyncReturnType<typeof getSearchById>, TError, TData>(queryKey, queryFn, {enabled: !!(searchId), ...queryOptions})
+
+  return {
+    queryKey,
+    ...query
+  }
+}
+
+/**
+ * type id struct
+Create search.
+Return search
+ */
+export const modifySearch = (
+    searchId: string,
+    searchDTOBody: SearchDTOBody,
+ ) => {
+      return customInstance<SearchDTO>(
+      {url: `/searches/${searchId}`, method: 'put',
+      data: searchDTOBody
+    },
+      );
+    }
+  
+
+
+    export const useModifySearch = <TError = void,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof modifySearch>, TError,{searchId: string;data: SearchDTOBody}, TContext>, }
+) => {
+      const {mutation: mutationOptions} = options || {}
+
+      const mutationFn: MutationFunction<AsyncReturnType<typeof modifySearch>, {searchId: string;data: SearchDTOBody}> = (props) => {
+          const {searchId,data} = props || {};
+
+          return  modifySearch(searchId,data,)
+        }
+
+      return useMutation<AsyncReturnType<typeof modifySearch>, TError, {searchId: string;data: SearchDTOBody}, TContext>(mutationFn, mutationOptions)
+    }
+    

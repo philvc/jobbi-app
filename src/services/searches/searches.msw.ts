@@ -14,11 +14,35 @@ import faker from 'faker'
 
 export const getGetSearchesMock = () => ([...Array(faker.datatype.number({min: 1, max: 10}))].map(() => ({description: faker.random.word(), id: faker.datatype.number(), title: faker.random.word(), userId: faker.datatype.number()})))
 
+export const getAddSearchMock = () => ({description: faker.random.word(), id: faker.datatype.number(), title: faker.random.word(), userId: faker.datatype.number()})
+
+export const getGetSearchByIdMock = () => ({description: faker.random.word(), id: faker.datatype.number(), title: faker.random.word(), userId: faker.datatype.number()})
+
+export const getModifySearchMock = () => ({description: faker.random.word(), id: faker.datatype.number(), title: faker.random.word(), userId: faker.datatype.number()})
+
 export const getSearchesMSW = () => [
 rest.get('*/searches', (req, res, ctx) => {
         return res(
           ctx.delay(1000),
           ctx.status(200, 'Mocked status'),
 ctx.json(getGetSearchesMock()),
+        )
+      }),rest.post('*/searches', (req, res, ctx) => {
+        return res(
+          ctx.delay(1000),
+          ctx.status(200, 'Mocked status'),
+ctx.json(getAddSearchMock()),
+        )
+      }),rest.get('*/searches/:searchId', (req, res, ctx) => {
+        return res(
+          ctx.delay(1000),
+          ctx.status(200, 'Mocked status'),
+ctx.json(getGetSearchByIdMock()),
+        )
+      }),rest.put('*/searches/:searchId', (req, res, ctx) => {
+        return res(
+          ctx.delay(1000),
+          ctx.status(200, 'Mocked status'),
+ctx.json(getModifySearchMock()),
         )
       }),]
