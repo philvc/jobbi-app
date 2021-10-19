@@ -133,3 +133,37 @@ export const useGetCompanyById = <TData = AsyncReturnType<typeof getCompanyById>
   }
 }
 
+/**
+ * type id struct
+Modify company.
+Return company
+ */
+export const modifyCompany = (
+    searchId: string,
+    companyId: string,
+    companyDTOBody: CompanyDTOBody,
+ ) => {
+      return customInstance<CompanyDTO>(
+      {url: `/searches/${searchId}/companies/${companyId}`, method: 'put',
+      data: companyDTOBody
+    },
+      );
+    }
+  
+
+
+    export const useModifyCompany = <TError = void,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof modifyCompany>, TError,{searchId: string;companyId: string;data: CompanyDTOBody}, TContext>, }
+) => {
+      const {mutation: mutationOptions} = options || {}
+
+      const mutationFn: MutationFunction<AsyncReturnType<typeof modifyCompany>, {searchId: string;companyId: string;data: CompanyDTOBody}> = (props) => {
+          const {searchId,companyId,data} = props || {};
+
+          return  modifyCompany(searchId,companyId,data,)
+        }
+
+      return useMutation<AsyncReturnType<typeof modifyCompany>, TError, {searchId: string;companyId: string;data: CompanyDTOBody}, TContext>(mutationFn, mutationOptions)
+    }
+    

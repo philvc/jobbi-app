@@ -15,7 +15,7 @@ export interface CompanyDTO {
   /** The description */
   description?: string;
   /** The id */
-  id: number;
+  id?: number;
   /** The link */
   link?: string;
   /** The SearchID */

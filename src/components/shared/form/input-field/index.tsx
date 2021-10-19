@@ -74,10 +74,11 @@ const InputField = ({ name, type, placeholder, disabled, disableReset = false }:
 								_placeholder={{ fontSize: FONT_SIZES.SMALL }}
 								fontSize={FONT_SIZES.SMALL}
 								value={value}
+								name={name}
 							/>
 						</Box>
 						{!disableReset && !isEmpty() && (
-							<Box mt={-1} cursor="pointer" whileHover={{ scale: 0.9875 }} whileTap={{ scale: 1.0125 }} ml={"auto"} onClick={() => setFieldValue(name, "")}>
+							<Box mt={-1} cursor="pointer" whilehover={{ scale: 0.9875 }} whiletap={{ scale: 1.0125 }} ml={"auto"} onClick={() => setFieldValue(name, "")}>
 								<Reset height="16px" width="16px" />
 							</Box>
 						)}
@@ -114,6 +115,7 @@ const InputField = ({ name, type, placeholder, disabled, disableReset = false }:
 							onMouseEnter={() => setIsHovered(true)}
 							onMouseLeave={() => setIsHovered(false)}
 							disabled={disabled}
+							name={name}
 							type={type}
 							p={0}
 							placeholder={placeholder}
@@ -130,7 +132,7 @@ const InputField = ({ name, type, placeholder, disabled, disableReset = false }:
 						/>
 					</Box>
 					{!disableReset && !isEmpty() && (
-						<Box mt={-1} cursor="pointer" whileHover={{ scale: 0.9875 }} whileTap={{ scale: 1.0125 }} ml={"auto"} onClick={() => setFieldValue(name, "")}>
+						<Box mt={-1} cursor="pointer" whilehover={{ scale: 0.9875 }} whiletap={{ scale: 1.0125 }} ml={"auto"} onClick={() => setFieldValue(name, "")}>
 							<Reset height="16px" width="16px" />
 						</Box>
 					)}

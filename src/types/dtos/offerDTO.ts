@@ -15,7 +15,7 @@ export interface OfferDTO {
   /** The description */
   description?: string;
   /** The id */
-  id: number;
+  id?: number;
   /** The link */
   link?: string;
   /** the search id */
@@ -23,5 +23,5 @@ export interface OfferDTO {
   /** The title */
   title?: string;
   /** the user id */
-  userId: number;
+  userId?: number;
 }

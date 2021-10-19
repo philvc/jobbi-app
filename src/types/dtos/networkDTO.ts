@@ -17,11 +17,11 @@ export interface NetworkDTO {
   /** The email */
   email?: string;
   /** The firstName */
-  firstName: string;
+  firstName?: string;
   /** The id */
-  id: number;
+  id?: number;
   /** The lastName */
-  lastName: string;
+  lastName?: string;
   /** The link */
   link?: string;
   /** The phoneNumber */

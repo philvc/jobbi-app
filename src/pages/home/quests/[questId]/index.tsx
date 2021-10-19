@@ -12,6 +12,9 @@ import { useDisclosure } from "@chakra-ui/hooks";
 import FriendshipDrawer from "../../../../components/friendship-drawer";
 import AnswerDrawer from "../../../../components/answer-drawer";
 import { useGetSearchById } from "../../../../services/search/search";
+import { useGetOffersBySearchId } from "../../../../services/offers/offers";
+import { useGetNetworksBySearchId } from "../../../../services/networks/networks";
+import { useGetCompaniesBySearchId } from "../../../../services/companies/companies";
 
 export default function Quests() {
 	// Attributes
@@ -23,6 +26,13 @@ export default function Quests() {
 	const { isOpen: isNewCompanyOpen, onOpen: openNewCompany, onClose: closeNewCompany } = useDisclosure();
 	const { isOpen: isNewContactOpen, onOpen: openNewContact, onClose: closeNewContact } = useDisclosure();
 	const {data, isLoading} = useGetSearchById(questId as string, {query: {enabled: !!questId}});
+	const q = useGetOffersBySearchId(questId as string);
+	const n = useGetNetworksBySearchId(questId as string);
+	const c = useGetCompaniesBySearchId(questId as string);
+	console.log("offers", q.data);
+	console.log("networks", n.data);
+	console.log("companies", c.data);
+	
 	// Function
 	function handleNewAnswer() {
 		router.back();

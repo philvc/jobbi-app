@@ -6,7 +6,7 @@ const success: string[] = [];
 // @ts-ignore
 const IAM_URL = process.env.REACT_APP_IAM_SERVER;
 // @ts-ignore
-const API_URL = process.env.REACT_APP_RESOURCE_SERVER;
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 const api = axios.create({ baseURL: API_URL });
 const iam = axios.create({ baseURL: IAM_URL });

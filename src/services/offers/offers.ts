@@ -28,39 +28,6 @@ T extends (...args: any) => Promise<any>
 
 /**
  * type id struct
-Modify offer.
-Return offer
- */
-export const modifyCompany = (
-    searchId: string,
-    offerId: string,
-    offerDTOBody: OfferDTOBody,
- ) => {
-      return customInstance<OfferDTO>(
-      {url: `/searches/${searchId}/offers/${offerId}`, method: 'put',
-      data: offerDTOBody
-    },
-      );
-    }
-  
-
-
-    export const useModifyCompany = <TError = void,
-    
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof modifyCompany>, TError,{searchId: string;offerId: string;data: OfferDTOBody}, TContext>, }
-) => {
-      const {mutation: mutationOptions} = options || {}
-
-      const mutationFn: MutationFunction<AsyncReturnType<typeof modifyCompany>, {searchId: string;offerId: string;data: OfferDTOBody}> = (props) => {
-          const {searchId,offerId,data} = props || {};
-
-          return  modifyCompany(searchId,offerId,data,)
-        }
-
-      return useMutation<AsyncReturnType<typeof modifyCompany>, TError, {searchId: string;offerId: string;data: OfferDTOBody}, TContext>(mutationFn, mutationOptions)
-    }
-    /**
- * type id struct
 Get offers by searchId.
 Return offer
  */
@@ -166,3 +133,37 @@ export const useGetOfferById = <TData = AsyncReturnType<typeof getOfferById>, TE
   }
 }
 
+/**
+ * type id struct
+Modify offer.
+Return offer
+ */
+export const modifyOffer = (
+    searchId: string,
+    offerId: string,
+    offerDTOBody: OfferDTOBody,
+ ) => {
+      return customInstance<OfferDTO>(
+      {url: `/searches/${searchId}/offers/${offerId}`, method: 'put',
+      data: offerDTOBody
+    },
+      );
+    }
+  
+
+
+    export const useModifyOffer = <TError = void,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof modifyOffer>, TError,{searchId: string;offerId: string;data: OfferDTOBody}, TContext>, }
+) => {
+      const {mutation: mutationOptions} = options || {}
+
+      const mutationFn: MutationFunction<AsyncReturnType<typeof modifyOffer>, {searchId: string;offerId: string;data: OfferDTOBody}> = (props) => {
+          const {searchId,offerId,data} = props || {};
+
+          return  modifyOffer(searchId,offerId,data,)
+        }
+
+      return useMutation<AsyncReturnType<typeof modifyOffer>, TError, {searchId: string;offerId: string;data: OfferDTOBody}, TContext>(mutationFn, mutationOptions)
+    }
+    

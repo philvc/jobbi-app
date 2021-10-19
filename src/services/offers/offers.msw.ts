@@ -12,22 +12,16 @@ import {
 } from 'msw'
 import faker from 'faker'
 
-export const getModifyCompanyMock = () => ({description: faker.random.word(), id: faker.datatype.number(), link: faker.random.word(), searchId: faker.datatype.number(), title: faker.random.word(), userId: faker.datatype.number()})
-
 export const getGetOffersBySearchIdMock = () => ([...Array(faker.datatype.number({min: 1, max: 10}))].map(() => ({description: faker.random.word(), id: faker.datatype.number(), link: faker.random.word(), searchId: faker.datatype.number(), title: faker.random.word(), userId: faker.datatype.number()})))
 
 export const getAddOfferMock = () => ({description: faker.random.word(), id: faker.datatype.number(), link: faker.random.word(), searchId: faker.datatype.number(), title: faker.random.word(), userId: faker.datatype.number()})
 
 export const getGetOfferByIdMock = () => ({description: faker.random.word(), id: faker.datatype.number(), link: faker.random.word(), searchId: faker.datatype.number(), title: faker.random.word(), userId: faker.datatype.number()})
 
+export const getModifyOfferMock = () => ({description: faker.random.word(), id: faker.datatype.number(), link: faker.random.word(), searchId: faker.datatype.number(), title: faker.random.word(), userId: faker.datatype.number()})
+
 export const getOffersMSW = () => [
-rest.put('*/searches/:searchId/offers/:offerId', (req, res, ctx) => {
-        return res(
-          ctx.delay(1000),
-          ctx.status(200, 'Mocked status'),
-ctx.json(getModifyCompanyMock()),
-        )
-      }),rest.get('*/searches/:searchId/offers', (req, res, ctx) => {
+rest.get('*/searches/:searchId/offers', (req, res, ctx) => {
         return res(
           ctx.delay(1000),
           ctx.status(200, 'Mocked status'),
@@ -44,5 +38,11 @@ ctx.json(getAddOfferMock()),
           ctx.delay(1000),
           ctx.status(200, 'Mocked status'),
 ctx.json(getGetOfferByIdMock()),
+        )
+      }),rest.put('*/searches/:searchId/offers/:offerId', (req, res, ctx) => {
+        return res(
+          ctx.delay(1000),
+          ctx.status(200, 'Mocked status'),
+ctx.json(getModifyOfferMock()),
         )
       }),]
