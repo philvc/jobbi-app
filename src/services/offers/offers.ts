@@ -166,4 +166,35 @@ export const modifyOffer = (
 
       return useMutation<AsyncReturnType<typeof modifyOffer>, TError, {searchId: string;offerId: string;data: OfferDTOBody}, TContext>(mutationFn, mutationOptions)
     }
+    /**
+ * type id struct
+Delete offer.
+Return true or error
+ */
+export const deleteOffer = (
+    searchId: string,
+    offerId: string,
+ ) => {
+      return customInstance<boolean>(
+      {url: `/searches/${searchId}/offers/${offerId}`, method: 'delete'
+    },
+      );
+    }
+  
+
+
+    export const useDeleteOffer = <TError = void,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof deleteOffer>, TError,{searchId: string;offerId: string}, TContext>, }
+) => {
+      const {mutation: mutationOptions} = options || {}
+
+      const mutationFn: MutationFunction<AsyncReturnType<typeof deleteOffer>, {searchId: string;offerId: string}> = (props) => {
+          const {searchId,offerId} = props || {};
+
+          return  deleteOffer(searchId,offerId,)
+        }
+
+      return useMutation<AsyncReturnType<typeof deleteOffer>, TError, {searchId: string;offerId: string}, TContext>(mutationFn, mutationOptions)
+    }
     

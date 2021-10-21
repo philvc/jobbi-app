@@ -13,72 +13,58 @@ import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { useQueryClient } from "react-query";
 import { COLORS } from "../../constants/colors";
+import { useAddCompany } from "../../services/companies/companies";
 import {
-  getGetCompaniesBySearchIdQueryKey,
-  useAddCompany,
-  useGetCompaniesBySearchId,
-  useGetCompanyById,
-  useModifyCompany,
-} from "../../services/companies/companies";
-import {
-  getGetNetworkByIdQueryKey,
-  getGetNetworksBySearchIdQueryKey,
-  useAddNetwork,
-  useDeleteNetwork,
-  useGetNetworkById,
-  useGetNetworksBySearchId,
-  useModifyNetwork,
-} from "../../services/networks/networks";
+  getGetOfferByIdQueryKey,
+  getGetOffersBySearchIdQueryKey,
+  useAddOffer,
+  useDeleteOffer,
+  useGetOfferById,
+  useGetOffersBySearchId,
+  useModifyOffer,
+} from "../../services/offers/offers";
 import InputField from "../shared/form/input-field";
 
-export enum EnumDrawerNetworkFields {
+export enum EnumDrawerOfferFields {
   LINK = "link",
-  FIRSTNAME = "firstName",
-  LASTNAME = "lastName",
-  EMAIL = "email",
-  PHONENUMBER = "phoneNumber",
+  TITLE = "title",
   DESCRIPTION = "description",
 }
 
-export type TDrawerNetwork = {
-  firstName: string;
-  lastName: string;
-  description: string;
-  email: string;
-  phoneNumber: string;
+export type TDrawerOffer = {
   link: string;
+  title: string;
+  description: string;
 };
 
-export default function NetworkDrawer({ isOpen, onClose }) {
+export default function OfferDrawer({ isOpen, onClose }) {
   // Attributes
   const router = useRouter();
-  const { questId, networkId } = router.query;
+  const { questId, offerId } = router.query;
   const clientQuery = useQueryClient();
 
   // Put Queries
-  const { mutateAsync: putNetwork } = useModifyNetwork();
+  const { mutateAsync: putOffer } = useModifyOffer();
 
   // Post Queries
-  const { mutateAsync: postNetwork } = useAddNetwork();
+  const { mutateAsync: postOffer } = useAddOffer();
 
-  // Delete Queries
-  const { mutateAsync: deleteNetwork } = useDeleteNetwork();
+  // Delete Query
+  const { mutateAsync: deleteOffer } = useDeleteOffer();
 
   // Get Queries
-  const { data: networks, refetch: refetchNetworks } = useGetNetworksBySearchId(
-    questId as string
+  const { refetch: refetchOffers } = useGetOffersBySearchId(questId as string);
+  const { data: offer, isLoading, refetch: refetchOffer } = useGetOfferById(
+    questId as string,
+    offerId as string,
+    {
+      query: { enabled: !!offerId },
+    }
   );
-  const {
-    data: network,
-    isLoading,
-    refetch: refecthNetwork,
-  } = useGetNetworkById(questId as string, networkId as string, {
-    query: { enabled: !!networkId },
-  });
 
   async function handleOnClose() {
     // remove query params
-    if (networkId) {
+    if (offerId) {
       await router.push(`/home/quests/${questId}`);
     }
 
@@ -86,60 +72,54 @@ export default function NetworkDrawer({ isOpen, onClose }) {
     onClose();
   }
 
-  async function handleSubmit(values: TDrawerNetwork) {
+  async function handleSubmit(values: TDrawerOffer) {
     // Invalidate query
     clientQuery.invalidateQueries(
-      getGetNetworksBySearchIdQueryKey(questId as string)
+      getGetOffersBySearchIdQueryKey(questId as string)
     );
-    if (networkId) {
+    if (offerId) {
       clientQuery.invalidateQueries(
-        getGetNetworkByIdQueryKey(questId as string, networkId as string)
+        getGetOfferByIdQueryKey(questId as string, offerId as string)
       );
     }
     // Mutation
-    networkId
-      ? await putNetwork({
+    offerId
+      ? await putOffer({
           searchId: questId as string,
-          networkId: networkId as string,
+          offerId: offerId as string,
           data: {
-            firstName: values.firstName,
-            lastName: values.lastName,
-            email: values.email,
-            phoneNumber: values.phoneNumber,
+            title: values.title,
             description: values.description,
             link: values.link,
           },
         })
-      : await postNetwork({
+      : await postOffer({
           searchId: questId as string,
           data: {
-            firstName: values.firstName,
-            lastName: values.lastName,
-            email: values.email,
-            phoneNumber: values.phoneNumber,
+            title: values.title,
             description: values.description,
             link: values.link,
           },
         });
 
     // Refetch Companies
-    await refetchNetworks();
-    if (networkId) {
-      await refecthNetwork();
+    if (offerId) {
+      await refetchOffer();
     }
+    await refetchOffers();
 
     // Close drawer
     handleOnClose();
   }
 
-  // Delete network
+  // Delete offer
   async function handleDelete() {
-    if (networkId) {
-      await deleteNetwork({
+    if (offerId) {
+      await deleteOffer({
         searchId: questId as string,
-        networkId: networkId as string,
+        offerId: offerId as string,
       });
-      await refetchNetworks();
+      await refetchOffers();
     }
     handleOnClose();
   }
@@ -148,36 +128,29 @@ export default function NetworkDrawer({ isOpen, onClose }) {
     <Drawer isOpen={isOpen} size="full" onClose={onClose}>
       <DrawerOverlay />
       <DrawerContent>
-        <Skeleton isLoaded={networkId ? !isLoading : true}>
-          <Formik<TDrawerNetwork>
+        <Skeleton isLoaded={offerId ? !isLoading : true}>
+          <Formik<TDrawerOffer>
             initialValues={{
-              firstName: network?.firstName,
-              lastName: network?.lastName,
-              email: network?.email,
-              phoneNumber: network?.phoneNumber,
-              link: network?.link,
-              description: network?.description,
+              link: offer?.link,
+              title: offer?.title,
+              description: offer?.description,
             }}
             onSubmit={handleSubmit}
           >
             <Form>
               <DrawerHeader>
-                <Heading>{`Ajouter un contact`}</Heading>
+                <Heading>{`Ajouter une offre`}</Heading>
               </DrawerHeader>
 
               <DrawerBody>
                 <Stack spacing={8}>
                   <Text>
-                    Grâce à vous, Philippe trouvera plus vite un emploie et
+                    Grâce à vous, Philippe trouvera plus vite un emploi et
                     utilisera vos ressources pour y arriver. Dès que vous
                     sauvez, Philippe en sera notifié.
                   </Text>
                   <Stack spacing={4}>
-                    <InputField placeholder="FirstName" name="firstName" />
-                    <InputField placeholder="LastName" name="lastName" />
-                    <InputField placeholder="Email" name="email" />
-                    <InputField placeholder="PhoneNumber" name="phoneNumber" />
-                    <InputField placeholder="Link" name="link" />
+                    <InputField placeholder="Titre" name="title" />
                     <InputField
                       type="textarea"
                       placeholder="Description"

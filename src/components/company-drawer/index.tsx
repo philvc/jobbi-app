@@ -16,6 +16,7 @@ import { COLORS } from "../../constants/colors";
 import {
   getGetCompaniesBySearchIdQueryKey,
   useAddCompany,
+  useDeleteCompany,
   useGetCompaniesBySearchId,
   useGetCompanyById,
   useModifyCompany,
@@ -46,6 +47,9 @@ export default function CompanyDrawer({ isOpen, onClose }) {
 
   // Post Queries
   const { mutateAsync: postCompany } = useAddCompany();
+
+  // Delete company
+  const { mutateAsync: deleteCompany } = useDeleteCompany();
 
   // Get Queries
   const {
@@ -94,7 +98,6 @@ export default function CompanyDrawer({ isOpen, onClose }) {
       : await postCompany({
           searchId: questId as string,
           data: {
-            searchId: parseInt(questId as string),
             title: values.title,
             description: values.description,
             link: values.link,
@@ -102,10 +105,24 @@ export default function CompanyDrawer({ isOpen, onClose }) {
         });
 
     // Refetch Companies
-    await refetchCompany();
+    if (companyId) {
+      await refetchCompany();
+    }
     await refetchCompanies();
 
     // Close drawer
+    handleOnClose();
+  }
+
+  // Delete company
+  async function handleDelete() {
+    if (companyId) {
+      await deleteCompany({
+        searchId: questId as string,
+        companyId: companyId as string,
+      });
+      await refetchCompanies();
+    }
     handleOnClose();
   }
 
@@ -150,6 +167,9 @@ export default function CompanyDrawer({ isOpen, onClose }) {
                 <Stack w="full" direction="row" spacing={4}>
                   <Button w="full" variant="outline" onClick={handleOnClose}>
                     Cancel
+                  </Button>
+                  <Button w="full" variant="outline" onClick={handleDelete}>
+                    Delete
                   </Button>
                   <Button
                     type="submit"

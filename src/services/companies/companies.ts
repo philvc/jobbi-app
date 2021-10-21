@@ -166,4 +166,35 @@ export const modifyCompany = (
 
       return useMutation<AsyncReturnType<typeof modifyCompany>, TError, {searchId: string;companyId: string;data: CompanyDTOBody}, TContext>(mutationFn, mutationOptions)
     }
+    /**
+ * type id struct
+Delete company.
+Return true or error
+ */
+export const deleteCompany = (
+    searchId: string,
+    companyId: string,
+ ) => {
+      return customInstance<boolean>(
+      {url: `/searches/${searchId}/companies/${companyId}`, method: 'delete'
+    },
+      );
+    }
+  
+
+
+    export const useDeleteCompany = <TError = void,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof deleteCompany>, TError,{searchId: string;companyId: string}, TContext>, }
+) => {
+      const {mutation: mutationOptions} = options || {}
+
+      const mutationFn: MutationFunction<AsyncReturnType<typeof deleteCompany>, {searchId: string;companyId: string}> = (props) => {
+          const {searchId,companyId} = props || {};
+
+          return  deleteCompany(searchId,companyId,)
+        }
+
+      return useMutation<AsyncReturnType<typeof deleteCompany>, TError, {searchId: string;companyId: string}, TContext>(mutationFn, mutationOptions)
+    }
     

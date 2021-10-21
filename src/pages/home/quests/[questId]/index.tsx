@@ -17,6 +17,8 @@ import { useGetNetworksBySearchId } from "../../../../services/networks/networks
 import { useGetCompaniesBySearchId } from "../../../../services/companies/companies";
 import CompanyDrawer from "../../../../components/company-drawer";
 import { Skeleton } from "@chakra-ui/skeleton";
+import NetworkDrawer from "../../../../components/network-drawer";
+import OfferDrawer from "../../../../components/offer-drawer";
 
 export default function Quests() {
   // Attributes
@@ -177,18 +179,13 @@ export default function Quests() {
         })}
       </Box>
       <FriendshipDrawer isOpen={isNewFriendOpen} onClose={closeNewFriend} />
-      <AnswerDrawer
-        type={0}
-        isOpen={isNewOffreOpen || offerId}
-        onClose={closeNewOffre}
-      />
+      <OfferDrawer isOpen={isNewOffreOpen || offerId} onClose={closeNewOffre} />
       <CompanyDrawer
         isOpen={isNewCompanyOpen || companyId}
         onClose={closeNewCompany}
       />
-      <AnswerDrawer
-        type={2}
-        isOpen={isNewContactOpen}
+      <NetworkDrawer
+        isOpen={isNewContactOpen || networkId}
         onClose={closeNewContact}
       />
     </Page>

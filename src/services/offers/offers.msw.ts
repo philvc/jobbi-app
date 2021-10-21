@@ -20,6 +20,8 @@ export const getGetOfferByIdMock = () => ({description: faker.random.word(), id:
 
 export const getModifyOfferMock = () => ({description: faker.random.word(), id: faker.datatype.number(), link: faker.random.word(), searchId: faker.datatype.number(), title: faker.random.word(), userId: faker.datatype.number()})
 
+export const getDeleteOfferMock = () => (faker.datatype.boolean())
+
 export const getOffersMSW = () => [
 rest.get('*/searches/:searchId/offers', (req, res, ctx) => {
         return res(
@@ -44,5 +46,11 @@ ctx.json(getGetOfferByIdMock()),
           ctx.delay(1000),
           ctx.status(200, 'Mocked status'),
 ctx.json(getModifyOfferMock()),
+        )
+      }),rest.delete('*/searches/:searchId/offers/:offerId', (req, res, ctx) => {
+        return res(
+          ctx.delay(1000),
+          ctx.status(200, 'Mocked status'),
+ctx.json(getDeleteOfferMock()),
         )
       }),]

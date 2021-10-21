@@ -20,6 +20,8 @@ export const getGetNetworkByIdMock = () => ({description: faker.random.word(), e
 
 export const getModifyNetworkMock = () => ({description: faker.random.word(), email: (() => faker.internet.email())(), firstName: (() => faker.name.firstName())(), id: faker.datatype.number(), lastName: (() => faker.name.lastName())(), link: faker.random.word(), phoneNumber: (() => faker.phone.phoneNumber("+32494######"))(), searchId: faker.datatype.number(), userId: faker.datatype.number()})
 
+export const getDeleteNetworkMock = () => (faker.datatype.boolean())
+
 export const getNetworksMSW = () => [
 rest.get('*/searches/:searchId/networks', (req, res, ctx) => {
         return res(
@@ -44,5 +46,11 @@ ctx.json(getGetNetworkByIdMock()),
           ctx.delay(1000),
           ctx.status(200, 'Mocked status'),
 ctx.json(getModifyNetworkMock()),
+        )
+      }),rest.delete('*/searches/:searchId/networks/:networkId', (req, res, ctx) => {
+        return res(
+          ctx.delay(1000),
+          ctx.status(200, 'Mocked status'),
+ctx.json(getDeleteNetworkMock()),
         )
       }),]

@@ -20,6 +20,8 @@ export const getGetCompanyByIdMock = () => ({description: faker.random.word(), i
 
 export const getModifyCompanyMock = () => ({description: faker.random.word(), id: faker.datatype.number(), link: faker.random.word(), searchId: faker.datatype.number(), title: faker.random.word(), userId: faker.datatype.number()})
 
+export const getDeleteCompanyMock = () => (faker.datatype.boolean())
+
 export const getCompaniesMSW = () => [
 rest.get('*/searches/:searchId/companies', (req, res, ctx) => {
         return res(
@@ -44,5 +46,11 @@ ctx.json(getGetCompanyByIdMock()),
           ctx.delay(1000),
           ctx.status(200, 'Mocked status'),
 ctx.json(getModifyCompanyMock()),
+        )
+      }),rest.delete('*/searches/:searchId/companies/:companyId', (req, res, ctx) => {
+        return res(
+          ctx.delay(1000),
+          ctx.status(200, 'Mocked status'),
+ctx.json(getDeleteCompanyMock()),
         )
       }),]

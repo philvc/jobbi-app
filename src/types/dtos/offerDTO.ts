@@ -19,7 +19,7 @@ export interface OfferDTO {
   /** The link */
   link?: string;
   /** the search id */
-  searchId: number;
+  searchId?: number;
   /** The title */
   title?: string;
   /** the user id */

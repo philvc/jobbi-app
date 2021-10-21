@@ -166,4 +166,35 @@ export const modifyNetwork = (
 
       return useMutation<AsyncReturnType<typeof modifyNetwork>, TError, {searchId: string;networkId: string;data: NetworkDTOBody}, TContext>(mutationFn, mutationOptions)
     }
+    /**
+ * type id struct
+Delete network.
+Return true or error
+ */
+export const deleteNetwork = (
+    searchId: string,
+    networkId: string,
+ ) => {
+      return customInstance<boolean>(
+      {url: `/searches/${searchId}/networks/${networkId}`, method: 'delete'
+    },
+      );
+    }
+  
+
+
+    export const useDeleteNetwork = <TError = void,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof deleteNetwork>, TError,{searchId: string;networkId: string}, TContext>, }
+) => {
+      const {mutation: mutationOptions} = options || {}
+
+      const mutationFn: MutationFunction<AsyncReturnType<typeof deleteNetwork>, {searchId: string;networkId: string}> = (props) => {
+          const {searchId,networkId} = props || {};
+
+          return  deleteNetwork(searchId,networkId,)
+        }
+
+      return useMutation<AsyncReturnType<typeof deleteNetwork>, TError, {searchId: string;networkId: string}, TContext>(mutationFn, mutationOptions)
+    }
     
