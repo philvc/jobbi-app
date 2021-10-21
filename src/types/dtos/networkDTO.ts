@@ -27,7 +27,7 @@ export interface NetworkDTO {
   /** The phoneNumber */
   phoneNumber?: string;
   /** The search id */
-  searchId: number;
+  searchId?: number;
   /** The user id */
   userId?: number;
 }
