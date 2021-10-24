@@ -19,7 +19,7 @@ export interface UserDTO {
   /** The firstName */
   firstName?: string;
   /** The id */
-  id: number;
+  id?: number;
   /** The lastName */
   lastName?: string;
 }

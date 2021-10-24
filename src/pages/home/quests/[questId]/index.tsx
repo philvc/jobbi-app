@@ -78,7 +78,12 @@ export default function Quests() {
   return (
     <Page p={4} justify="space-between">
       <Box>
-        <Stack onClick={router.back} direction="row" spacing={2} align="center">
+        <Stack
+          onClick={() => router.push("/home")}
+          direction="row"
+          spacing={2}
+          align="center"
+        >
           <ArrowDown height="16px" width="16px" transform="rotate(90)" />
         </Stack>
         <Stack mt={8} spacing={5}>
