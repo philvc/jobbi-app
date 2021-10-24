@@ -17,6 +17,7 @@
 	"scripts": {
 		"dev": "next dev",
 		"build": "cross-env NODE_ENV=production next build",
+		"export": "next export",
 		"start": "next start",
 		"generate-api": "orval --config ./orval.config.js",
 		"storybook": "start-storybook -p 6006 -s public",

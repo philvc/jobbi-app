@@ -22,7 +22,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "orval.config.js"  ],
+, "orval.config.js", "next.config.js"  ],
   "exclude": [
     "**/node_modules"
   ]
