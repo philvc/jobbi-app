@@ -19,12 +19,18 @@ import CompanyDrawer from "../../../../components/company-drawer";
 import { Skeleton } from "@chakra-ui/skeleton";
 import NetworkDrawer from "../../../../components/network-drawer";
 import OfferDrawer from "../../../../components/offer-drawer";
+import SearchDrawer from "../../../../components/quest-drawer";
 
 export default function Quests() {
   // Attributes
   const router = useRouter();
   const { questId, offerId, companyId, networkId } = router.query;
   const { t } = useTranslation();
+  const {
+    isOpen: isSearchOpen,
+    onOpen: openSearch,
+    onClose: closeSearch,
+  } = useDisclosure();
   const {
     isOpen: isNewFriendOpen,
     onOpen: openNewFriend,
@@ -76,11 +82,11 @@ export default function Quests() {
           <ArrowDown height="16px" width="16px" transform="rotate(90)" />
         </Stack>
         <Stack mt={8} spacing={5}>
-          <Stack>
+          <Stack onClick={openSearch}>
             <Heading>Titre</Heading>
             <Paragraph>{data.title}</Paragraph>
           </Stack>
-          <Stack>
+          <Stack onClick={openSearch}>
             <Heading>Description</Heading>
             <Paragraph>{data.description}</Paragraph>
           </Stack>
@@ -178,6 +184,7 @@ export default function Quests() {
           );
         })}
       </Box>
+      <SearchDrawer isOpen={isSearchOpen} onClose={closeSearch} />
       <FriendshipDrawer isOpen={isNewFriendOpen} onClose={closeNewFriend} />
       <OfferDrawer isOpen={isNewOffreOpen || offerId} onClose={closeNewOffre} />
       <CompanyDrawer

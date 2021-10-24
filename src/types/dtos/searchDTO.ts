@@ -15,7 +15,7 @@ export interface SearchDTO {
   /** The description */
   description: string;
   /** The id */
-  id: number;
+  id?: number;
   /** The title */
   title: string;
   /** UserId */
