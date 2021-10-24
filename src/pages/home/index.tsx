@@ -1,6 +1,7 @@
 import Page from "../../components/shared/layout/page";
 import { useRouter } from "next/router";
 import React from "react";
+import { Text } from "@chakra-ui/react";
 import { Box, Container, Flex, Stack } from "@chakra-ui/layout";
 import { Skeleton } from "@chakra-ui/skeleton";
 import { useTranslation } from "react-i18next";
@@ -10,6 +11,8 @@ import Cross from "../../components/shared/icons/cross";
 import { useGetSearches } from "../../services/searches/searches";
 import { useDisclosure } from "@chakra-ui/hooks";
 import SearchDrawer from "../../components/quest-drawer";
+import HomeTopBar from "./topbar";
+import { COLORS } from "../../constants/colors";
 
 export default function Home() {
   // Attributes
@@ -18,10 +21,6 @@ export default function Home() {
   const { t } = useTranslation();
   const { data, isLoading } = useGetSearches();
   const { isOpen, onClose, onOpen } = useDisclosure();
-
-  function handleProfileClicked() {
-    router.push("/home/profile");
-  }
 
   function handleNewQuestClicked() {
     onOpen();
@@ -33,15 +32,27 @@ export default function Home() {
 
   return (
     <Page>
-      <Flex justify="End" p={4}>
-        <Box onClick={handleProfileClicked}>
-          <User width={25} height={25} />
-        </Box>
-      </Flex>
-      <Stack mt={2} spacing={4} pl={4}>
+      <HomeTopBar />
+      <Box  pt={"118px"} pl={4}>
         <Stack spacing={2}>
+          <Flex>
+            <Text size="20px" as="span">
+              {"Prêt à trouver ton "}
+            </Text>
+            <Text
+              size="20px"
+              ml={"4px"}
+              color={COLORS.GREEN.T800.hex}
+              as="span"
+            >
+              {" job de rêve"}
+            </Text>
+            <Text size="20px" ml={"4px"} as="span">
+              ?
+            </Text>
+          </Flex>
           <Flex justify="space-between" align="center" mr={2}>
-            <Heading>Mes recherches</Heading>
+            <Heading>Mes quêtes</Heading>
             <Cross
               onClick={handleNewQuestClicked}
               height={16}
@@ -68,14 +79,14 @@ export default function Home() {
           </Skeleton>
         </Stack>
         <Box>
-          <Heading>Les recherches de mes amis</Heading>
+          <Heading>Les quêtes de mes amis</Heading>
           <Stack direction="row" spacing={2}></Stack>
         </Box>
         <Box>
           <Heading>Mes invitations</Heading>
           <Stack direction="row" spacing={2}></Stack>
         </Box>
-      </Stack>
+      </Box>
       <SearchDrawer isOpen={isOpen} onClose={onClose} />
     </Page>
   );

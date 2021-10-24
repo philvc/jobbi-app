@@ -18,6 +18,7 @@ export interface ColorPallet {
 	T500: Color;
 	T600: Color;
 	T700: Color;
+	T800?: Color;
 }
 
 export interface Color {
@@ -29,7 +30,7 @@ export const COLORS: Colors = {
 		hex: "transparent",
 	},
 	BACKGROUND: {
-		hex: "#F0F0EE",
+		hex: "#F2F7F8",
 	},
 	WHITE: {
 		hex: "#FFFFFF",
@@ -58,6 +59,9 @@ export const COLORS: Colors = {
 		},
 	},
 	GREEN: {
+		T800: {
+			hex: "#00CC9D",
+		},
 		T700: {
 			hex: "#1C7F47",
 		},
@@ -134,7 +138,7 @@ export const COLORS: Colors = {
 			hex: "#242323",
 		},
 		T500: {
-			hex: "#000F08",
+			hex: "#8F95B2",
 		},
 		T400: {
 			hex: "#575656",
