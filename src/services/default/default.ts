@@ -90,4 +90,34 @@ export const modifyUser = (
 
       return useMutation<AsyncReturnType<typeof modifyUser>, TError, {data: UserDTO}, TContext>(mutationFn, mutationOptions)
     }
+    /**
+ * Return user
+ * @summary Create new user.
+ */
+export const createUser = (
+    userDTO: UserDTO,
+ ) => {
+      return customInstance<UserDTO>(
+      {url: `/users`, method: 'post',
+      data: userDTO
+    },
+      );
+    }
+  
+
+
+    export const useCreateUser = <TError = void,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof createUser>, TError,{data: UserDTO}, TContext>, }
+) => {
+      const {mutation: mutationOptions} = options || {}
+
+      const mutationFn: MutationFunction<AsyncReturnType<typeof createUser>, {data: UserDTO}> = (props) => {
+          const {data} = props || {};
+
+          return  createUser(data,)
+        }
+
+      return useMutation<AsyncReturnType<typeof createUser>, TError, {data: UserDTO}, TContext>(mutationFn, mutationOptions)
+    }
     

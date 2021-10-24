@@ -11,6 +11,7 @@ import {
 import { Skeleton } from "@chakra-ui/skeleton";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
+import React from "react";
 import { useQueryClient } from "react-query";
 import { COLORS } from "../../constants/colors";
 import {
@@ -29,6 +30,7 @@ import {
   useGetNetworksBySearchId,
   useModifyNetwork,
 } from "../../services/networks/networks";
+import SearchDrawerFooter from "../footer-drawer";
 import InputField from "../shared/form/input-field";
 
 export enum EnumDrawerNetworkFields {
@@ -187,25 +189,11 @@ export default function NetworkDrawer({ isOpen, onClose }) {
                   </Stack>
                 </Stack>
               </DrawerBody>
-
-              <DrawerFooter>
-                <Stack w="full" direction="row" spacing={4}>
-                  <Button w="full" variant="outline" onClick={handleOnClose}>
-                    Cancel
-                  </Button>
-                  <Button w="full" variant="outline" onClick={handleDelete}>
-                    Delete
-                  </Button>
-                  <Button
-                    type="submit"
-                    bg={COLORS.BLUE.T500.hex}
-                    color={COLORS.WHITE.hex}
-                    w="full"
-                  >
-                    Sauver
-                  </Button>
-                </Stack>
-              </DrawerFooter>
+              <SearchDrawerFooter
+                handleDelete={handleDelete}
+                hasDelete={!!networkId}
+                onClose={handleOnClose}
+              />
             </Form>
           </Formik>
         </Skeleton>

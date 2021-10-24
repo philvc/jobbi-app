@@ -23,6 +23,8 @@ import {
   useGetOffersBySearchId,
   useModifyOffer,
 } from "../../services/offers/offers";
+import SearchDrawerFooter from "../footer-drawer";
+import SearchDrawer from "../quest-drawer";
 import InputField from "../shared/form/input-field";
 
 export enum EnumDrawerOfferFields {
@@ -161,24 +163,11 @@ export default function OfferDrawer({ isOpen, onClose }) {
                 </Stack>
               </DrawerBody>
 
-              <DrawerFooter>
-                <Stack w="full" direction="row" spacing={4}>
-                  <Button w="full" variant="outline" onClick={handleOnClose}>
-                    Cancel
-                  </Button>
-                  <Button w="full" variant="outline" onClick={handleDelete}>
-                    Delete
-                  </Button>
-                  <Button
-                    type="submit"
-                    bg={COLORS.BLUE.T500.hex}
-                    color={COLORS.WHITE.hex}
-                    w="full"
-                  >
-                    Sauver
-                  </Button>
-                </Stack>
-              </DrawerFooter>
+              <SearchDrawerFooter
+                handleDelete={handleDelete}
+                hasDelete={!!offerId}
+                onClose={handleOnClose}
+              />
             </Form>
           </Formik>
         </Skeleton>

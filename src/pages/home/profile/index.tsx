@@ -48,6 +48,8 @@ export default function Home() {
 
     // refetch user
     await refetch();
+
+    router.back();
   }
 
   return (

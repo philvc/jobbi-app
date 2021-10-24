@@ -16,6 +16,8 @@ export const getGetUserBySubMock = () => ({email: (() => faker.internet.email())
 
 export const getModifyUserMock = () => ({email: (() => faker.internet.email())(), externalId: faker.random.word(), firstName: (() => faker.name.firstName())(), id: faker.datatype.number(), lastName: (() => faker.name.lastName())()})
 
+export const getCreateUserMock = () => ({email: (() => faker.internet.email())(), externalId: faker.random.word(), firstName: (() => faker.name.firstName())(), id: faker.datatype.number(), lastName: (() => faker.name.lastName())()})
+
 export const getDefaultMSW = () => [
 rest.get('*/me', (req, res, ctx) => {
         return res(
@@ -28,5 +30,11 @@ ctx.json(getGetUserBySubMock()),
           ctx.delay(1000),
           ctx.status(200, 'Mocked status'),
 ctx.json(getModifyUserMock()),
+        )
+      }),rest.post('*/users', (req, res, ctx) => {
+        return res(
+          ctx.delay(1000),
+          ctx.status(200, 'Mocked status'),
+ctx.json(getCreateUserMock()),
         )
       }),]

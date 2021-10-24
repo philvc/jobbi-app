@@ -68,7 +68,7 @@ export default function Home() {
           </Skeleton>
         </Stack>
         <Box>
-          <Heading>Mes amis</Heading>
+          <Heading>Les recherches de mes amis</Heading>
           <Stack direction="row" spacing={2}></Stack>
         </Box>
         <Box>
