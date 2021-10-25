@@ -8,6 +8,10 @@ const HomeTopBar = () => {
   // Attributes
   const router = useRouter();
 
+  /***
+   * @todo get me
+   */
+
   // Handlers
   function handleProfileClicked() {
     router.push("/home/profile");
@@ -23,7 +27,7 @@ const HomeTopBar = () => {
       position="fixed"
     >
       <Flex alignItems="center" justifyContent="space-between">
-        <Heading size="20px" fontWeight="bold">
+        <Heading size="800" fontWeight="bold">
           Bonjour Philippe
         </Heading>
         <Box onClick={handleProfileClicked}>

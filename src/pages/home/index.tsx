@@ -33,51 +33,44 @@ export default function Home() {
   return (
     <Page>
       <HomeTopBar />
-      <Box  pt={"118px"} pl={4}>
-        <Stack spacing={2}>
-          <Flex>
-            <Text size="20px" as="span">
-              {"Prêt à trouver ton "}
-            </Text>
-            <Text
-              size="20px"
-              ml={"4px"}
-              color={COLORS.GREEN.T800.hex}
-              as="span"
-            >
-              {" job de rêve"}
-            </Text>
-            <Text size="20px" ml={"4px"} as="span">
-              ?
-            </Text>
-          </Flex>
-          <Flex justify="space-between" align="center" mr={2}>
-            <Heading>Mes quêtes</Heading>
-            <Cross
-              onClick={handleNewQuestClicked}
-              height={16}
-              width={16}
-              transform="rotate(45)"
-            />
-          </Flex>
-          <Skeleton isLoaded={!isLoading}>
-            <Stack direction="row" spacing={2} overflow="auto">
-              {data?.map((search) => {
-                return (
-                  <Box
-                    onClick={() => handleQuestClicked(search.id)}
-                    h={40}
-                    minW={32}
-                    bg="red"
-                    p={2}
-                  >
-                    <Heading type={4}>{search.title}</Heading>
-                  </Box>
-                );
-              })}
-            </Stack>
-          </Skeleton>
-        </Stack>
+      <Box pt={"118px"} pl={4}>
+        <Flex>
+          <Text size="20px" as="span">
+            {"Prêt à trouver ton "}
+          </Text>
+          <Text size="20px" ml={"4px"} color={COLORS.GREEN.T800.hex} as="span">
+            {" job de rêve"}
+          </Text>
+          <Text size="20px" ml={"4px"} as="span">
+            ?
+          </Text>
+        </Flex>
+        <Flex justify="space-between" align="center" mr={2}>
+          <Heading>Mes quêtes</Heading>
+          <Cross
+            onClick={handleNewQuestClicked}
+            height={16}
+            width={16}
+            transform="rotate(45)"
+          />
+        </Flex>
+        <Skeleton isLoaded={!isLoading}>
+          <Stack direction="row" spacing={2} overflow="auto">
+            {data?.map((search) => {
+              return (
+                <Box
+                  onClick={() => handleQuestClicked(search.id)}
+                  h={40}
+                  minW={32}
+                  bg="red"
+                  p={2}
+                >
+                  <Heading type={4}>{search.title}</Heading>
+                </Box>
+              );
+            })}
+          </Stack>
+        </Skeleton>
         <Box>
           <Heading>Les quêtes de mes amis</Heading>
           <Stack direction="row" spacing={2}></Stack>

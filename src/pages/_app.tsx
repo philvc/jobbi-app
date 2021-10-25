@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { createClient } from "@supabase/supabase-js";
 import { SupabaseContextProvider } from "use-supabase";
 import { useRouter } from "next/router";
+import { UITheme } from "../themes";
 
 function MyApp({ Component, pageProps }) {
 	const router = useRouter();
@@ -33,7 +34,7 @@ function MyApp({ Component, pageProps }) {
 					<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
 				</Head>
 				<QueryClientProvider client={queryClientRef.current}>
-					<ChakraProvider>
+					<ChakraProvider theme={UITheme}>
 						<Component {...pageProps} />
 					</ChakraProvider>
 				</QueryClientProvider>
