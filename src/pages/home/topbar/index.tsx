@@ -1,6 +1,5 @@
 import { Box, Flex, Heading } from "@chakra-ui/layout";
 import { useRouter } from "next/router";
-import { userInfo } from "os";
 import React from "react";
 import User from "../../../components/shared/icons/user";
 import { COLORS } from "../../../constants/colors";

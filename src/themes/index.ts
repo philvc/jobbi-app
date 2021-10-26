@@ -1,4 +1,6 @@
 import { Heading } from "./components/heading";
+import { Text } from "./components/text";
+import {Button} from "./components/button";
 import { typo } from "./typo";
 import {fonts} from './fonts';
 import {mergeWith} from 'lodash';
@@ -8,7 +10,9 @@ export const overrides = {
     typo,
     fonts,
     components: {
-        Heading
+        Heading,
+        Text,
+        Button
     }
 }
 

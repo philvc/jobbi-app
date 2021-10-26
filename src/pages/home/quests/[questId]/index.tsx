@@ -2,15 +2,14 @@ import Page from "../../../../components/shared/layout/page";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { Box, Container, Flex, Stack } from "@chakra-ui/layout";
+
 import { useTranslation } from "react-i18next";
 import Paragraph from "../../../../components/shared/typography/paragraph";
-import Heading from "../../../../components/shared/typography/heading";
 import ArrowDown from "../../../../components/shared/icons/arrow-down";
 import { Avatar, AvatarBadge } from "@chakra-ui/avatar";
 import Cross from "../../../../components/shared/icons/cross";
 import { useDisclosure } from "@chakra-ui/hooks";
 import FriendshipDrawer from "../../../../components/friendship-drawer";
-import AnswerDrawer from "../../../../components/answer-drawer";
 import { useGetSearchById } from "../../../../services/search/search";
 import { useGetOffersBySearchId } from "../../../../services/offers/offers";
 import { useGetNetworksBySearchId } from "../../../../services/networks/networks";
@@ -20,6 +19,9 @@ import { Skeleton } from "@chakra-ui/skeleton";
 import NetworkDrawer from "../../../../components/network-drawer";
 import OfferDrawer from "../../../../components/offer-drawer";
 import SearchDrawer from "../../../../components/quest-drawer";
+import { Button, Heading, Text } from "@chakra-ui/react";
+import { SectionContainer } from "../../../../components/all/quest/section-container";
+import { AddUser } from "../../../../components/shared/icons/add-user";
 
 export default function Quests() {
   // Attributes
@@ -76,7 +78,7 @@ export default function Quests() {
   }
 
   return (
-    <Page p={4} justify="space-between">
+    <Page p={4}>
       <Box>
         <Stack
           onClick={() => router.push("/home")}
@@ -87,17 +89,19 @@ export default function Quests() {
           <ArrowDown height="16px" width="16px" transform="rotate(90)" />
         </Stack>
         <Stack mt={8} spacing={5}>
-          <Stack onClick={openSearch}>
-            <Heading>Titre</Heading>
-            <Paragraph>{data.title}</Paragraph>
-          </Stack>
-          <Stack onClick={openSearch}>
-            <Heading>Description</Heading>
-            <Paragraph>{data.description}</Paragraph>
-          </Stack>
-          <Stack>
+          <SectionContainer onClick={openSearch}>
+            <Heading mb={4} size="800">
+              Poste
+            </Heading>
+            <Text size="100">{data.title}</Text>
+          </SectionContainer>
+          <SectionContainer onClick={openSearch}>
+            <Heading size="800">Description</Heading>
+            <Text size="100">{data.description}</Text>
+          </SectionContainer>
+          <SectionContainer>
             <Flex justify="space-between" align="center" mr={2}>
-              <Heading>Amis</Heading>
+              <Heading size="800">Amis</Heading>
               <Cross
                 onClick={openNewFriend}
                 height={16}
@@ -109,10 +113,14 @@ export default function Quests() {
               <Avatar name="Tahir Bashir" />
               <Avatar name="Maxime Denuit" />
             </Stack>
-          </Stack>
+            <Button mt="10px">
+              <AddUser style={{ marginRight: "14px" }} fill={"white"} />
+              <Text>Trouve-moi des potes</Text>
+            </Button>
+          </SectionContainer>
           <Stack>
             <Flex justify="space-between" align="center" mr={2}>
-              <Heading>Offres</Heading>
+              <Heading size="600">Offres</Heading>
               <Cross
                 onClick={openNewOffre}
                 height={16}

@@ -1,16 +1,16 @@
 import Page from "../../../components/shared/layout/page";
 import { useRouter } from "next/router";
 import React from "react";
-import { Box, Container, Flex, Stack } from "@chakra-ui/layout";
-import Heading from "../../../components/shared/typography/heading";
+import { Box, Container, Flex, Heading, Stack } from "@chakra-ui/layout";
 import InputField from "../../../components/shared/form/input-field";
 import { Form, Formik, FormikContext } from "formik";
-import Button from "../../../components/shared/actions/button";
 import UserDTO from "../../../types/UserDTO";
 import ArrowDown from "../../../components/shared/icons/arrow-down";
 import { useSupabase } from "use-supabase";
 import { useToast } from "@chakra-ui/toast";
 import { useCreateUser } from "../../../services/default/default";
+import { Button } from "@chakra-ui/button";
+import { useTheme } from "@emotion/react";
 
 export default function SignIn() {
   // Attributes
@@ -56,18 +56,20 @@ export default function SignIn() {
       onSubmit={handleSubmit}
     >
       <Form>
-        <Page p={4} justify="space-between">
-          <Box>
-            <Stack direction="row" spacing={2} align="center">
-              <ArrowDown
-                onClick={router.back}
-                style={{ marginTop: -1 }}
-                height="16px"
-                width="16px"
-                transform="rotate(90)"
-              />
-              <Heading>S'inscrire</Heading>
-            </Stack>
+        <Page p={4}>
+          <ArrowDown
+            onClick={() => router.push("/auth/sign-in")}
+            style={{ marginTop: 50 }}
+            height="16px"
+            width="16px"
+            transform="rotate(90)"
+          />
+          <Flex marginTop={20} flexGrow={1} direction="column">
+            <Heading size="900">S'inscrire 🎉</Heading>
+            <Heading size="300" color={"#818080"}>
+              Créé ton compte sur Jobbi et aide tes amis à trouver un nouveau
+              job de rêve !{" "}
+            </Heading>
             <Stack mt={8} spacing={4}>
               <InputField placeholder="E-mail" name="email" />
               <InputField
@@ -80,9 +82,18 @@ export default function SignIn() {
                 name="confirm-password"
                 type="password"
               />
-              <Button type="submit" text="S'inscrire" />
             </Stack>
-          </Box>
+            <Button marginTop={"36px"} type="submit" backgroundColor="#00CC9D">
+              S'inscrire
+            </Button>
+          </Flex>
+          <ArrowDown
+            height="16px"
+            width="16px"
+            transform="rotate(90)"
+            visibility="hidden"
+            style={{ marginBottom: "50px" }}
+          />
         </Page>
       </Form>
     </Formik>

@@ -4,7 +4,6 @@ import React from "react";
 import { Box, Container, Flex, Stack, Text } from "@chakra-ui/layout";
 import { useTranslation } from "react-i18next";
 import Paragraph from "../../../components/shared/typography/paragraph";
-import Heading from "../../../components/shared/typography/heading";
 import InputField from "../../../components/shared/form/input-field";
 import { Form, Formik, FormikContext } from "formik";
 import Button from "../../../components/shared/actions/button";
@@ -14,6 +13,8 @@ import { useSupabase } from "use-supabase";
 import { useToast } from "@chakra-ui/toast";
 import { FONT_SIZES } from "../../../constants/typography";
 import { COLORS } from "../../../constants/colors";
+import { Heading } from "@chakra-ui/react";
+import Image from "next/image";
 
 export default function SignIn() {
   // Attributes
@@ -53,26 +54,49 @@ export default function SignIn() {
       onSubmit={handleSubmit}
     >
       <Form>
-        <Page p={4} justifyContent="center" alignItems="center">
-          <Heading mb={"52px"}>Bienvenue 👋</Heading>
-          <Stack spacing={4} width="full">
-            <InputField placeholder="E-mail" name="email" />
-            <Stack>
-              <InputField placeholder="Mot de passe" name="password" />
-              <Text
-                onClick={handleForgotPassword}
-                fontSize={FONT_SIZES.SMALL}
-                align="right"
-                color={COLORS.GREY.T500.hex}
-              >
-                Mot de passe oublié
-              </Text>
+        <Page p={4}>
+          <Heading pt={"43px"} size="800">
+            Jobbi
+          </Heading>
+          <Flex
+            justifyContent="center"
+            direction="column"
+            alignItems="center"
+            flexGrow={1}
+          >
+            <Heading size="1000" mb={"52px"}>
+              Bienvenue 👋
+            </Heading>
+            <Stack spacing={4} width="full">
+              <InputField placeholder="E-mail" name="email" />
+              <Stack>
+                <InputField placeholder="Mot de passe" name="password" />
+                <Text
+                  onClick={handleForgotPassword}
+                  fontSize={FONT_SIZES.SMALL}
+                  align="right"
+                  color={COLORS.GREY.T500.hex}
+                >
+                  Mot de passe oublié
+                </Text>
+              </Stack>
+              <Button text="Se connecter" />
             </Stack>
-            <Button text="Se connecter" />
-          </Stack>
-          <Flex onClick={handleSignUp} justify="center" mt={4}>
-            <Text>S'inscrire</Text>
+            <Flex onClick={handleSignUp} justify="center" mt={4}>
+              <Text>S'inscrire</Text>
+            </Flex>
+            <Box h={"1px"} backgroundColor={"#E1E1E1"} mt={"21px"} w="80%" />
+            <Box marginTop={"21px"}>
+              <Image
+                src={"/assets/images/apple.png"}
+                width={"48px"}
+                height={"48px"}
+              />
+            </Box>
           </Flex>
+          <Heading pb={"43px"} visibility="hidden" size="800">
+            Jobbi
+          </Heading>
         </Page>
       </Form>
     </Formik>

@@ -3,6 +3,10 @@ export const typo = {
         fontSize: '10px',
         fontWeight: '700'
     },
+    headline300: {
+        fontSize: '12px',
+        fontWeight: '400'
+    },
     headline500: {
         fontSize: '14px',
         fontWeight: '600',
@@ -23,6 +27,14 @@ export const typo = {
         fontSize: "30px",
         fontWeight: "700"
     },
+    headline1000: {
+        fontSize: "32px",
+        fontWeight: "600"
+    },
+    paragraph100: {
+        fontSize: "14px",
+        fontWeight: "normal"
+    }
 
 }
 
