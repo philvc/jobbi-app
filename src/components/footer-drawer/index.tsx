@@ -6,8 +6,8 @@ import { DrawerFooter } from "@chakra-ui/modal";
 
 interface IDrawerFooter {
   onClose: () => void;
-  hasDelete: boolean;
-  handleDelete: () => void;
+  hasDelete?: boolean;
+  handleDelete?: () => void;
 }
 
 export default function SearchDrawerFooter({
