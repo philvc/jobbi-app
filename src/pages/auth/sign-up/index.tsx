@@ -66,7 +66,7 @@ export default function SignIn() {
           />
           <Flex marginTop={20} flexGrow={1} direction="column">
             <Heading size="900">S'inscrire 🎉</Heading>
-            <Heading size="300" color={"#818080"}>
+            <Heading mt={2} size="300" color={"#818080"}>
               Créé ton compte sur Jobbi et aide tes amis à trouver un nouveau
               job de rêve !{" "}
             </Heading>
