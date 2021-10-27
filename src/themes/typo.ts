@@ -34,6 +34,10 @@ export const typo = {
     paragraph100: {
         fontSize: "14px",
         fontWeight: "normal"
+    },
+    paragraph200: {
+        fontSize: "12px",
+        fontWeight: "600"
     }
 
 }

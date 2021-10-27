@@ -51,7 +51,7 @@ export default function ProfileDrawer({ isOpen, onClose }) {
     // refetch user
     await refetch();
 
-    router.push("/home/profile");
+    onClose();
   }
 
   return (
