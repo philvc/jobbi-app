@@ -42,7 +42,8 @@ export const QuestItem = ({ quest }: QuestItemProps) => {
       px={2}
       py={4}
       minW={"185px"}
-      minH={"177px"}
+      w={"185px"}
+      h={"177px"}
     >
       <Flex direction="column" justifyContent="space-between" w="100%" h="100%">
         <Box>

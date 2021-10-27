@@ -1,8 +1,17 @@
-import { Box, Button, Flex, Heading, Stack, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
 import { useGetFriendshipsBySearchId } from "../../../../services/friendships/friendships";
 import { capitalize } from "../../../../utils/capitalize";
+import Wallet from "../../../shared/icons/wallet";
 
 const Invitations = () => {
   // Attributes
@@ -27,6 +36,8 @@ const Invitations = () => {
           py={4}
           minW={"185px"}
           minH={"177px"}
+          width={"185px"}
+          height={"177px"}
         >
           <Flex
             direction="column"
@@ -35,14 +46,42 @@ const Invitations = () => {
             h="100%"
           >
             <Box>
-              <Flex>
+              <Flex alignItems="center">
+                <Avatar
+                  color={"white"}
+                  backgroundColor={"#00CC9D"}
+                  width="25px"
+                  height="25px"
+                  size="xs"
+                  fontWeight="700"
+                  name="phi s"
+                  mr={2}
+                />
                 <Heading id="title" noOfLines={2} size="600">
                   {capitalize("'sdfsdf")}
                 </Heading>
               </Flex>
-              <Text mt={2} size="100" noOfLines={3}>
-                {"sfsdqfq"}
-              </Text>
+            </Box>
+            <Box
+              py={2}
+              px={2}
+              h={"50px"}
+              borderRadius={"16px"}
+              backgroundColor="#EBF3F5"
+            >
+              <Flex alignItems="center">
+                {/* <Wallet
+                  width="30px"
+                  height="30px"
+                  style={{
+                    marginLeft: "8px",
+                    marginRight: "4px",
+                  }}
+                /> */}
+                <Text size="200" fontWeight="500" noOfLines={2}>
+                  {"sfsdqfq sdfkljs msqldjfksq m qsjkf mlqskjdf mslqjfqsl mk"}
+                </Text>
+              </Flex>
             </Box>
             <Stack direction="row" spacing={4}>
               <Button
