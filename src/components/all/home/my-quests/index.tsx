@@ -34,7 +34,7 @@ export const MyQuests = () => {
         </Flex>
       </Box>
       <Skeleton isLoaded={!isLoading}>
-        <Stack direction="row" spacing={2} mt={4} mb={6} overflow="auto">
+        <Stack direction="row" spacing={2} mt={4} mb={6} pr={4} overflow="auto">
           {data?.map((search) => {
             return <QuestItem quest={search} />;
           })}

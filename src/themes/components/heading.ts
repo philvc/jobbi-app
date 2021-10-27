@@ -6,6 +6,7 @@ export const Heading = {
         '900': ({theme}) => theme.typo?.headline900,
         '800': ({theme}) => theme.typo?.headline800,
         '700': ({theme}) => theme.typo?.headline700,
+        '650': ({theme}) => theme.typo?.headline650,
         '600': ({theme}) => theme.typo?.headline600,
         '500': ({theme}) => theme.typo?.headline500,
         '400': ({theme}) => theme.typo?.headline400,

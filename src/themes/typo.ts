@@ -15,6 +15,10 @@ export const typo = {
         fontSize: '16px',
         fontWeight: '600',
     },
+    headline650: {
+        fontSize: '16px',
+        fontWeight: '700',
+    },
     headline700: {
         fontSize: "18px",
         fontWeight: '500',
@@ -37,6 +41,10 @@ export const typo = {
     },
     paragraph200: {
         fontSize: "12px",
+        fontWeight: "600"
+    },
+    paragraph300: {
+        fontSize: "10px",
         fontWeight: "600"
     }
 

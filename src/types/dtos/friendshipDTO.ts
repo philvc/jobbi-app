@@ -13,15 +13,15 @@ Schemes: [http, https]
  */
 export interface FriendshipDTO {
   /** The email */
-  email: string;
+  email?: string;
   /** The firstName */
   firstName?: string;
   /** The id */
-  id: number;
+  id?: number;
   /** The lastName */
-  lastName: string;
+  lastName?: string;
   /** The searchId */
-  searchId: number;
+  searchId?: number;
   /** The state */
   state?: number;
   /** The userId */

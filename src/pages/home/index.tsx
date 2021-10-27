@@ -14,6 +14,7 @@ import HomeTopBar from "./topbar";
 import { COLORS } from "../../constants/colors";
 import { QuestItem } from "../../components/all/home/my-quests/quest-item";
 import { MyQuests } from "../../components/all/home/my-quests";
+import Invitations from "../../components/all/home/invitations";
 
 export default function Home() {
   // Attributes
@@ -45,10 +46,7 @@ export default function Home() {
         <Heading size="800">Les quêtes de mes amis</Heading>
         <Stack direction="row" spacing={2}></Stack>
       </Box>
-      <Box pl={4}>
-        <Heading size="800">Mes invitations</Heading>
-        <Stack direction="row" spacing={2}></Stack>
-      </Box>
+      <Invitations />
     </Page>
   );
 }

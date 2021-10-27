@@ -22,6 +22,7 @@ import SearchDrawer from "../../../../components/quest-drawer";
 import { Button, Heading, Text } from "@chakra-ui/react";
 import { SectionContainer } from "../../../../components/all/quest/section-container";
 import { AddUser } from "../../../../components/shared/icons/add-user";
+import QuestFriendship from "../../../../components/all/quest/friendships";
 
 export default function Quests() {
   // Attributes
@@ -33,11 +34,7 @@ export default function Quests() {
     onOpen: openSearch,
     onClose: closeSearch,
   } = useDisclosure();
-  const {
-    isOpen: isNewFriendOpen,
-    onOpen: openNewFriend,
-    onClose: closeNewFriend,
-  } = useDisclosure();
+
   const {
     isOpen: isNewOffreOpen,
     onOpen: openNewOffre,
@@ -99,25 +96,7 @@ export default function Quests() {
             <Heading size="800">Description</Heading>
             <Text size="100">{data.description}</Text>
           </SectionContainer>
-          <SectionContainer>
-            <Flex justify="space-between" align="center" mr={2}>
-              <Heading size="800">Amis</Heading>
-              <Cross
-                onClick={openNewFriend}
-                height={16}
-                width={16}
-                transform="rotate(45)"
-              />
-            </Flex>
-            <Stack direction="row">
-              <Avatar name="Tahir Bashir" />
-              <Avatar name="Maxime Denuit" />
-            </Stack>
-            <Button mt="10px">
-              <AddUser style={{ marginRight: "14px" }} fill={"white"} />
-              <Text>Trouve-moi des potes</Text>
-            </Button>
-          </SectionContainer>
+          <QuestFriendship />
           <Stack>
             <Flex justify="space-between" align="center" mr={2}>
               <Heading size="600">Offres</Heading>
@@ -198,7 +177,6 @@ export default function Quests() {
         })}
       </Box>
       <SearchDrawer isOpen={isSearchOpen} onClose={closeSearch} />
-      <FriendshipDrawer isOpen={isNewFriendOpen} onClose={closeNewFriend} />
       <OfferDrawer isOpen={isNewOffreOpen || offerId} onClose={closeNewOffre} />
       <CompanyDrawer
         isOpen={isNewCompanyOpen || companyId}
