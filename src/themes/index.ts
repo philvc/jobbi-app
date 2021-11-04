@@ -12,7 +12,6 @@ export const overrides = {
     components: {
         Heading,
         Text,
-        Button
     }
 }
 

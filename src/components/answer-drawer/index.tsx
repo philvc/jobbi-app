@@ -66,7 +66,6 @@ export default function AnswerDrawer({ isOpen, onClose, type }) {
   const description =
     o?.data?.description || c?.data?.description || n?.data?.description || "";
 
-  console.log("titel", title);
 
   function getAnswerType() {
     switch (type) {
@@ -95,7 +94,7 @@ export default function AnswerDrawer({ isOpen, onClose, type }) {
         offer.mutateAsync({
           searchId: questId as string,
           data: {
-            searchId: parseInt(questId as string),
+            searchId: questId as string,
             title: values.title,
             description: values.description,
             link: values.link,
@@ -106,7 +105,7 @@ export default function AnswerDrawer({ isOpen, onClose, type }) {
         company.mutateAsync({
           searchId: questId as string,
           data: {
-            searchId: parseInt(questId as string),
+            searchId: questId as string,
             title: values.title,
             description: values.description,
             link: values.link,
@@ -117,7 +116,7 @@ export default function AnswerDrawer({ isOpen, onClose, type }) {
         network.mutateAsync({
           searchId: questId as string,
           data: {
-            searchId: parseInt(questId as string),
+            searchId: questId as string,
             description: values.description,
             firstName: values.title,
           },

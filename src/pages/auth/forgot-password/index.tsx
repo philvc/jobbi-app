@@ -5,7 +5,6 @@ import { Box, Container, Flex, Heading, Stack } from "@chakra-ui/layout";
 import { useTranslation } from "react-i18next";
 import InputField from "../../../components/shared/form/input-field";
 import { Form, Formik, FormikContext } from "formik";
-import UserDTO from "../../../types/UserDTO";
 import ArrowDown from "../../../components/shared/icons/arrow-down";
 import { useSupabase } from "use-supabase";
 import { Button } from "@chakra-ui/react";

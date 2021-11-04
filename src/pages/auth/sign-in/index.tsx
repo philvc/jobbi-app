@@ -7,14 +7,17 @@ import Paragraph from "../../../components/shared/typography/paragraph";
 import InputField from "../../../components/shared/form/input-field";
 import { Form, Formik, FormikContext } from "formik";
 import Button from "../../../components/shared/actions/button";
-import UserDTO from "../../../types/UserDTO";
-import ArrowDown from "../../../components/shared/icons/arrow-down";
 import { useSupabase } from "use-supabase";
 import { useToast } from "@chakra-ui/toast";
 import { FONT_SIZES } from "../../../constants/typography";
 import { COLORS } from "../../../constants/colors";
 import { Heading } from "@chakra-ui/react";
 import Image from "next/image";
+
+interface SignInForm {
+  email: string,
+  password: string,
+}
 
 export default function SignIn() {
   // Attributes
@@ -24,7 +27,7 @@ export default function SignIn() {
   const toast = useToast();
 
   // Function
-  async function handleSubmit(data: UserDTO) {
+  async function handleSubmit(data: SignInForm) {
     const signInResponse = await auth.signIn({
       email: data.email,
       password: data.password,
@@ -49,8 +52,8 @@ export default function SignIn() {
   }
 
   return (
-    <Formik<UserDTO>
-      initialValues={{ firstName: "", lastName: "", email: "", password: "" }}
+    <Formik<SignInForm>
+      initialValues={{  email: "", password: "" }}
       onSubmit={handleSubmit}
     >
       <Form>

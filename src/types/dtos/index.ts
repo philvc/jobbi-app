@@ -12,3 +12,4 @@ export * from './networkDTOBody';
 export * from './searchDTOBody';
 export * from './companyDTOBody';
 export * from './offerDTOBody';
+export * from './getFriendshipsBySearchIdParams';

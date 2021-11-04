@@ -15,10 +15,8 @@ export const QuestItem = ({ quest }: QuestItemProps) => {
   const router = useRouter();
   const [titleHeight, setTitleHeight] = useState<number>();
   const { data: friendships, isLoading } = useGetFriendshipsBySearchId(
-    quest?.id.toString() ?? "",
-    {
-      query: { enabled: !!quest?.id },
-    }
+    quest?.id?? "",
+    {status: 1}, {query: {enabled: !!quest?.id}}
   );
   const random_hex_color_code = () => {
     let n = (Math.random() * 0xfffff * 1000000).toString(16);
@@ -28,7 +26,6 @@ export const QuestItem = ({ quest }: QuestItemProps) => {
   // Effect
   useEffect(() => {
     const height = document.getElementById("title").clientWidth;
-    console.log("title height", titleHeight);
     setTitleHeight(height);
   }, []);
 

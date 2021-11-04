@@ -14,6 +14,7 @@ import Email from "../../../components/shared/icons/mail";
 import { capitalize } from "../../../utils/capitalize";
 import Profile from "../../../components/shared/icons/profile";
 import Logout from "../../../components/shared/icons/logout";
+import { useSupabase } from "use-supabase";
 
 export default function Home() {
   // Attributes
@@ -21,7 +22,12 @@ export default function Home() {
   const { t } = useTranslation();
   const { data: user, isLoading, refetch } = useGetUserBySub();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { auth } = useSupabase();
 
+  // handlers
+  async function handleLogout() {
+    await auth.signOut();
+  }
   return (
     <Skeleton isLoaded={!isLoading}>
       <Page p={4}>
@@ -83,7 +89,7 @@ export default function Home() {
               </Flex>
             </Box>
           </Box>
-          <Box>
+          <Box onClick={handleLogout}>
             <Flex direction="row" alignItems="center">
               <Logout />
               <Heading ml={2} fontWeight="700" size="600">

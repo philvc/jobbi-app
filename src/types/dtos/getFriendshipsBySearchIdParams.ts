@@ -7,9 +7,5 @@
 Schemes: [http, https]
  * OpenAPI spec version: 1.0.0
  */
-import type { SearchDTO } from './searchDTO';
 
-/**
- * search
- */
-export type SearchDTOBody = SearchDTO;
+export type GetFriendshipsBySearchIdParams = { status: number };

@@ -3,7 +3,7 @@ import { createContext, useContext } from "react";
 import { useGetUserBySub } from "../../services/default/default";
 
 interface IUserContext {
-  id?: number;
+  id?: string;
   email?: string;
   fistName?: string;
   lastName?: string;
@@ -19,7 +19,6 @@ export const UserProvider = (props: BoxProps) => {
   // Queries
   const { data: user, isLoading } = useGetUserBySub();
 
-  console.log("user", user);
 
   return (
     <UserContext.Provider

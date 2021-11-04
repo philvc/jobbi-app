@@ -4,13 +4,19 @@ import React from "react";
 import { Box, Container, Flex, Heading, Stack } from "@chakra-ui/layout";
 import InputField from "../../../components/shared/form/input-field";
 import { Form, Formik, FormikContext } from "formik";
-import UserDTO from "../../../types/UserDTO";
 import ArrowDown from "../../../components/shared/icons/arrow-down";
 import { useSupabase } from "use-supabase";
 import { useToast } from "@chakra-ui/toast";
 import { useCreateUser } from "../../../services/default/default";
 import { Button } from "@chakra-ui/button";
-import { useTheme } from "@emotion/react";
+import { UserDTO } from "../../../types/dtos/userDTO";
+
+interface SignUpForm {
+  password: string,
+  email: string,
+  confirmPassword: string
+
+}
 
 export default function SignIn() {
   // Attributes
@@ -20,7 +26,7 @@ export default function SignIn() {
   const { mutateAsync: createUser } = useCreateUser();
 
   // Function
-  async function handleSubmit(data: UserDTO) {
+  async function handleSubmit(data: SignUpForm) {
     const signUpResponse = await auth.signUp({
       email: data.email,
       password: data.password,
@@ -51,8 +57,8 @@ export default function SignIn() {
   }
 
   return (
-    <Formik<UserDTO>
-      initialValues={{ firstName: "", lastName: "", email: "", password: "" }}
+    <Formik<SignUpForm>
+      initialValues={{ email: "", password: "",confirmPassword:""  }}
       onSubmit={handleSubmit}
     >
       <Form>
@@ -79,7 +85,7 @@ export default function SignIn() {
               />
               <InputField
                 placeholder="Confirmer mot de passe"
-                name="confirm-password"
+                name="confirmPassword"
                 type="password"
               />
             </Stack>

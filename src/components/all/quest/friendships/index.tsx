@@ -26,6 +26,7 @@ const QuestFriendship = () => {
   const { questId } = router.query;
   const { data: friendships, isLoading } = useGetFriendshipsBySearchId(
     questId as string,
+    {status: 1},
     {
       query: { enabled: !!questId },
     }
