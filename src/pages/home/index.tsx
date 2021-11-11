@@ -2,51 +2,32 @@ import Page from "../../components/shared/layout/page";
 import { useRouter } from "next/router";
 import React from "react";
 import { Heading, Text } from "@chakra-ui/react";
-import { Box, Container, Flex, Stack } from "@chakra-ui/layout";
-import { Skeleton } from "@chakra-ui/skeleton";
+import { Box, Flex, Stack } from "@chakra-ui/layout";
 import { useTranslation } from "react-i18next";
-import User from "../../components/shared/icons/user";
-import Cross from "../../components/shared/icons/cross";
-import { useGetSearches } from "../../services/searches/searches";
-import { useDisclosure } from "@chakra-ui/hooks";
-import SearchDrawer from "../../components/quest-drawer";
 import HomeTopBar from "./topbar";
 import { COLORS } from "../../constants/colors";
-import { QuestItem } from "../../components/all/home/my-quests/quest-item";
 import { MyQuests } from "../../components/all/home/my-quests";
 import Invitations from "../../components/all/home/invitations";
+import getAuthRedirect from "../../utils/getAuthRedirect";
+import { GetServerSideProps } from "next";
+import { useSupabase } from "use-supabase";
+import supabase from "@supabase/supabase-js";
+import { createClient } from "@supabase/supabase-js";
+import { HomeHeader } from "../../components/all/home/header";
+import FriendQuests from "../../components/all/home/friend-quests";
 
 export default function Home() {
   // Attributes
   const router = useRouter();
   const { t } = useTranslation();
 
-  function handleQuestClicked(id: number) {
-    router.push(`/home/quests/${id}`);
-  }
-
   return (
     <Page>
       <HomeTopBar />
-      <Box pt={"118px"} mb={6} pl={4}>
-        <Flex>
-          <Text size="20px" as="span">
-            {"Prêt à trouver ton "}
-          </Text>
-          <Text size="20px" ml={"4px"} color={COLORS.GREEN.T800.hex} as="span">
-            {" job de rêve"}
-          </Text>
-          <Text size="20px" ml={"4px"} as="span">
-            ?
-          </Text>
-        </Flex>
-      </Box>
+      <HomeHeader />
       <MyQuests />
-      <Box pl={4} mb={6}>
-        <Heading size="800">Les quêtes de mes amis</Heading>
-        <Stack direction="row" spacing={2}></Stack>
-      </Box>
-      <Invitations />
+      <FriendQuests />
+      {/* <Invitations /> */}
     </Page>
   );
 }

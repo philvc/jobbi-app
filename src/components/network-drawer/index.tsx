@@ -185,7 +185,6 @@ export default function NetworkDrawer({ isOpen, onClose }) {
                       placeholder="Description"
                       name="description"
                     />
-                    <InputField placeholder="Lien" name="link" />
                   </Stack>
                 </Stack>
               </DrawerBody>

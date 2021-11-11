@@ -12,9 +12,9 @@ import {
 } from 'msw'
 import faker from 'faker'
 
-export const getGetFriendshipsBySearchIdMock = () => ([...Array(faker.datatype.number({min: 1, max: 10}))].map(() => ({email: faker.random.word(), firstName: faker.random.word(), id: faker.random.word(), lastName: faker.random.word(), searchId: faker.random.word(), state: faker.datatype.number(), userId: faker.random.word()})))
+export const getGetFriendshipsBySearchIdMock = () => ([...Array(faker.datatype.number({min: 1, max: 10}))].map(() => ({id: faker.random.word(), searchId: faker.random.word(), state: faker.datatype.number(), userId: faker.random.word()})))
 
-export const getAddFriendshipMock = () => ({email: (() => faker.internet.email())(), firstName: (() => faker.name.firstName())(), id: faker.random.word(), lastName: (() => faker.name.lastName())(), searchId: faker.random.word(), state: faker.datatype.number(), userId: faker.random.word()})
+export const getAddFriendshipMock = () => ({id: faker.random.word(), searchId: faker.random.word(), state: faker.datatype.number(), userId: faker.random.word()})
 
 export const getFriendshipsMSW = () => [
 rest.get('*/searches/:searchId/friendships', (req, res, ctx) => {

@@ -12,14 +12,8 @@ Schemes: [http, https]
  * An friendship
  */
 export interface FriendshipDTO {
-  /** The email */
-  email?: string;
-  /** The firstName */
-  firstName?: string;
   /** The id */
   id?: string;
-  /** The lastName */
-  lastName?: string;
   /** The searchId */
   searchId?: string;
   /** The state */

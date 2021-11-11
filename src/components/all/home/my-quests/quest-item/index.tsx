@@ -1,4 +1,4 @@
-import { Avatar, Box, Flex, Heading, Text } from "@chakra-ui/react";
+import { Avatar, Box, BoxProps, Flex, Heading, Text } from "@chakra-ui/react";
 import { capitalize } from "lodash";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -6,18 +6,21 @@ import { useGetFriendshipsBySearchId } from "../../../../../services/friendships
 import { SearchDTO } from "../../../../../types/dtos";
 import PinsButton from "../../../../shared/icons/pins-button";
 
-type QuestItemProps = {
+type QuestItemProps = BoxProps & {
   quest: SearchDTO;
 };
 
-export const QuestItem = ({ quest }: QuestItemProps) => {
+export const QuestItem = ({ quest, ...rest }: QuestItemProps) => {
   // Attributes
   const router = useRouter();
   const [titleHeight, setTitleHeight] = useState<number>();
   const { data: friendships, isLoading } = useGetFriendshipsBySearchId(
-    quest?.id?? "",
-    {status: 1}, {query: {enabled: !!quest?.id}}
+    quest?.id ?? "",
+    { status: 1 },
+    { query: { enabled: !!quest?.id } }
   );
+
+  // random color for card icon
   const random_hex_color_code = () => {
     let n = (Math.random() * 0xfffff * 1000000).toString(16);
     return "#" + n.slice(0, 6);
@@ -41,6 +44,7 @@ export const QuestItem = ({ quest }: QuestItemProps) => {
       minW={"185px"}
       w={"185px"}
       h={"177px"}
+      {...rest}
     >
       <Flex direction="column" justifyContent="space-between" w="100%" h="100%">
         <Box>
@@ -49,7 +53,7 @@ export const QuestItem = ({ quest }: QuestItemProps) => {
               style={{ marginRight: "8px" }}
               fill={random_hex_color_code()}
             />
-            <Heading id="title" noOfLines={2} size="600">
+            <Heading lineHeight="normal" id="title" noOfLines={2} size="600">
               {capitalize(quest?.title)}
             </Heading>
           </Flex>

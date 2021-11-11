@@ -13,8 +13,8 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const queryClientRef = React.useRef();
   const supabase = createClient(
-    "https://ldmvmkkhldzpwfryrkvq.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYzNDA3OTMwNSwiZXhwIjoxOTQ5NjU1MzA1fQ.AEoeEKRFe45nI-ZgMJLuUdqoP8Ut-Ii88CSHQAzyiLA"
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_KEY
   );
 
   if (!queryClientRef.current) {

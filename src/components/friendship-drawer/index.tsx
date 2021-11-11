@@ -26,24 +26,28 @@ export default function FriendshipDrawer({ isOpen, onClose }) {
   const { questId } = router.query;
 
   // Handlers
-  async function handleSubmit() {
+  async function handleSubmit(values: FriendshipForm) {
+
+    // Send invitation email
     await auth.signIn(
-      { email: "philvancaloen+4@gmail.com" },
+      { email:  values.email},
       {
         redirectTo: `http://localhost:3000/auth/reset-password?questId=${questId}`,
       }
     );
+
+    onClose();
   }
 
   return (
-    <Formik<FriendshipForm>
-      initialValues={{ email: "" }}
-      onSubmit={handleSubmit}
-    >
-      <Form>
-        <Drawer isOpen={isOpen} size="full" onClose={onClose}>
-          <DrawerOverlay />
-          <DrawerContent>
+    <Drawer isOpen={isOpen} size="full" onClose={onClose}>
+      <DrawerOverlay />
+      <DrawerContent>
+        <Formik<FriendshipForm>
+          initialValues={{ email: "" }}
+          onSubmit={handleSubmit}
+        >
+          <Form>
             <DrawerHeader>
               <Heading>Ajouter un ami</Heading>
             </DrawerHeader>
@@ -70,14 +74,14 @@ export default function FriendshipDrawer({ isOpen, onClose }) {
                 bg={COLORS.BLUE.T500.hex}
                 color={COLORS.WHITE.hex}
                 w="full"
-                onClick={() => handleSubmit()}
+                type="submit"
               >
                 Sauver
               </Button>
             </DrawerFooter>
-          </DrawerContent>
-        </Drawer>
-      </Form>
-    </Formik>
+          </Form>
+        </Formik>
+      </DrawerContent>
+    </Drawer>
   );
 }

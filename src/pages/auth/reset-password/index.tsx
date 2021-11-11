@@ -22,7 +22,8 @@ export default function SignIn() {
   const { auth } = useSupabase();
   const { t } = useTranslation();
   const { questId } = router.query;
-
+  console.log("query", router.pathname);
+  
   const access_token = router.asPath
     ?.split("#access_token=")[1]
     ?.split("&expires_in=")[0];
