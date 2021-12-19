@@ -160,6 +160,9 @@ export const COLORS: Colors = {
 		T600: {
 			hex: "#242323",
 		},
+		T800: {
+			hex: "#393360",
+		},
 		T500: {
 			hex: "#000F08",
 		},
