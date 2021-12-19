@@ -46,7 +46,7 @@ const QuestFriendship = () => {
       <Stack direction="row">
         {friendships &&
           friendships.map((friend) => (
-            <Avatar name={`${friend.firstName} ${friend.lastName}`} />
+            <Avatar name={`${"friend.firstName"} ${"friend.lastName"}`} />
           ))}
       </Stack>
       <Button mt="10px">

@@ -70,7 +70,7 @@ export const QuestItem = ({ quest, ...rest }: QuestItemProps) => {
                     key={friendship.id}
                     color={"white"}
                     backgroundColor={"#00CC9D"}
-                    name={`${friendship.firstName} ${friendship.lastName}`}
+                    name={`${"firstname"} ${"lastname"}`}
                     width="20px"
                     height="20px"
                     size="xs"

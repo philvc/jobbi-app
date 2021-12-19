@@ -74,7 +74,6 @@ export default function SignIn() {
         data: {
           userId: user.id,
           searchId: questId as string,
-          email: user.email,
           state: 1,
         },
       });

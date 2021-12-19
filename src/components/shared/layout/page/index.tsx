@@ -7,7 +7,7 @@ export default function Page({ children, ...rest }: BoxProps) {
       direction="column"
       w={"full"}
       h={"100vh"}
-      background={COLORS.BACKGROUND.hex}
+      background={"#F8F9FC"}
       display="flex"
       {...rest}
     >
