@@ -6,9 +6,10 @@ import QuestCardTags from "./tag";
 
 interface QuestCardProps {
   index?: number;
+  isFriend?: boolean;
 }
 
-const QuestCard = ({ index }: QuestCardProps) => {
+const QuestCard = ({ index, isFriend = false }: QuestCardProps) => {
   return (
     <Box
       background={"white"}
@@ -18,7 +19,7 @@ const QuestCard = ({ index }: QuestCardProps) => {
       }
       paddingY={"17px"}
       padding={"15px"}
-      width={"269px"}
+      minWidth={"269px"}
       height={"180px"}
     >
       <Flex
@@ -27,7 +28,7 @@ const QuestCard = ({ index }: QuestCardProps) => {
         justifyContent={"space-between"}
       >
         <Box>
-          <QuestCardHeader />
+          <QuestCardHeader isFriend={isFriend} />
           <Text
             mt={"20px"}
             color={COLORS.BLACK.T800.hex}

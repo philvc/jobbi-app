@@ -9,7 +9,7 @@ const HomeTopBar = () => {
   // Attributes
 
   return (
-    <Box width="full" height={"28%"}>
+    <Box width="full" minH={"28%"} position={"relative"}>
       <Box
         boxShadow="0px 2px 8px rgba(40, 41, 61, 0.04), 0px 26px 34px rgba(96, 97, 112, 0.06)"
         bg={COLORS.WHITE.hex}

@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <Page>
       <HomeTopBar />
-      <Box>
+      <Box overflow={"scroll"}>
         <SharedQuestList />
         <PublicQuestList />
       </Box>

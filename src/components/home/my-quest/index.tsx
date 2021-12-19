@@ -12,9 +12,12 @@ const MyQuest = () => {
       minH={"167px"}
       mt={"-120px"}
       w={"80%"}
-      marginX={"auto"}
       paddingX={"20px"}
       paddingY={"24px"}
+      position={"absolute"}
+      right={0}
+      left={0}
+      marginX={"auto"}
     >
       <Box>
         <Text
@@ -35,7 +38,11 @@ const MyQuest = () => {
           {"Web Developer FullStack"}
         </Heading>
       </Box>
-      <Flex alignItems={"center"} direction={"row"} justifyContent={"space-between"}>
+      <Flex
+        alignItems={"center"}
+        direction={"row"}
+        justifyContent={"space-between"}
+      >
         <MyQuestParticipants participants={participants} />
         <MyQuestTag />
       </Flex>
