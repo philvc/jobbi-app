@@ -13,7 +13,7 @@ const TopbarUser = () => {
   return (
     <Flex direction={"row"} alignItems={"center"}>
       <Box borderRadius={"10px"} bgColor={"#5D44F2"}>
-        <OldAvatar />
+        <OldAvatar width={"40px"} height={"40px"} />
       </Box>
       <Flex ml={"10px"} direction={"column"} justifyContent={"center"}>
         <Paragraph size={12} weight={400} color={COLORS.GREY.T500}>

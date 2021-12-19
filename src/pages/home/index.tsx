@@ -15,6 +15,7 @@ import supabase from "@supabase/supabase-js";
 import { createClient } from "@supabase/supabase-js";
 import { HomeHeader } from "../../components/all/home/header";
 import FriendQuests from "../../components/all/home/friend-quests";
+import MyQuest from "../../components/home/my-quest";
 
 export default function Home() {
   // Attributes
@@ -24,9 +25,7 @@ export default function Home() {
   return (
     <Page>
       <HomeTopBar />
-      <HomeHeader />
-      <MyQuests />
-      <FriendQuests />
+      {/* <FriendQuests /> */}
       {/* <Invitations /> */}
     </Page>
   );

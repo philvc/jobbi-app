@@ -1,12 +1,13 @@
-export const OldAvatar = () => {
+import React from "react";
+
+export const OldAvatar = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
-      width="40"
-      height="40"
       viewBox="0 0 40 40"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
+      {...props}
     >
       <rect width="40" height="40" fill="url(#pattern0)" />
       <defs>
