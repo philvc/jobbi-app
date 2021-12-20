@@ -4,7 +4,7 @@ import PublicQuestBox from "./quest-box";
 
 const PublicQuestList = () => {
   return (
-    <Box>
+    <Box background={"#F8F9FC"} pb={"200px"}>
       <Heading ml={"24px"} mb={"20px"} size={"800"} color={"#393360"}>
         Public Quest
       </Heading>

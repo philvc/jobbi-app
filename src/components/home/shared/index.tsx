@@ -4,7 +4,7 @@ import SharedQuestBox from "./quest-box";
 
 const SharedQuestList = () => {
   return (
-    <Box mt={"94px"}>
+    <Box background={"#F8F9FC"} mt={"94px"}>
       <Heading ml={"24px"} mb={"20px"} size={"800"} color={"#393360"}>
         Shared Quest
       </Heading>
