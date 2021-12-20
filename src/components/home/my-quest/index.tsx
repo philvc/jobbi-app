@@ -10,14 +10,9 @@ const MyQuest = () => {
       direction={"column"}
       justifyContent={"space-between"}
       minH={"167px"}
-      mt={"-120px"}
-      w={"80%"}
       paddingX={"20px"}
       paddingY={"24px"}
-      position={"absolute"}
-      right={0}
-      left={0}
-      marginX={"auto"}
+      mt={"-107px"}
     >
       <Box>
         <Text

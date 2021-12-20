@@ -9,16 +9,17 @@ const HomeTopBar = () => {
   // Attributes
 
   return (
-    <Box width="full" minH={"28%"} position={"relative"}>
-      <Box
-        boxShadow="0px 2px 8px rgba(40, 41, 61, 0.04), 0px 26px 34px rgba(96, 97, 112, 0.06)"
-        bg={COLORS.WHITE.hex}
-        borderBottomRadius={"24px"}
-        height={"100%"}
-      >
+    <Box
+      width="full"
+      minH={"255px"}
+      pt={"4rem"}
+      px={"24px"}
+      boxShadow="0px 2px 8px rgba(40, 41, 61, 0.04), 0px 26px 34px rgba(96, 97, 112, 0.06)"
+      bg={COLORS.WHITE.hex}
+      borderBottomRadius={"24px"}
+    >
+      <Box height={"100%"}>
         <Flex
-          pt={"20px"}
-          px={"24px"}
           direction="row"
           justifyContent={"space-between"}
           alignItems={"center"}

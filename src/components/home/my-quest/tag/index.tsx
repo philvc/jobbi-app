@@ -14,7 +14,7 @@ const MyQuestTag = () => {
       alignItems={"center"}
       bgColor={"rgba(255, 255, 255, 0.4)"}
     >
-      <TagIcon fill="white" width={"10px"} height={"14px"} />
+      <TagIcon style={{maxHeight: "28px"}} fill="white" width={"10px"} height={"14px"} />
       <Text ml={"7px"} fontWeight={500} fontSize={12} color={COLORS.WHITE.hex}>
         {capitalize("development")}
       </Text>
