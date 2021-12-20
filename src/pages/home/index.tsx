@@ -6,6 +6,7 @@ import HomeTopBar from "./topbar";
 import SharedQuestList from "../../components/home/shared";
 import { Box } from "@chakra-ui/react";
 import PublicQuestList from "../../components/home/public";
+import Navbar from "../../components/shared/navbar";
 
 export default function Home() {
   // Attributes
@@ -13,14 +14,13 @@ export default function Home() {
   const { t } = useTranslation();
 
   return (
-    <Page>
+    <Page overflow={"scrolls"}>
       <HomeTopBar />
-      <Box overflow={"scroll"}>
-        <SharedQuestList />
-        <PublicQuestList />
-      </Box>
+      <SharedQuestList />
+      <PublicQuestList />
       {/* <FriendQuests /> */}
       {/* <Invitations /> */}
+      <Navbar />
     </Page>
   );
 }

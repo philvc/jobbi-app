@@ -8,7 +8,7 @@ const PublicQuestList = () => {
       <Heading ml={"24px"} mb={"20px"} size={"800"} color={"#393360"}>
         Public Quest
       </Heading>
-      <Flex direction={"column"} overflow={"scroll"}>
+      <Flex direction={"column"}>
         <PublicQuestBox mx={"24px"} mb={"20px"}>
           <QuestCard />
         </PublicQuestBox>
