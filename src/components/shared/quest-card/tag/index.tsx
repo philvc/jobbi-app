@@ -15,6 +15,7 @@ const QuestCardTags = () => {
       bgColor={"#6772E5"}
       width={"fit-content"}
       alignSelf={"flex-end"}
+      maxH={"28px"}
     >
       <TagIcon fill="white" width={"10px"} height={"14px"} />
       <Text

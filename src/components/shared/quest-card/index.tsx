@@ -40,7 +40,7 @@ const QuestCard = ({ index, isFriend = false }: QuestCardProps) => {
         </Box>
         <QuestCardTags />
       </Flex>
-    </Box>
+    </Box> 
   );
 };
 
