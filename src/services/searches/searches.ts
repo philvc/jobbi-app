@@ -17,7 +17,12 @@ import {
 } from 'react-query'
 import type {
   SearchDTO,
-  SearchDTOBody
+  SearchDTOBody,
+  MySearchDTO,
+  FollowedSearchDTO,
+  SharedSearchDTO,
+  UserDTO,
+  GetSearchFriendshipsParams
 } from '../../types/dtos'
 import { customInstance } from '.././config'
 
@@ -25,41 +30,6 @@ type AsyncReturnType<
 T extends (...args: any) => Promise<any>
 > = T extends (...args: any) => Promise<infer R> ? R : any;
 
-
-/**
- * Return all searches
- * @summary Get all searches.
- */
-export const getSearches = (
-    
- ) => {
-      return customInstance<SearchDTO[]>(
-      {url: `/searches`, method: 'get'
-    },
-      );
-    }
-  
-
-export const getGetSearchesQueryKey = () => [`/searches`];
-
-    
-export const useGetSearches = <TData = AsyncReturnType<typeof getSearches>, TError = void>(
-  options?: { query?:UseQueryOptions<AsyncReturnType<typeof getSearches>, TError, TData>, }
-
-  ) => {
-
-  const {query: queryOptions} = options || {}
-
-  const queryKey = queryOptions?.queryKey ?? getGetSearchesQueryKey();
-  const queryFn: QueryFunction<AsyncReturnType<typeof getSearches>> = () => getSearches();
-
-  const query = useQuery<AsyncReturnType<typeof getSearches>, TError, TData>(queryKey, queryFn, queryOptions)
-
-  return {
-    queryKey,
-    ...query
-  }
-}
 
 /**
  * type id struct
@@ -93,6 +63,111 @@ export const addSearch = (
       return useMutation<AsyncReturnType<typeof addSearch>, TError, {data: SearchDTOBody}, TContext>(mutationFn, mutationOptions)
     }
     /**
+ * Return my search
+ * @summary Get my search.
+ */
+export const getMySearch = (
+    
+ ) => {
+      return customInstance<MySearchDTO>(
+      {url: `/searches/me`, method: 'get'
+    },
+      );
+    }
+  
+
+export const getGetMySearchQueryKey = () => [`/searches/me`];
+
+    
+export const useGetMySearch = <TData = AsyncReturnType<typeof getMySearch>, TError = void>(
+  options?: { query?:UseQueryOptions<AsyncReturnType<typeof getMySearch>, TError, TData>, }
+
+  ) => {
+
+  const {query: queryOptions} = options || {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetMySearchQueryKey();
+  const queryFn: QueryFunction<AsyncReturnType<typeof getMySearch>> = () => getMySearch();
+
+  const query = useQuery<AsyncReturnType<typeof getMySearch>, TError, TData>(queryKey, queryFn, queryOptions)
+
+  return {
+    queryKey,
+    ...query
+  }
+}
+
+/**
+ * Return my followed searches
+ * @summary Get my followed searches.
+ */
+export const getMyFollowedSearches = (
+    
+ ) => {
+      return customInstance<FollowedSearchDTO[]>(
+      {url: `/searches/public`, method: 'get'
+    },
+      );
+    }
+  
+
+export const getGetMyFollowedSearchesQueryKey = () => [`/searches/public`];
+
+    
+export const useGetMyFollowedSearches = <TData = AsyncReturnType<typeof getMyFollowedSearches>, TError = void>(
+  options?: { query?:UseQueryOptions<AsyncReturnType<typeof getMyFollowedSearches>, TError, TData>, }
+
+  ) => {
+
+  const {query: queryOptions} = options || {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetMyFollowedSearchesQueryKey();
+  const queryFn: QueryFunction<AsyncReturnType<typeof getMyFollowedSearches>> = () => getMyFollowedSearches();
+
+  const query = useQuery<AsyncReturnType<typeof getMyFollowedSearches>, TError, TData>(queryKey, queryFn, queryOptions)
+
+  return {
+    queryKey,
+    ...query
+  }
+}
+
+/**
+ * Return my shared searches
+ * @summary Get my shared searches.
+ */
+export const getMySharedSearches = (
+    
+ ) => {
+      return customInstance<SharedSearchDTO[]>(
+      {url: `/searches/shared`, method: 'get'
+    },
+      );
+    }
+  
+
+export const getGetMySharedSearchesQueryKey = () => [`/searches/shared`];
+
+    
+export const useGetMySharedSearches = <TData = AsyncReturnType<typeof getMySharedSearches>, TError = void>(
+  options?: { query?:UseQueryOptions<AsyncReturnType<typeof getMySharedSearches>, TError, TData>, }
+
+  ) => {
+
+  const {query: queryOptions} = options || {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetMySharedSearchesQueryKey();
+  const queryFn: QueryFunction<AsyncReturnType<typeof getMySharedSearches>> = () => getMySharedSearches();
+
+  const query = useQuery<AsyncReturnType<typeof getMySharedSearches>, TError, TData>(queryKey, queryFn, queryOptions)
+
+  return {
+    queryKey,
+    ...query
+  }
+}
+
+/**
  * type id struct
 Get search by id.
 Return search
@@ -160,4 +235,43 @@ export const modifySearch = (
 
       return useMutation<AsyncReturnType<typeof modifySearch>, TError, {searchId: string;data: SearchDTOBody}, TContext>(mutationFn, mutationOptions)
     }
+    /**
+ * type id struct
+Get friendships by search id.
+Return users
+ */
+export const getSearchFriendships = (
+    searchId: string,
+    params?: GetSearchFriendshipsParams,
+ ) => {
+      return customInstance<UserDTO>(
+      {url: `/searches/${searchId}/friendships`, method: 'get',
+        params,
+    },
+      );
+    }
+  
+
+export const getGetSearchFriendshipsQueryKey = (searchId: string,
+    params?: GetSearchFriendshipsParams,) => [`/searches/${searchId}/friendships`, ...(params ? [params]: [])];
+
     
+export const useGetSearchFriendships = <TData = AsyncReturnType<typeof getSearchFriendships>, TError = void>(
+ searchId: string,
+    params?: GetSearchFriendshipsParams, options?: { query?:UseQueryOptions<AsyncReturnType<typeof getSearchFriendships>, TError, TData>, }
+
+  ) => {
+
+  const {query: queryOptions} = options || {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetSearchFriendshipsQueryKey(searchId,params);
+  const queryFn: QueryFunction<AsyncReturnType<typeof getSearchFriendships>> = () => getSearchFriendships(searchId,params, );
+
+  const query = useQuery<AsyncReturnType<typeof getSearchFriendships>, TError, TData>(queryKey, queryFn, {enabled: !!(searchId), ...queryOptions})
+
+  return {
+    queryKey,
+    ...query
+  }
+}
+

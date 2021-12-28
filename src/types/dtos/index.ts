@@ -15,3 +15,8 @@ export * from './offerDTOBody';
 export * from './getFriendshipsBySearchIdParams';
 export * from './getUserFriendshipsParams';
 export * from './searchWithOwnerAndFriendsDTO';
+export * from './followedSearchDTO';
+export * from './sharedSearchDTO';
+export * from './getSearchFriendshipsParams';
+export * from './friendSearchDTO';
+export * from './mySearchDTO';

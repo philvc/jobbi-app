@@ -9,13 +9,19 @@ Schemes: [http, https]
  */
 
 /**
- * An search
+ * An shared search
  */
-export interface SearchDTO {
+export interface SharedSearchDTO {
+  /** Avatar url */
+  avatarUrl?: string;
   /** The description */
   description: string;
+  /** The firstName */
+  firstName?: string;
   /** The id */
   id?: string;
+  /** The lastName */
+  lastName?: string;
   /** The search tags */
   tags?: string[];
   /** The title */

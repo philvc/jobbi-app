@@ -9,13 +9,19 @@ Schemes: [http, https]
  */
 
 /**
- * An search
+ * An followed search
  */
-export interface SearchDTO {
+export interface FollowedSearchDTO {
+  /** Avatar url */
+  avatarUrl?: string;
   /** The description */
   description: string;
+  /** The firstName */
+  firstName?: string;
   /** The id */
   id?: string;
+  /** The lastName */
+  lastName?: string;
   /** The search tags */
   tags?: string[];
   /** The title */

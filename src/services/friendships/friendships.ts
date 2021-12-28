@@ -8,16 +8,12 @@ Schemes: [http, https]
  * OpenAPI spec version: 1.0.0
  */
 import {
-  useQuery,
   useMutation,
-  UseQueryOptions,
   UseMutationOptions,
-  QueryFunction,
   MutationFunction
 } from 'react-query'
 import type {
-  FriendshipDTO,
-  GetFriendshipsBySearchIdParams
+  FriendshipDTO
 } from '../../types/dtos'
 import { customInstance } from '.././config'
 
@@ -25,46 +21,6 @@ type AsyncReturnType<
 T extends (...args: any) => Promise<any>
 > = T extends (...args: any) => Promise<infer R> ? R : any;
 
-
-/**
- * type id struct
-Get friendships by searchId.
-Return friendship
- */
-export const getFriendshipsBySearchId = (
-    searchId: string,
-    params?: GetFriendshipsBySearchIdParams,
- ) => {
-      return customInstance<FriendshipDTO[]>(
-      {url: `/searches/${searchId}/friendships`, method: 'get',
-        params,
-    },
-      );
-    }
-  
-
-export const getGetFriendshipsBySearchIdQueryKey = (searchId: string,
-    params?: GetFriendshipsBySearchIdParams,) => [`/searches/${searchId}/friendships`, ...(params ? [params]: [])];
-
-    
-export const useGetFriendshipsBySearchId = <TData = AsyncReturnType<typeof getFriendshipsBySearchId>, TError = void>(
- searchId: string,
-    params?: GetFriendshipsBySearchIdParams, options?: { query?:UseQueryOptions<AsyncReturnType<typeof getFriendshipsBySearchId>, TError, TData>, }
-
-  ) => {
-
-  const {query: queryOptions} = options || {}
-
-  const queryKey = queryOptions?.queryKey ?? getGetFriendshipsBySearchIdQueryKey(searchId,params);
-  const queryFn: QueryFunction<AsyncReturnType<typeof getFriendshipsBySearchId>> = () => getFriendshipsBySearchId(searchId,params, );
-
-  const query = useQuery<AsyncReturnType<typeof getFriendshipsBySearchId>, TError, TData>(queryKey, queryFn, {enabled: !!(searchId), ...queryOptions})
-
-  return {
-    queryKey,
-    ...query
-  }
-}
 
 /**
  * type id struct

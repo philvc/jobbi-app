@@ -12,6 +12,8 @@ Schemes: [http, https]
  * An user
  */
 export interface UserDTO {
+  /** Avatar url */
+  avatarUrl?: string;
   /** The email */
   email?: string;
   /** The externalId */

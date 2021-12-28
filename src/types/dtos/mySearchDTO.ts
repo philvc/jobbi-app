@@ -7,19 +7,18 @@
 Schemes: [http, https]
  * OpenAPI spec version: 1.0.0
  */
+import type { UserDTO } from './userDTO';
 
 /**
- * An search
+ * My search
  */
-export interface SearchDTO {
-  /** The description */
-  description: string;
+export interface MySearchDTO {
+  /** The participants */
+  Participants?: UserDTO[];
   /** The id */
   id?: string;
   /** The search tags */
   tags?: string[];
   /** The title */
   title: string;
-  /** UserId */
-  userId?: string;
 }

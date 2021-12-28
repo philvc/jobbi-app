@@ -9,15 +9,21 @@ Schemes: [http, https]
  */
 
 /**
- * An search
+ * A friend search
  */
-export interface SearchDTO {
+export interface FriendSearchDTO {
   /** The description */
   description: string;
+  /** The email */
+  email?: string;
+  /** The externalId */
+  externalId?: string;
+  /** The firstName */
+  firstName?: string;
   /** The id */
   id?: string;
-  /** The search tags */
-  tags?: string[];
+  /** The lastName */
+  lastName?: string;
   /** The title */
   title: string;
   /** UserId */

@@ -12,11 +12,11 @@ import {
 } from 'msw'
 import faker from 'faker'
 
-export const getGetUserBySubMock = () => ({email: (() => faker.internet.email())(), externalId: faker.random.word(), firstName: (() => faker.name.firstName())(), id: faker.random.word(), lastName: (() => faker.name.lastName())()})
+export const getGetUserBySubMock = () => ({avatarUrl: faker.random.word(), email: (() => faker.internet.email())(), externalId: faker.random.word(), firstName: (() => faker.name.firstName())(), id: faker.random.word(), lastName: (() => faker.name.lastName())()})
 
-export const getModifyUserMock = () => ({email: (() => faker.internet.email())(), externalId: faker.random.word(), firstName: (() => faker.name.firstName())(), id: faker.random.word(), lastName: (() => faker.name.lastName())()})
+export const getModifyUserMock = () => ({avatarUrl: faker.random.word(), email: (() => faker.internet.email())(), externalId: faker.random.word(), firstName: (() => faker.name.firstName())(), id: faker.random.word(), lastName: (() => faker.name.lastName())()})
 
-export const getCreateUserMock = () => ({email: (() => faker.internet.email())(), externalId: faker.random.word(), firstName: (() => faker.name.firstName())(), id: faker.random.word(), lastName: (() => faker.name.lastName())()})
+export const getCreateUserMock = () => ({avatarUrl: faker.random.word(), email: (() => faker.internet.email())(), externalId: faker.random.word(), firstName: (() => faker.name.firstName())(), id: faker.random.word(), lastName: (() => faker.name.lastName())()})
 
 export const getDefaultMSW = () => [
 rest.get('*/me', (req, res, ctx) => {

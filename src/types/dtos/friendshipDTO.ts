@@ -18,6 +18,8 @@ export interface FriendshipDTO {
   searchId?: string;
   /** The state */
   state?: number;
+  /** The type */
+  type?: string;
   /** The userId */
   userId?: string;
 }
