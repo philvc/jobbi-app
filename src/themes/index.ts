@@ -5,6 +5,7 @@ import { typo } from "./typo";
 import {fonts} from './fonts';
 import {mergeWith} from 'lodash';
 import { extendTheme } from "@chakra-ui/react"; 
+import {Skeleton} from "./components/skeleton"
 
 export const overrides = {
     typo,
@@ -12,6 +13,7 @@ export const overrides = {
     components: {
         Heading,
         Text,
+        Skeleton,
     }
 }
 

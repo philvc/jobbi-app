@@ -29,7 +29,7 @@
 		"@capacitor/core": "^3.2.5",
 		"@capacitor/ios": "^3.2.5",
 		"@chakra-ui/react": "^1.6.8",
-		"@emotion/react": "^11.4.1",
+		"@emotion/react": "^11.7.1",
 		"@emotion/styled": "^11.3.0",
 		"@fontsource/poppins": "^4.5.0",
 		"@storybook/addon-controls": "^6.3.8",

@@ -13,10 +13,10 @@ import type { UserDTO } from './userDTO';
  * My search
  */
 export interface MySearchDTO {
-  /** The participants */
-  Participants?: UserDTO[];
   /** The id */
   id?: string;
+  /** The participants */
+  participants?: UserDTO[];
   /** The search tags */
   tags?: string[];
   /** The title */

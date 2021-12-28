@@ -14,7 +14,7 @@ import faker from 'faker'
 
 export const getAddSearchMock = () => ({description: faker.random.word(), id: faker.random.word(), tags: [...Array(faker.datatype.number({min: 1, max: 10}))].map(() => (faker.random.word())), title: faker.random.word(), userId: faker.random.word()})
 
-export const getGetMySearchMock = () => ({Participants: [...Array(faker.datatype.number({min: 1, max: 10}))].map(() => ({avatarUrl: faker.random.word(), email: faker.random.word(), externalId: faker.random.word(), firstName: faker.random.word(), id: faker.random.word(), lastName: faker.random.word()})), id: faker.random.word(), tags: [...Array(faker.datatype.number({min: 1, max: 10}))].map(() => (faker.random.word())), title: faker.random.word()})
+export const getGetMySearchMock = () => ({id: faker.random.word(), participants: [...Array(faker.datatype.number({min: 1, max: 10}))].map(() => ({avatarUrl: faker.random.word(), email: faker.random.word(), externalId: faker.random.word(), firstName: faker.random.word(), id: faker.random.word(), lastName: faker.random.word()})), tags: [...Array(faker.datatype.number({min: 1, max: 10}))].map(() => (faker.random.word())), title: faker.random.word()})
 
 export const getGetMyFollowedSearchesMock = () => ([...Array(faker.datatype.number({min: 1, max: 10}))].map(() => ({avatarUrl: faker.random.word(), description: faker.random.word(), firstName: faker.random.word(), id: faker.random.word(), lastName: faker.random.word(), tags: [...Array(faker.datatype.number({min: 1, max: 10}))].map(() => (faker.random.word())), title: faker.random.word(), userId: faker.random.word()})))
 
