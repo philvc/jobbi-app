@@ -1,15 +1,16 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { COLORS } from "../../../constants/colors";
-import { SearchDTO } from "../../../types/dtos";
+import { SearchDTO, SharedSearchDTO } from "../../../types/dtos";
 import { QuestCardHeader } from "./header";
 import QuestCardTags from "./tag";
 
 interface QuestCardProps {
   index?: number;
   isFriend?: boolean;
+  quest?: SharedSearchDTO
 }
 
-const QuestCard = ({ index, isFriend = false }: QuestCardProps) => {
+const QuestCard = ({ index, isFriend = false, quest }: QuestCardProps) => {
   return (
     <Box
       background={"white"}
@@ -28,14 +29,14 @@ const QuestCard = ({ index, isFriend = false }: QuestCardProps) => {
         justifyContent={"space-between"}
       >
         <Box>
-          <QuestCardHeader isFriend={isFriend} />
+          <QuestCardHeader quest={quest} isFriend={isFriend} />
           <Text
             mt={"20px"}
             color={COLORS.BLACK.T800.hex}
             fontSize={"14px"}
             fontWeight={400}
           >
-            Looking for a UI Designer role in a Brussels Startup
+            {quest?.description}
           </Text>
         </Box>
         <QuestCardTags />
