@@ -8,6 +8,7 @@ Schemes: [http, https]
  * OpenAPI spec version: 1.0.0
  */
 import type { UserDTO } from './userDTO';
+import type { StringArray } from './stringArray';
 
 /**
  * My search
@@ -17,8 +18,9 @@ export interface MySearchDTO {
   id?: string;
   /** The participants */
   participants?: UserDTO[];
-  /** The search tags */
-  tags?: string[];
+  /** The search sector */
+  sector?: string;
+  tags?: StringArray;
   /** The title */
   title: string;
 }

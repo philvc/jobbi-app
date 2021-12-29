@@ -3,7 +3,11 @@ import { COLORS } from "../../../../constants/colors";
 import { capitalize } from "../../../../utils/capitalize";
 import { TagIcon } from "../../../shared/icons/tag";
 
-const MyQuestTag = () => {
+interface MyQuestTag {
+  sector: string;
+}
+
+const MyQuestTag = ({ sector }: MyQuestTag) => {
   return (
     <Flex
       borderRadius={"20px"}
@@ -22,7 +26,7 @@ const MyQuestTag = () => {
         height={"14px"}
       />
       <Text ml={"7px"} fontWeight={500} fontSize={12} color={COLORS.WHITE.hex}>
-        {capitalize("development")}
+        {capitalize(sector)}
       </Text>
     </Flex>
   );

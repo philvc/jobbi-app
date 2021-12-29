@@ -53,7 +53,7 @@ export default function SignIn() {
     });
 
     // Create user in the API
-    router.push("/home");
+    router.push("/home/create-quest");
   }
 
   return (

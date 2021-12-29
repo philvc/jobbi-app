@@ -65,7 +65,6 @@ const PublicSearchPlaceholder = () => {
               {"You have no public followed quest"}
             </Text>
           </Box>
-          <QuestCardTags />
         </Flex>
       </Box>
     )

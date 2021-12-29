@@ -3,7 +3,11 @@ import { COLORS } from "../../../../constants/colors";
 import { capitalize } from "../../../../utils/capitalize";
 import { TagIcon } from "../../icons/tag";
 
-const QuestCardTags = () => {
+interface QuestCardTagsProps {
+  sector: string;
+}
+
+const QuestCardTags = ({ sector }: QuestCardTagsProps) => {
   return (
     <Flex
       borderRadius={"20px"}
@@ -24,7 +28,7 @@ const QuestCardTags = () => {
         fontSize={12}
         color={COLORS.WHITE.hex}
       >
-        {capitalize("design")}
+        {capitalize(sector)}
       </Text>
     </Flex>
   );

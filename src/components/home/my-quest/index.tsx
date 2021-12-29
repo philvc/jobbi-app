@@ -47,7 +47,7 @@ const MyQuest = () => {
           justifyContent={"space-between"}
         >
           <MyQuestParticipants participants={quest?.participants} />
-          {quest?.tags && <MyQuestTag />}
+          {quest?.sector && <MyQuestTag sector={quest?.sector} />}
         </Flex>
       </Flex>}
     </Skeleton>

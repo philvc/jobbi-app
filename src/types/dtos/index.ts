@@ -20,3 +20,6 @@ export * from './sharedSearchDTO';
 export * from './getSearchFriendshipsParams';
 export * from './friendSearchDTO';
 export * from './mySearchDTO';
+export * from './postSearchRequestDTO';
+export * from './stringArray';
+export * from './postSearchResponseDTO';

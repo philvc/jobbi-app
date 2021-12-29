@@ -10,24 +10,14 @@ Schemes: [http, https]
 import type { StringArray } from './stringArray';
 
 /**
- * An followed search
+ * An search
  */
-export interface FollowedSearchDTO {
-  /** Avatar url */
-  avatarUrl?: string;
+export interface PostSearchRequestDTO {
   /** The description */
   description: string;
-  /** The firstName */
-  firstName?: string;
-  /** The id */
-  id?: string;
-  /** The lastName */
-  lastName?: string;
   /** The search sector */
   sector?: string;
   tags?: StringArray;
   /** The title */
   title: string;
-  /** UserId */
-  userId?: string;
 }

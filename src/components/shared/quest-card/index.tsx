@@ -7,7 +7,7 @@ import QuestCardTags from "./tag";
 interface QuestCardProps {
   index?: number;
   isFriend?: boolean;
-  quest?: SharedSearchDTO
+  quest?: SharedSearchDTO;
 }
 
 const QuestCard = ({ index, isFriend = false, quest }: QuestCardProps) => {
@@ -39,9 +39,9 @@ const QuestCard = ({ index, isFriend = false, quest }: QuestCardProps) => {
             {quest?.description}
           </Text>
         </Box>
-        <QuestCardTags />
+        {quest?.sector && <QuestCardTags sector={quest?.sector} />}
       </Flex>
-    </Box> 
+    </Box>
   );
 };
 

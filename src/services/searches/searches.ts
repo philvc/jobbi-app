@@ -16,11 +16,12 @@ import {
   MutationFunction
 } from 'react-query'
 import type {
-  SearchDTO,
-  SearchDTOBody,
+  PostSearchResponseDTO,
+  PostSearchRequestDTO,
   MySearchDTO,
   FollowedSearchDTO,
   SharedSearchDTO,
+  SearchDTO,
   UserDTO,
   GetSearchFriendshipsParams
 } from '../../types/dtos'
@@ -37,11 +38,11 @@ Create search.
 Return search
  */
 export const addSearch = (
-    searchDTOBody: SearchDTOBody,
+    postSearchRequestDTO: PostSearchRequestDTO,
  ) => {
-      return customInstance<SearchDTO>(
+      return customInstance<PostSearchResponseDTO>(
       {url: `/searches`, method: 'post',
-      data: searchDTOBody
+      data: postSearchRequestDTO
     },
       );
     }
@@ -50,17 +51,17 @@ export const addSearch = (
 
     export const useAddSearch = <TError = void,
     
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof addSearch>, TError,{data: SearchDTOBody}, TContext>, }
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof addSearch>, TError,{data: PostSearchRequestDTO}, TContext>, }
 ) => {
       const {mutation: mutationOptions} = options || {}
 
-      const mutationFn: MutationFunction<AsyncReturnType<typeof addSearch>, {data: SearchDTOBody}> = (props) => {
+      const mutationFn: MutationFunction<AsyncReturnType<typeof addSearch>, {data: PostSearchRequestDTO}> = (props) => {
           const {data} = props || {};
 
           return  addSearch(data,)
         }
 
-      return useMutation<AsyncReturnType<typeof addSearch>, TError, {data: SearchDTOBody}, TContext>(mutationFn, mutationOptions)
+      return useMutation<AsyncReturnType<typeof addSearch>, TError, {data: PostSearchRequestDTO}, TContext>(mutationFn, mutationOptions)
     }
     /**
  * Return my search
@@ -210,11 +211,11 @@ Return search
  */
 export const modifySearch = (
     searchId: string,
-    searchDTOBody: SearchDTOBody,
+    searchDTO: SearchDTO,
  ) => {
       return customInstance<SearchDTO>(
       {url: `/searches/${searchId}`, method: 'put',
-      data: searchDTOBody
+      data: searchDTO
     },
       );
     }
@@ -223,17 +224,17 @@ export const modifySearch = (
 
     export const useModifySearch = <TError = void,
     
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof modifySearch>, TError,{searchId: string;data: SearchDTOBody}, TContext>, }
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof modifySearch>, TError,{searchId: string;data: SearchDTO}, TContext>, }
 ) => {
       const {mutation: mutationOptions} = options || {}
 
-      const mutationFn: MutationFunction<AsyncReturnType<typeof modifySearch>, {searchId: string;data: SearchDTOBody}> = (props) => {
+      const mutationFn: MutationFunction<AsyncReturnType<typeof modifySearch>, {searchId: string;data: SearchDTO}> = (props) => {
           const {searchId,data} = props || {};
 
           return  modifySearch(searchId,data,)
         }
 
-      return useMutation<AsyncReturnType<typeof modifySearch>, TError, {searchId: string;data: SearchDTOBody}, TContext>(mutationFn, mutationOptions)
+      return useMutation<AsyncReturnType<typeof modifySearch>, TError, {searchId: string;data: SearchDTO}, TContext>(mutationFn, mutationOptions)
     }
     /**
  * type id struct

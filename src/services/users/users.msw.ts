@@ -12,7 +12,7 @@ import {
 } from 'msw'
 import faker from 'faker'
 
-export const getGetUserFriendshipsMock = () => ([...Array(faker.datatype.number({min: 1, max: 10}))].map(() => ({friends: [...Array(faker.datatype.number({min: 1, max: 10}))].map(() => ({avatarUrl: faker.random.word(), email: faker.random.word(), externalId: faker.random.word(), firstName: faker.random.word(), id: faker.random.word(), lastName: faker.random.word()})), owner: {avatarUrl: faker.random.word(), email: faker.random.word(), externalId: faker.random.word(), firstName: faker.random.word(), id: faker.random.word(), lastName: faker.random.word()}, search: {description: faker.random.word(), id: faker.random.word(), tags: [...Array(faker.datatype.number({min: 1, max: 10}))].map(() => (faker.random.word())), title: faker.random.word(), userId: faker.random.word()}})))
+export const getGetUserFriendshipsMock = () => ([...Array(faker.datatype.number({min: 1, max: 10}))].map(() => ({friends: [...Array(faker.datatype.number({min: 1, max: 10}))].map(() => ({avatarUrl: faker.random.word(), email: faker.random.word(), externalId: faker.random.word(), firstName: faker.random.word(), id: faker.random.word(), lastName: faker.random.word()})), owner: {avatarUrl: faker.random.word(), email: faker.random.word(), externalId: faker.random.word(), firstName: faker.random.word(), id: faker.random.word(), lastName: faker.random.word()}, search: {description: faker.random.word(), id: faker.random.word(), sector: faker.random.word(), tags: [...Array(faker.datatype.number({min: 1, max: 10}))].map(() => (faker.random.word())), title: faker.random.word(), userId: faker.random.word()}})))
 
 export const getUsersMSW = () => [
 rest.get('*/users/:userId/friendships', (req, res, ctx) => {

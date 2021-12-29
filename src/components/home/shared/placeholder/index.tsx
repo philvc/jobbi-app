@@ -65,7 +65,6 @@ const PlaceholderSharedQuest = () => {
             {"You have no shared quest"}
           </Text>
         </Box>
-        <QuestCardTags />
       </Flex>
     </Box>
   );

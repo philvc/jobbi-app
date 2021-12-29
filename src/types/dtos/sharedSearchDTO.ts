@@ -7,6 +7,7 @@
 Schemes: [http, https]
  * OpenAPI spec version: 1.0.0
  */
+import type { StringArray } from './stringArray';
 
 /**
  * An shared search
@@ -22,8 +23,9 @@ export interface SharedSearchDTO {
   id?: string;
   /** The lastName */
   lastName?: string;
-  /** The search tags */
-  tags?: string[];
+  /** The search sector */
+  sector?: string;
+  tags?: StringArray;
   /** The title */
   title: string;
   /** UserId */

@@ -14,11 +14,11 @@ import { useRouter } from "next/router";
 import { useQueryClient } from "react-query";
 import { COLORS } from "../../constants/colors";
 import {
+  getGetMySearchQueryKey,
   getGetSearchByIdQueryKey,
-  getGetSearchesQueryKey,
   useAddSearch,
+  useGetMySearch,
   useGetSearchById,
-  useGetSearches,
   useModifySearch,
 } from "../../services/searches/searches";
 import InputField from "../shared/form/input-field";
@@ -52,11 +52,11 @@ export default function SearchDrawer({ isOpen, onClose }) {
     isLoading,
   } = useGetSearchById(questId as string, { query: { enabled: !!questId } });
 
-  const { refetch: refetchAllSearches } = useGetSearches();
+  const { refetch: refetchAllSearches } = useGetMySearch();
 
   async function handleSubmit(values: TDrawerSearch) {
     // Invalidate query
-    clientQuery.invalidateQueries(getGetSearchesQueryKey());
+    clientQuery.invalidateQueries(getGetMySearchQueryKey());
     if (questId) {
       clientQuery.invalidateQueries(
         getGetSearchByIdQueryKey(questId as string)

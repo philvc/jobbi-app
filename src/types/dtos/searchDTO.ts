@@ -7,6 +7,7 @@
 Schemes: [http, https]
  * OpenAPI spec version: 1.0.0
  */
+import type { StringArray } from './stringArray';
 
 /**
  * An search
@@ -16,8 +17,9 @@ export interface SearchDTO {
   description: string;
   /** The id */
   id?: string;
-  /** The search tags */
-  tags?: string[];
+  /** The search sector */
+  sector?: string;
+  tags?: StringArray;
   /** The title */
   title: string;
   /** UserId */
