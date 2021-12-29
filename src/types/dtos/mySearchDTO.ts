@@ -23,4 +23,6 @@ export interface MySearchDTO {
   tags?: StringArray;
   /** The title */
   title: string;
+  /** The search type */
+  type: string;
 }

@@ -1,7 +1,9 @@
-import { Box, Button } from "@chakra-ui/react";
+import { Box, Button, Switch } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
+import { ChangeEvent, useState } from "react";
 import InputField from "../../../components/shared/form/input-field";
+import { PrivateQuest, PublicQuest } from "../../../constants/contant";
 import { useAddSearch } from "../../../services/search/search";
 import { useGetMySearch } from "../../../services/searches/searches";
 
@@ -10,23 +12,30 @@ interface PostSearchRequestDTO {
     description: string,
     sector?: string,
     tags?: [string]
+    type: string,
 }
 
 const CreateQuest = () => {
 
     // Attributes
     const router = useRouter();
+    const [isPrivate, setIsPrivate] = useState<boolean>(true)
 
     // Queries
     const {mutateAsync: postQuest} = useAddSearch();
 
     // Handlers
+    function handleSwitchChange(e: ChangeEvent<HTMLInputElement>){
+        setIsPrivate(e.target.checked)
+    }
+    
     async function postQuestHandler(values:PostSearchRequestDTO ){
 
         // post quest
         const response = await postQuest({
             data: {
-                ...values
+                ...values,
+                type: isPrivate ? PrivateQuest : PublicQuest 
             }
         });
 
@@ -44,7 +53,8 @@ const CreateQuest = () => {
                 title: "",
                 description: "",
                 tags: undefined,
-                sector: ""
+                sector: "",
+                type: PrivateQuest,
             }
         } onSubmit={postQuestHandler}>
             <Form>
@@ -52,6 +62,8 @@ const CreateQuest = () => {
                 <InputField name="title" />
                 <InputField name="description" />
                 <InputField name="sector" />
+                <Box>Is private ?</Box>
+                <Switch onChange={handleSwitchChange} defaultChecked={isPrivate} isChecked={isPrivate}  />
                 <Button type="submit">
                     Submit
                 </Button>
