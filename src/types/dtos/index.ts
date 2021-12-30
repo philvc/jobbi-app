@@ -23,3 +23,7 @@ export * from './mySearchDTO';
 export * from './postSearchRequestDTO';
 export * from './stringArray';
 export * from './postSearchResponseDTO';
+export * from './postDTO';
+export * from './participantDTOForSearchById';
+export * from './postDTOBySearchId';
+export * from './searchDTOById';

@@ -21,9 +21,12 @@ import type {
   MySearchDTO,
   FollowedSearchDTO,
   SharedSearchDTO,
+  SearchDTOById,
   SearchDTO,
   UserDTO,
-  GetSearchFriendshipsParams
+  GetSearchFriendshipsParams,
+  ParticipantDTOForSearchById,
+  PostDTOBySearchId
 } from '../../types/dtos'
 import { customInstance } from '.././config'
 
@@ -176,7 +179,7 @@ Return search
 export const getSearchById = (
     searchId: string,
  ) => {
-      return customInstance<SearchDTO>(
+      return customInstance<SearchDTOById>(
       {url: `/searches/${searchId}`, method: 'get'
     },
       );
@@ -269,6 +272,78 @@ export const useGetSearchFriendships = <TData = AsyncReturnType<typeof getSearch
   const queryFn: QueryFunction<AsyncReturnType<typeof getSearchFriendships>> = () => getSearchFriendships(searchId,params, );
 
   const query = useQuery<AsyncReturnType<typeof getSearchFriendships>, TError, TData>(queryKey, queryFn, {enabled: !!(searchId), ...queryOptions})
+
+  return {
+    queryKey,
+    ...query
+  }
+}
+
+/**
+ * type id struct
+Get participants by search id.
+Return participants
+ */
+export const getSearchParticipants = (
+    searchId: string,
+ ) => {
+      return customInstance<ParticipantDTOForSearchById[]>(
+      {url: `/searches/${searchId}/participants`, method: 'get'
+    },
+      );
+    }
+  
+
+export const getGetSearchParticipantsQueryKey = (searchId: string,) => [`/searches/${searchId}/participants`];
+
+    
+export const useGetSearchParticipants = <TData = AsyncReturnType<typeof getSearchParticipants>, TError = void>(
+ searchId: string, options?: { query?:UseQueryOptions<AsyncReturnType<typeof getSearchParticipants>, TError, TData>, }
+
+  ) => {
+
+  const {query: queryOptions} = options || {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetSearchParticipantsQueryKey(searchId);
+  const queryFn: QueryFunction<AsyncReturnType<typeof getSearchParticipants>> = () => getSearchParticipants(searchId, );
+
+  const query = useQuery<AsyncReturnType<typeof getSearchParticipants>, TError, TData>(queryKey, queryFn, {enabled: !!(searchId), ...queryOptions})
+
+  return {
+    queryKey,
+    ...query
+  }
+}
+
+/**
+ * type id struct
+Get posts by search id.
+Return posts
+ */
+export const getSearchPosts = (
+    searchId: string,
+ ) => {
+      return customInstance<PostDTOBySearchId[]>(
+      {url: `/searches/${searchId}/posts`, method: 'get'
+    },
+      );
+    }
+  
+
+export const getGetSearchPostsQueryKey = (searchId: string,) => [`/searches/${searchId}/posts`];
+
+    
+export const useGetSearchPosts = <TData = AsyncReturnType<typeof getSearchPosts>, TError = void>(
+ searchId: string, options?: { query?:UseQueryOptions<AsyncReturnType<typeof getSearchPosts>, TError, TData>, }
+
+  ) => {
+
+  const {query: queryOptions} = options || {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetSearchPostsQueryKey(searchId);
+  const queryFn: QueryFunction<AsyncReturnType<typeof getSearchPosts>> = () => getSearchPosts(searchId, );
+
+  const query = useQuery<AsyncReturnType<typeof getSearchPosts>, TError, TData>(queryKey, queryFn, {enabled: !!(searchId), ...queryOptions})
 
   return {
     queryKey,

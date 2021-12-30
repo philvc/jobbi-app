@@ -20,11 +20,15 @@ export const getGetMyFollowedSearchesMock = () => ([...Array(faker.datatype.numb
 
 export const getGetMySharedSearchesMock = () => ([...Array(faker.datatype.number({min: 1, max: 10}))].map(() => ({avatarUrl: faker.random.word(), description: faker.random.word(), firstName: faker.random.word(), id: faker.random.word(), lastName: faker.random.word(), sector: faker.random.word(), tags: [...Array(faker.datatype.number({min: 1, max: 10}))].map(() => (faker.random.word())), title: faker.random.word(), type: faker.random.word(), userId: faker.random.word()})))
 
-export const getGetSearchByIdMock = () => ({description: faker.random.word(), id: faker.random.word(), sector: faker.random.word(), tags: [...Array(faker.datatype.number({min: 1, max: 10}))].map(() => (faker.random.word())), title: faker.random.word(), type: faker.random.word(), userId: faker.random.word()})
+export const getGetSearchByIdMock = () => ({avatarUrl: faker.random.word(), description: faker.random.word(), email: (() => faker.internet.email())(), firstName: (() => faker.name.firstName())(), id: faker.random.word(), lastName: (() => faker.name.lastName())(), participants: [...Array(faker.datatype.number({min: 1, max: 10}))].map(() => ({avatarUrl: faker.random.word(), email: faker.random.word(), externalId: faker.random.word(), firstName: faker.random.word(), id: faker.random.word(), lastName: faker.random.word()})), sector: faker.random.word(), tags: [...Array(faker.datatype.number({min: 1, max: 10}))].map(() => (faker.random.word())), title: faker.random.word(), type: faker.random.word(), userId: faker.random.word()})
 
 export const getModifySearchMock = () => ({description: faker.random.word(), id: faker.random.word(), sector: faker.random.word(), tags: [...Array(faker.datatype.number({min: 1, max: 10}))].map(() => (faker.random.word())), title: faker.random.word(), type: faker.random.word(), userId: faker.random.word()})
 
 export const getGetSearchFriendshipsMock = () => ({avatarUrl: faker.random.word(), email: (() => faker.internet.email())(), externalId: faker.random.word(), firstName: (() => faker.name.firstName())(), id: faker.random.word(), lastName: (() => faker.name.lastName())()})
+
+export const getGetSearchParticipantsMock = () => ([...Array(faker.datatype.number({min: 1, max: 10}))].map(() => ({avatarUrl: faker.random.word(), email: faker.random.word(), firstName: faker.random.word(), id: faker.random.word(), lastName: faker.random.word(), numberOfPosts: faker.datatype.number(), type: faker.random.word()})))
+
+export const getGetSearchPostsMock = () => ([...Array(faker.datatype.number({min: 1, max: 10}))].map(() => ({companyAddress: faker.random.word(), companyEmail: faker.random.word(), companyName: faker.random.word(), companyPhoneNumber: faker.random.word(), companyUrl: faker.random.word(), contactEmail: faker.random.word(), contactFirstName: faker.random.word(), contactLastName: faker.random.word(), contactPhoneNumber: faker.datatype.number(), description: faker.random.word(), id: faker.random.word(), searchId: faker.random.word(), tags: [...Array(faker.datatype.number({min: 1, max: 10}))].map(() => (faker.random.word())), title: faker.random.word(), type: faker.random.word(), url: faker.random.word(), userEmail: faker.random.word(), userFirstName: faker.random.word(), userId: faker.random.word(), userLastName: faker.random.word()})))
 
 export const getSearchesMSW = () => [
 rest.post('*/searches', (req, res, ctx) => {
@@ -68,5 +72,17 @@ ctx.json(getModifySearchMock()),
           ctx.delay(1000),
           ctx.status(200, 'Mocked status'),
 ctx.json(getGetSearchFriendshipsMock()),
+        )
+      }),rest.get('*/searches/:searchId/participants', (req, res, ctx) => {
+        return res(
+          ctx.delay(1000),
+          ctx.status(200, 'Mocked status'),
+ctx.json(getGetSearchParticipantsMock()),
+        )
+      }),rest.get('*/searches/:searchId/posts', (req, res, ctx) => {
+        return res(
+          ctx.delay(1000),
+          ctx.status(200, 'Mocked status'),
+ctx.json(getGetSearchPostsMock()),
         )
       }),]
