@@ -26,6 +26,7 @@ const MyQuestParticipants = ({ participants }: MyQuestParticipantsProps) => {
           if (index < 2) {
             return (
               <OldAvatar
+                key={participant?.id}
                 style={{
                   borderRadius: "100%",
                   marginLeft: index !== 0 ? "-18px" : 0,
@@ -42,6 +43,7 @@ const MyQuestParticipants = ({ participants }: MyQuestParticipantsProps) => {
           if (index === 2) {
             return (
               <Box
+                key={participant?.id}
                 position={"relative"}
                 style={{
                   borderRadius: "100%",

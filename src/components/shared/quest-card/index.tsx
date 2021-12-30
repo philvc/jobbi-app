@@ -47,9 +47,3 @@ const QuestCard = ({ index, isFriend = false, quest }: QuestCardProps) => {
 
 export default QuestCard;
 
-const mockQuest: SearchDTO = {
-  description: "Looking for a UI Designer role in a Brussels Startup",
-  title: "no title",
-  id: "1",
-  userId: "1",
-};
