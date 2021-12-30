@@ -18,8 +18,6 @@ export default function Home() {
       <HomeTopBar />
       <SharedQuestList />
       <PublicQuestList />
-      {/* <FriendQuests /> */}
-      {/* <Invitations /> */}
       <Navbar menu="home" />
     </Page>
   );

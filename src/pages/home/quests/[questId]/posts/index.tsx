@@ -26,7 +26,7 @@ const QuestPosts = () => {
       >
         {hasPosts && (
           <Flex direction={"row"} overflow={"scroll"} pr={"20px"}>
-            {posts.map((post, index) => {
+            {posts?.map((post, index) => {
               if (index === 0) {
                 return (
                   <Box key={post?.id} ml={"1.5rem"} mb={"1rem"}>
