@@ -14,13 +14,13 @@ export default function Home() {
   const { t } = useTranslation();
 
   return (
-    <Page overflow={"scrolls"}>
+    <Page overflow={"scroll"}>
       <HomeTopBar />
       <SharedQuestList />
       <PublicQuestList />
       {/* <FriendQuests /> */}
       {/* <Invitations /> */}
-      <Navbar />
+      <Navbar menu="home" />
     </Page>
   );
 }

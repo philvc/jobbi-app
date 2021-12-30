@@ -1,8 +1,9 @@
 import { Box, Flex, Heading, Skeleton } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useGetSearchPosts } from "../../../../../services/searches/searches";
+import QuestDetailsAddButton from "./add-post";
 import QuestPostCard from "./card";
-import QuestPostsHeader from "./header";
+import QuestDetailsSectionHeader from "./header";
 
 const QuestPosts = () => {
   // Attributes
@@ -15,20 +16,26 @@ const QuestPosts = () => {
 
   return (
     <Box>
-      <QuestPostsHeader />
-      <Skeleton isLoaded={!isLoading}>
+      <QuestDetailsSectionHeader>Fil d'actualités</QuestDetailsSectionHeader>
+      <Skeleton
+        width={isLoading ? "280px" : "initial"}
+        borderRadius={isLoading ? "0.75rem" : "initial"}
+        height={isLoading ? "141px" : "initial"}
+        ml={isLoading ? "1.5rem" : "initial"}
+        isLoaded={!isLoading}
+      >
         {hasPosts && (
           <Flex direction={"row"} overflow={"scroll"} pr={"20px"}>
             {posts.map((post, index) => {
               if (index === 0) {
                 return (
-                  <Box key={post?.id} ml={"1.5rem"} mb={"3.25rem"}>
+                  <Box key={post?.id} ml={"1.5rem"} mb={"1rem"}>
                     <QuestPostCard post={post} />
                   </Box>
                 );
               } else {
                 return (
-                  <Box key={post?.id} ml={"20px"} mb={"3.25rem"}>
+                  <Box key={post?.id} ml={"20px"} mb={"1rem"}>
                     <QuestPostCard post={post} />
                   </Box>
                 );
@@ -41,6 +48,7 @@ const QuestPosts = () => {
             <PlaceholderSharedQuest />
           </SharedQuestBox>
         )} */}
+        <QuestDetailsAddButton>Add a post</QuestDetailsAddButton>
       </Skeleton>
     </Box>
   );

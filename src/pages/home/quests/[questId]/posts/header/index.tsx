@@ -1,7 +1,7 @@
-import { Flex, Heading } from "@chakra-ui/react";
+import { BoxProps, Flex, Heading } from "@chakra-ui/react";
 import MoreButton from "../../../../../../components/shared/actions/more";
 
-const QuestPostsHeader = () => {
+const QuestDetailsSectionHeader = (props: BoxProps) => {
   return (
     <Flex
       px={"1.5rem"}
@@ -12,11 +12,11 @@ const QuestPostsHeader = () => {
       mb={"1.25rem"}
     >
       <Heading size={"800"} color={"#393360"}>
-        Fil d'actualités
+        {props.children}
       </Heading>
-      <MoreButton />
+      <MoreButton onClick={props.onClick} />
     </Flex>
   );
 };
 
-export default QuestPostsHeader;
+export default QuestDetailsSectionHeader;

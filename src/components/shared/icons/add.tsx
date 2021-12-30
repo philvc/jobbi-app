@@ -17,3 +17,4 @@ export default function AddIcon(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
