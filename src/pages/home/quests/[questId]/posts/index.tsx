@@ -1,5 +1,6 @@
 import { Box, Flex, Heading, Skeleton, useDisclosure } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import AddPostDrawer from "../../../../../components/add-post-drawer";
 import { useGetSearchPosts } from "../../../../../services/searches/searches";
 import QuestDetailsAddButton from "./add-post";
 import QuestPostCard from "./card";
@@ -49,7 +50,8 @@ const QuestPosts = () => {
             <PlaceholderSharedQuest />
           </SharedQuestBox>
         )} */}
-        <QuestDetailsAddButton>Add a post</QuestDetailsAddButton>
+        <QuestDetailsAddButton onClick={onNewPostOpen}>Add a post</QuestDetailsAddButton>
+        <AddPostDrawer onClose={onNewPostClose} isOpen={isNewPostOpen}/>
       </Skeleton>
     </Box>
   );

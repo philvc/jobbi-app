@@ -52,6 +52,4 @@ export interface PostDTOBySearchId {
   userId: string;
   /** The user  lastName */
   userLastName?: string;
-  /** The user  type */
-  userType?: string;
 }
