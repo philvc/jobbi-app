@@ -22,7 +22,8 @@ import type {
   FollowedSearchDTO,
   SharedSearchDTO,
   SearchDTOById,
-  SearchDTO,
+  PutSearchResponseDTO,
+  PutSearchRequestDTO,
   UserDTO,
   GetSearchFriendshipsParams,
   ParticipantDTOForSearchById,
@@ -214,11 +215,11 @@ Return search
  */
 export const modifySearch = (
     searchId: string,
-    searchDTO: SearchDTO,
+    putSearchRequestDTO: PutSearchRequestDTO,
  ) => {
-      return customInstance<SearchDTO>(
+      return customInstance<PutSearchResponseDTO>(
       {url: `/searches/${searchId}`, method: 'put',
-      data: searchDTO
+      data: putSearchRequestDTO
     },
       );
     }
@@ -227,17 +228,17 @@ export const modifySearch = (
 
     export const useModifySearch = <TError = void,
     
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof modifySearch>, TError,{searchId: string;data: SearchDTO}, TContext>, }
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof modifySearch>, TError,{searchId: string;data: PutSearchRequestDTO}, TContext>, }
 ) => {
       const {mutation: mutationOptions} = options || {}
 
-      const mutationFn: MutationFunction<AsyncReturnType<typeof modifySearch>, {searchId: string;data: SearchDTO}> = (props) => {
+      const mutationFn: MutationFunction<AsyncReturnType<typeof modifySearch>, {searchId: string;data: PutSearchRequestDTO}> = (props) => {
           const {searchId,data} = props || {};
 
           return  modifySearch(searchId,data,)
         }
 
-      return useMutation<AsyncReturnType<typeof modifySearch>, TError, {searchId: string;data: SearchDTO}, TContext>(mutationFn, mutationOptions)
+      return useMutation<AsyncReturnType<typeof modifySearch>, TError, {searchId: string;data: PutSearchRequestDTO}, TContext>(mutationFn, mutationOptions)
     }
     /**
  * type id struct

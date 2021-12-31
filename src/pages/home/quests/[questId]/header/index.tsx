@@ -1,9 +1,11 @@
 import { Flex, Box, Text, Heading, Skeleton } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import { useMemo } from "react";
 import MyQuestParticipants from "../../../../../components/home/my-quest/participants";
 import MyQuestTag from "../../../../../components/home/my-quest/tag";
 import { useUser } from "../../../../../contexts/user";
 import { useGetSearchById } from "../../../../../services/searches/searches";
+import { SearchDTO } from "../../../../../types/dtos";
 import QuestDetailsHeaderIconsTopBar from "./icons";
 
 const QuestDetailsHeader = () => {
@@ -13,6 +15,17 @@ const QuestDetailsHeader = () => {
   const { data, refetch, isLoading } = useGetSearchById(questId);
   const { id } = useUser();
   const isOwner = id === data?.userId;
+  const questDTO: SearchDTO = useMemo(() => {
+    return {
+      id: data?.id,
+      title: data?.title,
+      description: data?.description,
+      type: data?.type,
+      userId: data?.userId,
+      sector: data?.sector,
+      tags: data?.tags,
+    };
+  }, [data]);
 
   return (
     <Box
@@ -24,7 +37,7 @@ const QuestDetailsHeader = () => {
       pb={"1.375rem"}
     >
       <Skeleton isLoaded={!isLoading} opacity={isLoading ? 0.3 : "initial"}>
-        <QuestDetailsHeaderIconsTopBar />
+        <QuestDetailsHeaderIconsTopBar quest={questDTO} />
         <Box mt={"1.5rem"}>
           <Text
             textAlign={"center"}

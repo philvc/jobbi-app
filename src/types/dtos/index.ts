@@ -27,3 +27,5 @@ export * from './postDTO';
 export * from './participantDTOForSearchById';
 export * from './postDTOBySearchId';
 export * from './searchDTOById';
+export * from './putSearchRequestDTO';
+export * from './putSearchResponseDTO';

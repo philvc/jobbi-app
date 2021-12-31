@@ -12,14 +12,14 @@ import type { StringArray } from './stringArray';
 /**
  * An search
  */
-export interface SearchDTO {
+export interface PutSearchResponseDTO {
   /** The description */
   description: string;
   /** The id */
   id: string;
   /** The search sector */
-  sector?: string;
-  tags?: StringArray;
+  sector: string;
+  tags: StringArray;
   /** The title */
   title: string;
   /** The search type */
