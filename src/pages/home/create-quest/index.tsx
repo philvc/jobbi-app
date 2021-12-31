@@ -4,8 +4,7 @@ import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 import InputField from "../../../components/shared/form/input-field";
 import { PrivateQuest, PublicQuest } from "../../../constants/contant";
-import { useAddSearch } from "../../../services/search/search";
-import { useGetMySearch } from "../../../services/searches/searches";
+import { useAddSearch } from "../../../services/searches/searches";
 
 interface PostSearchRequestDTO {
     title: string,
