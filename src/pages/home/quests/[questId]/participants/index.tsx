@@ -1,4 +1,4 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, Skeleton } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import {
   useGetSearchFriendships,
@@ -20,30 +20,39 @@ const QuestDetailsParticipants = () => {
   return (
     <Box pb={"150px"}>
       <QuestDetailsSectionHeader>Friends</QuestDetailsSectionHeader>
-      {hasParticipants && (
-        <Flex direction={"column"} overflow={"scroll"} pr={"20px"}>
-          {participants?.map((participant, index) => {
-            if (index === 0) {
-              return (
-                <Box key={participant?.id} ml={"1.5rem"} mb={"1rem"}>
-                  <QuestDetailsFriendCard participant={participant} />
-                </Box>
-              );
-            } else {
-              return (
-                <Box key={participant?.id} ml={"20px"} mb={"1rem"}>
-                  <QuestDetailsFriendCard participant={participant} />
-                </Box>
-              );
-            }
-          })}
-        </Flex>
-      )}
-      {/* {!hasPosts && (
+      <Skeleton
+        minWidth={isLoading ? "327px" : "fit-content"}
+        height={isLoading ? "72px" : "fit-content"}
+        mx={isLoading ? "24px" : "inherit"}
+        mb={isLoading ? "1rem" : "inherit"}
+        borderRadius={isLoading ? "12px": "inherit"}
+        isLoaded={!isLoading}
+      >
+        {hasParticipants && (
+          <Flex direction={"column"} overflow={"scroll"} pr={"20px"}>
+            {participants?.map((participant, index) => {
+              if (index === 0) {
+                return (
+                  <Box key={participant?.id} ml={"1.5rem"} mb={"1rem"}>
+                    <QuestDetailsFriendCard participant={participant} />
+                  </Box>
+                );
+              } else {
+                return (
+                  <Box key={participant?.id} ml={"20px"} mb={"1rem"}>
+                    <QuestDetailsFriendCard participant={participant} />
+                  </Box>
+                );
+              }
+            })}
+          </Flex>
+        )}
+        {/* {!hasPosts && (
           <SharedQuestBox ml={"24px"} mb={"47px"}>
             <PlaceholderSharedQuest />
           </SharedQuestBox>
         )} */}
+      </Skeleton>
       <QuestDetailsAddButton>Invite friends</QuestDetailsAddButton>
     </Box>
   );

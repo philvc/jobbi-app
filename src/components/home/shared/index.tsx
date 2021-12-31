@@ -22,8 +22,8 @@ const SharedQuestList = () => {
         isLoaded={!isLoading}
         minWidth={isLoading ? "269px" : "fit-content"}
         height={isLoading ? "180px" : "fit-content"}
-        mx={isLoading ? "24px" : "0px"}
-        mb={isLoading ? "47px" : "0px"}
+        mx={isLoading ? "24px" : "initial"}
+        mb={isLoading ? "47px" : "initial"}
       >
         {hasSharedQuest && (
           <Flex direction={"row"} overflow={"scroll"} pr={"20px"}>
