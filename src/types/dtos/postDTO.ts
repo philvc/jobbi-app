@@ -20,7 +20,7 @@ export interface PostDTO {
   /** The company name */
   companyName?: string;
   /** The company phone number */
-  companyPhoneNumber?: string;
+  companyPhoneNumber?: number;
   /** The company url */
   companyUrl?: string;
   /** The contact email */

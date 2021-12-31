@@ -27,7 +27,9 @@ import type {
   UserDTO,
   GetSearchFriendshipsParams,
   ParticipantDTOForSearchById,
-  PostDTOBySearchId
+  PostDTOBySearchId,
+  AddPostResponseDTO,
+  AddPostRequestDTO
 } from '../../types/dtos'
 import { customInstance } from '.././config'
 
@@ -352,3 +354,36 @@ export const useGetSearchPosts = <TData = AsyncReturnType<typeof getSearchPosts>
   }
 }
 
+/**
+ * type id struct
+Create search.
+Return search
+ */
+export const addPostForSearch = (
+    searchId: string,
+    addPostRequestDTO: AddPostRequestDTO,
+ ) => {
+      return customInstance<AddPostResponseDTO>(
+      {url: `/searches/${searchId}/posts`, method: 'post',
+      data: addPostRequestDTO
+    },
+      );
+    }
+  
+
+
+    export const useAddPostForSearch = <TError = void,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof addPostForSearch>, TError,{searchId: string;data: AddPostRequestDTO}, TContext>, }
+) => {
+      const {mutation: mutationOptions} = options || {}
+
+      const mutationFn: MutationFunction<AsyncReturnType<typeof addPostForSearch>, {searchId: string;data: AddPostRequestDTO}> = (props) => {
+          const {searchId,data} = props || {};
+
+          return  addPostForSearch(searchId,data,)
+        }
+
+      return useMutation<AsyncReturnType<typeof addPostForSearch>, TError, {searchId: string;data: AddPostRequestDTO}, TContext>(mutationFn, mutationOptions)
+    }
+    

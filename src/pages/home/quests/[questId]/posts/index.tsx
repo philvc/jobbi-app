@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Skeleton } from "@chakra-ui/react";
+import { Box, Flex, Heading, Skeleton, useDisclosure } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useGetSearchPosts } from "../../../../../services/searches/searches";
 import QuestDetailsAddButton from "./add-post";
@@ -9,6 +9,7 @@ const QuestPosts = () => {
   // Attributes
   const router = useRouter();
   const searchId = router.query.questId as string;
+  const {isOpen: isNewPostOpen, onOpen: onNewPostOpen, onClose: onNewPostClose} = useDisclosure()
 
   // Queries
   const { data: posts, isLoading } = useGetSearchPosts(searchId);
