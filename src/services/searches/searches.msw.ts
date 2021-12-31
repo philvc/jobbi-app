@@ -28,9 +28,11 @@ export const getGetSearchFriendshipsMock = () => ({avatarUrl: faker.random.word(
 
 export const getGetSearchParticipantsMock = () => ([...Array(faker.datatype.number({min: 1, max: 10}))].map(() => ({avatarUrl: faker.random.word(), email: faker.random.word(), firstName: faker.random.word(), id: faker.random.word(), lastName: faker.random.word(), numberOfPosts: faker.datatype.number(), type: faker.random.word()})))
 
-export const getGetSearchPostsMock = () => ([...Array(faker.datatype.number({min: 1, max: 10}))].map(() => ({companyAddress: faker.random.word(), companyEmail: faker.random.word(), companyName: faker.random.word(), companyPhoneNumber: faker.datatype.number(), companyUrl: faker.random.word(), contactEmail: faker.random.word(), contactFirstName: faker.random.word(), contactLastName: faker.random.word(), contactPhoneNumber: faker.datatype.number(), description: faker.random.word(), id: faker.random.word(), searchId: faker.random.word(), tags: [...Array(faker.datatype.number({min: 1, max: 10}))].map(() => (faker.random.word())), title: faker.random.word(), type: faker.random.word(), url: faker.random.word(), userEmail: faker.random.word(), userFirstName: faker.random.word(), userId: faker.random.word(), userLastName: faker.random.word()})))
+export const getGetSearchPostsMock = () => ([...Array(faker.datatype.number({min: 1, max: 10}))].map(() => ({UpdatedAt: faker.random.word(), companyAddress: faker.random.word(), companyEmail: faker.random.word(), companyName: faker.random.word(), companyPhoneNumber: faker.datatype.number(), companyUrl: faker.random.word(), contactEmail: faker.random.word(), contactFirstName: faker.random.word(), contactLastName: faker.random.word(), contactPhoneNumber: faker.datatype.number(), description: faker.random.word(), id: faker.random.word(), searchId: faker.random.word(), tags: [...Array(faker.datatype.number({min: 1, max: 10}))].map(() => (faker.random.word())), title: faker.random.word(), type: faker.random.word(), url: faker.random.word(), userEmail: faker.random.word(), userFirstName: faker.random.word(), userId: faker.random.word(), userLastName: faker.random.word()})))
 
 export const getAddPostForSearchMock = () => ({description: faker.random.word(), id: faker.random.word(), searchId: faker.random.word(), title: faker.random.word(), type: faker.random.word(), url: faker.random.word(), userEmail: faker.random.word(), userFirstName: faker.random.word(), userId: faker.random.word(), userLastName: faker.random.word()})
+
+export const getUpdatePostByIdMock = () => ({description: faker.random.word(), id: faker.random.word(), searchId: faker.random.word(), title: faker.random.word(), type: faker.random.word(), url: faker.random.word(), userEmail: faker.random.word(), userFirstName: faker.random.word(), userId: faker.random.word(), userLastName: faker.random.word()})
 
 export const getSearchesMSW = () => [
 rest.post('*/searches', (req, res, ctx) => {
@@ -92,5 +94,11 @@ ctx.json(getGetSearchPostsMock()),
           ctx.delay(1000),
           ctx.status(200, 'Mocked status'),
 ctx.json(getAddPostForSearchMock()),
+        )
+      }),rest.put('*/searches/:searchId/posts/:postId', (req, res, ctx) => {
+        return res(
+          ctx.delay(1000),
+          ctx.status(200, 'Mocked status'),
+ctx.json(getUpdatePostByIdMock()),
         )
       }),]

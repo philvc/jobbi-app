@@ -13,6 +13,8 @@ import type { StringArray } from './stringArray';
  * An post
  */
 export interface PostDTOBySearchId {
+  /** Updated at */
+  UpdatedAt?: string;
   /** The company address */
   companyAddress?: string;
   /** The company email */

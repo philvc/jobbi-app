@@ -31,3 +31,5 @@ export * from './putSearchRequestDTO';
 export * from './putSearchResponseDTO';
 export * from './addPostRequestDTO';
 export * from './addPostResponseDTO';
+export * from './updatePostRequestDTO';
+export * from './updatePostResponseDTO';

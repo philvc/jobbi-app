@@ -29,7 +29,9 @@ import type {
   ParticipantDTOForSearchById,
   PostDTOBySearchId,
   AddPostResponseDTO,
-  AddPostRequestDTO
+  AddPostRequestDTO,
+  UpdatePostResponseDTO,
+  UpdatePostRequestDTO
 } from '../../types/dtos'
 import { customInstance } from '.././config'
 
@@ -385,5 +387,38 @@ export const addPostForSearch = (
         }
 
       return useMutation<AsyncReturnType<typeof addPostForSearch>, TError, {searchId: string;data: AddPostRequestDTO}, TContext>(mutationFn, mutationOptions)
+    }
+    /**
+ * type id struct
+Update post.
+Return post
+ */
+export const updatePostById = (
+    searchId: string,
+    postId: string,
+    updatePostRequestDTO: UpdatePostRequestDTO,
+ ) => {
+      return customInstance<UpdatePostResponseDTO>(
+      {url: `/searches/${searchId}/posts/${postId}`, method: 'put',
+      data: updatePostRequestDTO
+    },
+      );
+    }
+  
+
+
+    export const useUpdatePostById = <TError = void,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof updatePostById>, TError,{searchId: string;postId: string;data: UpdatePostRequestDTO}, TContext>, }
+) => {
+      const {mutation: mutationOptions} = options || {}
+
+      const mutationFn: MutationFunction<AsyncReturnType<typeof updatePostById>, {searchId: string;postId: string;data: UpdatePostRequestDTO}> = (props) => {
+          const {searchId,postId,data} = props || {};
+
+          return  updatePostById(searchId,postId,data,)
+        }
+
+      return useMutation<AsyncReturnType<typeof updatePostById>, TError, {searchId: string;postId: string;data: UpdatePostRequestDTO}, TContext>(mutationFn, mutationOptions)
     }
     

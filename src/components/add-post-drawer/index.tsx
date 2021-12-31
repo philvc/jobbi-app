@@ -1,9 +1,24 @@
-import {Text, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Heading, Stack, DrawerFooter, Button } from "@chakra-ui/react";
+import {
+  Text,
+  Drawer,
+  DrawerBody,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+  Heading,
+  Stack,
+  DrawerFooter,
+  Button,
+} from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { useQueryClient } from "react-query";
 import { COLORS } from "../../constants/colors";
-import { getGetSearchPostsQueryKey, useAddPostForSearch, useGetSearchPosts } from "../../services/searches/searches";
+import {
+  getGetSearchPostsQueryKey,
+  useAddPostForSearch,
+  useGetSearchPosts,
+} from "../../services/searches/searches";
 import InputField from "../shared/form/input-field";
 
 interface AddPostRequestDTO {
@@ -19,41 +34,40 @@ interface AddPostDrawerProps {
 }
 
 const AddPostDrawer = ({ isOpen, onClose }: AddPostDrawerProps) => {
+  // Attributes
+  const router = useRouter();
+  const searchId = router.query?.questId as string;
+  const clientQuery = useQueryClient();
+  const { refetch } = useGetSearchPosts(searchId);
 
-    // Attributes
-    const router = useRouter();
-    const searchId = router.query?.questId as string;
-    const clientQuery = useQueryClient();
-    const {refetch} = useGetSearchPosts(searchId);
-    
-    // Queries
-    const {mutateAsync: addPost} = useAddPostForSearch();
+  // Queries
+  const { mutateAsync: addPost } = useAddPostForSearch();
 
-    // Handlers
-    async function handleSubmit(values: AddPostRequestDTO){
-        // post query
-        const response = await addPost({
-            searchId: searchId,
-            data: {
-                ...values
-            }
-        })
+  // Handlers
+  async function handleSubmit(values: AddPostRequestDTO) {
+    // post query
+    const response = await addPost({
+      searchId: searchId,
+      data: {
+        ...values,
+      },
+    });
 
-        // handle error
+    // handle error
 
-        if (response?.id){
-            // invalidate get posts by search id
-            await clientQuery.invalidateQueries(getGetSearchPostsQueryKey(searchId));
-            
-            // refetch get posts by search id
-            await refetch();
-        }
+    if (response?.id) {
+      // invalidate get posts by search id
+      await clientQuery.invalidateQueries(getGetSearchPostsQueryKey(searchId));
 
-        // toast success
-
-        // close drawer
-        onClose()
+      // refetch get posts by search id
+      await refetch();
     }
+
+    // toast success
+
+    // close drawer
+    onClose();
+  }
   return (
     <Drawer isOpen={isOpen} size="full" onClose={onClose}>
       <DrawerOverlay />
