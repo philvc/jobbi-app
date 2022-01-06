@@ -24,8 +24,8 @@ import type {
   SearchDTOById,
   PutSearchResponseDTO,
   PutSearchRequestDTO,
-  UserDTO,
-  GetSearchFriendshipsParams,
+  UpsertFriendshipResponseDTO,
+  UpsertFriendshipRequestDTO,
   ParticipantDTOForSearchById,
   PostDTOBySearchId,
   AddPostResponseDTO,
@@ -246,37 +246,64 @@ export const modifySearch = (
     }
     /**
  * type id struct
-Get friendships by search id.
-Return users
+Delete friendship.
+Return boolean
  */
-export const getSearchFriendships = (
+export const deleteFriendshipById = (
     searchId: string,
-    params?: GetSearchFriendshipsParams,
+    friendshipId: string,
  ) => {
-      return customInstance<UserDTO>(
-      {url: `/searches/${searchId}/friendships`, method: 'get',
-        params,
+      return customInstance<boolean>(
+      {url: `/searches/${searchId}/friendships/${friendshipId}`, method: 'delete'
     },
       );
     }
   
 
-export const getGetSearchFriendshipsQueryKey = (searchId: string,
-    params?: GetSearchFriendshipsParams,) => [`/searches/${searchId}/friendships`, ...(params ? [params]: [])];
+
+    export const useDeleteFriendshipById = <TError = void,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof deleteFriendshipById>, TError,{searchId: string;friendshipId: string}, TContext>, }
+) => {
+      const {mutation: mutationOptions} = options || {}
+
+      const mutationFn: MutationFunction<AsyncReturnType<typeof deleteFriendshipById>, {searchId: string;friendshipId: string}> = (props) => {
+          const {searchId,friendshipId} = props || {};
+
+          return  deleteFriendshipById(searchId,friendshipId,)
+        }
+
+      return useMutation<AsyncReturnType<typeof deleteFriendshipById>, TError, {searchId: string;friendshipId: string}, TContext>(mutationFn, mutationOptions)
+    }
+    /**
+ * type id struct
+Get search by id.
+Return search
+ */
+export const getSearchByIdForInvitation = (
+    searchId: string,
+ ) => {
+      return customInstance<SearchDTOById>(
+      {url: `/searches/${searchId}/invitations`, method: 'get'
+    },
+      );
+    }
+  
+
+export const getGetSearchByIdForInvitationQueryKey = (searchId: string,) => [`/searches/${searchId}/invitations`];
 
     
-export const useGetSearchFriendships = <TData = AsyncReturnType<typeof getSearchFriendships>, TError = void>(
- searchId: string,
-    params?: GetSearchFriendshipsParams, options?: { query?:UseQueryOptions<AsyncReturnType<typeof getSearchFriendships>, TError, TData>, }
+export const useGetSearchByIdForInvitation = <TData = AsyncReturnType<typeof getSearchByIdForInvitation>, TError = void>(
+ searchId: string, options?: { query?:UseQueryOptions<AsyncReturnType<typeof getSearchByIdForInvitation>, TError, TData>, }
 
   ) => {
 
   const {query: queryOptions} = options || {}
 
-  const queryKey = queryOptions?.queryKey ?? getGetSearchFriendshipsQueryKey(searchId,params);
-  const queryFn: QueryFunction<AsyncReturnType<typeof getSearchFriendships>> = () => getSearchFriendships(searchId,params, );
+  const queryKey = queryOptions?.queryKey ?? getGetSearchByIdForInvitationQueryKey(searchId);
+  const queryFn: QueryFunction<AsyncReturnType<typeof getSearchByIdForInvitation>> = () => getSearchByIdForInvitation(searchId, );
 
-  const query = useQuery<AsyncReturnType<typeof getSearchFriendships>, TError, TData>(queryKey, queryFn, {enabled: !!(searchId), ...queryOptions})
+  const query = useQuery<AsyncReturnType<typeof getSearchByIdForInvitation>, TError, TData>(queryKey, queryFn, {enabled: !!(searchId), ...queryOptions})
 
   return {
     queryKey,
@@ -285,6 +312,38 @@ export const useGetSearchFriendships = <TData = AsyncReturnType<typeof getSearch
 }
 
 /**
+ * type id struct
+Upsert friendship.
+Return friendship.
+ */
+export const upsertFriendship = (
+    searchId: string,
+    upsertFriendshipRequestDTO: UpsertFriendshipRequestDTO,
+ ) => {
+      return customInstance<UpsertFriendshipResponseDTO>(
+      {url: `/searches/${searchId}/invitations`, method: 'post',
+      data: upsertFriendshipRequestDTO
+    },
+      );
+    }
+  
+
+
+    export const useUpsertFriendship = <TError = void,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof upsertFriendship>, TError,{searchId: string;data: UpsertFriendshipRequestDTO}, TContext>, }
+) => {
+      const {mutation: mutationOptions} = options || {}
+
+      const mutationFn: MutationFunction<AsyncReturnType<typeof upsertFriendship>, {searchId: string;data: UpsertFriendshipRequestDTO}> = (props) => {
+          const {searchId,data} = props || {};
+
+          return  upsertFriendship(searchId,data,)
+        }
+
+      return useMutation<AsyncReturnType<typeof upsertFriendship>, TError, {searchId: string;data: UpsertFriendshipRequestDTO}, TContext>(mutationFn, mutationOptions)
+    }
+    /**
  * type id struct
 Get participants by search id.
 Return participants
@@ -420,5 +479,36 @@ export const updatePostById = (
         }
 
       return useMutation<AsyncReturnType<typeof updatePostById>, TError, {searchId: string;postId: string;data: UpdatePostRequestDTO}, TContext>(mutationFn, mutationOptions)
+    }
+    /**
+ * type id struct
+Update post.
+Return post
+ */
+export const deletePostById = (
+    searchId: string,
+    postId: string,
+ ) => {
+      return customInstance<boolean>(
+      {url: `/searches/${searchId}/posts/${postId}`, method: 'delete'
+    },
+      );
+    }
+  
+
+
+    export const useDeletePostById = <TError = void,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof deletePostById>, TError,{searchId: string;postId: string}, TContext>, }
+) => {
+      const {mutation: mutationOptions} = options || {}
+
+      const mutationFn: MutationFunction<AsyncReturnType<typeof deletePostById>, {searchId: string;postId: string}> = (props) => {
+          const {searchId,postId} = props || {};
+
+          return  deletePostById(searchId,postId,)
+        }
+
+      return useMutation<AsyncReturnType<typeof deletePostById>, TError, {searchId: string;postId: string}, TContext>(mutationFn, mutationOptions)
     }
     

@@ -24,7 +24,11 @@ export const getGetSearchByIdMock = () => ({avatarUrl: faker.random.word(), desc
 
 export const getModifySearchMock = () => ({description: faker.random.word(), id: faker.random.word(), sector: faker.random.word(), tags: [...Array(faker.datatype.number({min: 1, max: 10}))].map(() => (faker.random.word())), title: faker.random.word(), type: faker.random.word(), userId: faker.random.word()})
 
-export const getGetSearchFriendshipsMock = () => ({avatarUrl: faker.random.word(), email: (() => faker.internet.email())(), externalId: faker.random.word(), firstName: (() => faker.name.firstName())(), id: faker.random.word(), lastName: (() => faker.name.lastName())()})
+export const getDeleteFriendshipByIdMock = () => (faker.datatype.boolean())
+
+export const getGetSearchByIdForInvitationMock = () => ({avatarUrl: faker.random.word(), description: faker.random.word(), email: (() => faker.internet.email())(), firstName: (() => faker.name.firstName())(), id: faker.random.word(), lastName: (() => faker.name.lastName())(), participants: [...Array(faker.datatype.number({min: 1, max: 10}))].map(() => ({avatarUrl: faker.random.word(), email: faker.random.word(), externalId: faker.random.word(), firstName: faker.random.word(), id: faker.random.word(), lastName: faker.random.word()})), sector: faker.random.word(), tags: [...Array(faker.datatype.number({min: 1, max: 10}))].map(() => (faker.random.word())), title: faker.random.word(), type: faker.random.word(), userId: faker.random.word()})
+
+export const getUpsertFriendshipMock = () => ({id: faker.random.word(), searchId: faker.random.word(), state: faker.datatype.number(), type: faker.random.word(), userId: faker.random.word()})
 
 export const getGetSearchParticipantsMock = () => ([...Array(faker.datatype.number({min: 1, max: 10}))].map(() => ({avatarUrl: faker.random.word(), email: faker.random.word(), firstName: faker.random.word(), id: faker.random.word(), lastName: faker.random.word(), numberOfPosts: faker.datatype.number(), type: faker.random.word()})))
 
@@ -33,6 +37,8 @@ export const getGetSearchPostsMock = () => ([...Array(faker.datatype.number({min
 export const getAddPostForSearchMock = () => ({description: faker.random.word(), id: faker.random.word(), searchId: faker.random.word(), title: faker.random.word(), type: faker.random.word(), url: faker.random.word(), userEmail: faker.random.word(), userFirstName: faker.random.word(), userId: faker.random.word(), userLastName: faker.random.word()})
 
 export const getUpdatePostByIdMock = () => ({description: faker.random.word(), id: faker.random.word(), searchId: faker.random.word(), title: faker.random.word(), type: faker.random.word(), url: faker.random.word(), userEmail: faker.random.word(), userFirstName: faker.random.word(), userId: faker.random.word(), userLastName: faker.random.word()})
+
+export const getDeletePostByIdMock = () => (faker.datatype.boolean())
 
 export const getSearchesMSW = () => [
 rest.post('*/searches', (req, res, ctx) => {
@@ -71,11 +77,23 @@ ctx.json(getGetSearchByIdMock()),
           ctx.status(200, 'Mocked status'),
 ctx.json(getModifySearchMock()),
         )
-      }),rest.get('*/searches/:searchId/friendships', (req, res, ctx) => {
+      }),rest.delete('*/searches/:searchId/friendships/:friendshipId', (req, res, ctx) => {
         return res(
           ctx.delay(1000),
           ctx.status(200, 'Mocked status'),
-ctx.json(getGetSearchFriendshipsMock()),
+ctx.json(getDeleteFriendshipByIdMock()),
+        )
+      }),rest.get('*/searches/:searchId/invitations', (req, res, ctx) => {
+        return res(
+          ctx.delay(1000),
+          ctx.status(200, 'Mocked status'),
+ctx.json(getGetSearchByIdForInvitationMock()),
+        )
+      }),rest.post('*/searches/:searchId/invitations', (req, res, ctx) => {
+        return res(
+          ctx.delay(1000),
+          ctx.status(200, 'Mocked status'),
+ctx.json(getUpsertFriendshipMock()),
         )
       }),rest.get('*/searches/:searchId/participants', (req, res, ctx) => {
         return res(
@@ -100,5 +118,11 @@ ctx.json(getAddPostForSearchMock()),
           ctx.delay(1000),
           ctx.status(200, 'Mocked status'),
 ctx.json(getUpdatePostByIdMock()),
+        )
+      }),rest.delete('*/searches/:searchId/posts/:postId', (req, res, ctx) => {
+        return res(
+          ctx.delay(1000),
+          ctx.status(200, 'Mocked status'),
+ctx.json(getDeletePostByIdMock()),
         )
       }),]

@@ -1,7 +1,6 @@
 import { Box, Flex, Skeleton } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import {
-  useGetSearchFriendships,
   useGetSearchParticipants,
 } from "../../../../../services/searches/searches";
 import QuestDetailsAddButton from "../posts/add-post";

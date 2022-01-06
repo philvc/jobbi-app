@@ -33,3 +33,5 @@ export * from './addPostRequestDTO';
 export * from './addPostResponseDTO';
 export * from './updatePostRequestDTO';
 export * from './updatePostResponseDTO';
+export * from './upsertFriendshipRequestDTO';
+export * from './upsertFriendshipResponseDTO';

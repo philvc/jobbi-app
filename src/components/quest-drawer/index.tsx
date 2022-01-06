@@ -42,16 +42,15 @@ export default function SearchDrawer({
 
   // Queries
   const { mutateAsync: modifySearch } = useModifySearch();
-  const { refetch } = useGetSearchById(quest.id);
+  const { refetch } = useGetSearchById(quest?.id, {query: {enabled: !! quest?.id}});
 
   async function handleSubmit(values: PutSearchRequestDTO) {
-
     // Invalidate query
     await clientQuery.invalidateQueries(getGetMySearchQueryKey());
 
     // Mutation
     await modifySearch({
-      searchId: quest.id as string,
+      searchId: quest?.id as string,
       data: {
         title: values.title,
         description: values.description,

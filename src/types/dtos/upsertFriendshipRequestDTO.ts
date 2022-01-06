@@ -11,17 +11,9 @@ Schemes: [http, https]
 /**
  * An friendship
  */
-export interface FriendshipDTO {
-  /** Delete date */
-  deletedAt?: string;
-  /** The id */
-  id?: string;
-  /** The searchId */
-  searchId?: string;
+export interface UpsertFriendshipRequestDTO {
   /** The state */
   state?: number;
   /** The type */
   type?: string;
-  /** The userId */
-  userId?: string;
 }

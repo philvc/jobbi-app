@@ -39,18 +39,18 @@ const EditPostDrawer = ({ isOpen, onClose, post }: EditPostDrawerProps) => {
   // Attributes
   const queryClient = useQueryClient();
   const { id } = useUser();
-  const isOwner = post.userId === id;
+  const isOwner = post?.userId === id;
 
   // Query
   const { mutateAsync: editPost } = useUpdatePostById();
-  const { refetch } = useGetSearchPosts(post.searchId);
+  const { refetch } = useGetSearchPosts(post?.searchId);
 
   // Handler
   async function handleSubmit(values: UpdatePostRequestDTO) {
     // Upate post
     const response = await editPost({
-      searchId: post.searchId,
-      postId: post.id,
+      searchId: post?.searchId,
+      postId: post?.id,
       data: {
         ...values,
       },
@@ -59,9 +59,9 @@ const EditPostDrawer = ({ isOpen, onClose, post }: EditPostDrawerProps) => {
     // handle error
 
     // Invalidate & refetch get search post
-    if (response.id) {
+    if (response?.id) {
       await queryClient.invalidateQueries(
-        getGetSearchPostsQueryKey(post.searchId)
+        getGetSearchPostsQueryKey(post?.searchId)
       );
       await refetch();
     }
@@ -75,10 +75,10 @@ const EditPostDrawer = ({ isOpen, onClose, post }: EditPostDrawerProps) => {
       <DrawerContent>
         <Formik<UpdatePostRequestDTO>
           initialValues={{
-            title: post.title,
-            description: post.description,
-            type: post.type,
-            url: post.url,
+            title: post?.title,
+            description: post?.description,
+            type: post?.type,
+            url: post?.url,
           }}
           onSubmit={handleSubmit}
         >
