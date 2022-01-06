@@ -16,6 +16,7 @@ import { COLORS } from "../../constants/colors";
 import { useUser } from "../../contexts/user";
 import {
   getGetSearchPostsQueryKey,
+  useDeletePostById,
   useGetSearchPosts,
   useUpdatePostById,
 } from "../../services/searches/searches";
@@ -44,6 +45,7 @@ const EditPostDrawer = ({ isOpen, onClose, post }: EditPostDrawerProps) => {
   // Query
   const { mutateAsync: editPost } = useUpdatePostById();
   const { refetch } = useGetSearchPosts(post?.searchId);
+  const {mutateAsync: deletePost} = useDeletePostById()
 
   // Handler
   async function handleSubmit(values: UpdatePostRequestDTO) {
@@ -69,6 +71,26 @@ const EditPostDrawer = ({ isOpen, onClose, post }: EditPostDrawerProps) => {
     // Close drawer
     onClose();
   }
+
+  // Delete post
+  async function handleDeletePost(){
+    const response = await deletePost({
+      searchId: post?.searchId,
+      postId: post?.id
+    })
+
+    // Handle error
+
+    if (response){
+      await queryClient.invalidateQueries(
+        getGetSearchPostsQueryKey(post?.searchId)
+      );
+      await refetch();
+    }
+
+    // Close drawer
+    onClose();
+  } 
   return (
     <Drawer isOpen={isOpen} size="full" onClose={onClose}>
       <DrawerOverlay />
@@ -117,6 +139,17 @@ const EditPostDrawer = ({ isOpen, onClose, post }: EditPostDrawerProps) => {
                   Cancel
                 </Button>
 
+                {isOwner && (
+                  <Button
+                    disabled={!isOwner}
+                    onClick={handleDeletePost}
+                    bg={COLORS.BLUE.T500.hex}
+                    color={COLORS.WHITE.hex}
+                    w="full"
+                  >
+                    Delete
+                  </Button>
+                )}
                 {isOwner && (
                   <Button
                     disabled={!isOwner}
