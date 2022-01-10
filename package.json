@@ -25,9 +25,11 @@
 	},
 	"dependencies": {
 		"@capacitor/android": "^3.2.5",
+		"@capacitor/browser": "^1.0.6",
 		"@capacitor/cli": "^3.2.5",
 		"@capacitor/core": "^3.2.5",
 		"@capacitor/ios": "^3.2.5",
+		"@capacitor/share": "^1.1.0",
 		"@chakra-ui/react": "^1.6.8",
 		"@emotion/react": "^11.7.1",
 		"@emotion/styled": "^11.3.0",

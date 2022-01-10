@@ -21,6 +21,7 @@ const QuestPostCard = ({ post }: QuestPostCardProps) => {
         borderRadius={"0.75rem"}
         p={"1rem"}
         onClick={onOpen}
+        cursor={"pointer"}
       >
         <Text color="#393360" fontSize={"16px"} fontWeight={"bold"}>
           {post?.title}

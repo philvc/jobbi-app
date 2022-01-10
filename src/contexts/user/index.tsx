@@ -7,6 +7,8 @@ interface IUserContext {
   email?: string;
   fistName?: string;
   lastName?: string;
+  isLoading?: boolean;
+  isFetched?: boolean;
 }
 
 const UserContext = createContext<IUserContext>({});
@@ -17,7 +19,7 @@ export const useUser = () => {
 
 export const UserProvider = (props: BoxProps) => {
   // Queries
-  const { data: user, isLoading } = useGetUserBySub();
+  const { data: user, isLoading, isFetched } = useGetUserBySub();
 
 
   return (
@@ -27,6 +29,8 @@ export const UserProvider = (props: BoxProps) => {
         id: user?.id,
         fistName: user?.firstName,
         lastName: user?.lastName,
+        isLoading: isLoading,
+        isFetched: isFetched
       }}
     >
       {props.children}

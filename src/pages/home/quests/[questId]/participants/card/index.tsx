@@ -1,10 +1,20 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { capitalize } from "lodash";
 import { useRouter } from "next/router";
+import { useQueryClient } from "react-query";
 import { OldAvatar } from "../../../../../../components/shared/icons/old-avatar";
 import { friendTypeInvited } from "../../../../../../constants/contant";
 import { useUser } from "../../../../../../contexts/user";
-import { useGetSearchById } from "../../../../../../services/searches/searches";
+import {
+  getGetMySharedSearchesQueryKey,
+  getGetSearchByIdQueryKey,
+  getGetSearchParticipantsQueryKey,
+  useDeleteFriendshipById,
+  useGetMySharedSearches,
+  useGetSearchById,
+  useGetSearchParticipants,
+  useUpsertFriendship,
+} from "../../../../../../services/searches/searches";
 import { ParticipantDTOForSearchById } from "../../../../../../types/dtos";
 
 interface QuestDetailsFriendCardProps {
@@ -16,10 +26,56 @@ const QuestDetailsFriendCard = ({
 }: QuestDetailsFriendCardProps) => {
   // Attributes
   const { id, email } = useUser();
+  const clientQuery = useQueryClient();
   const router = useRouter();
   const searchId = router.query?.questId as string;
-  const { data: quest, isLoading, refetch } = useGetSearchById(searchId);
-  const isOwner = quest?.userId === id;
+  const { data: quest, refetch: refetchSearchById } = useGetSearchById(searchId);
+  const isOwnerOrFriend = quest?.userId === id || participant?.id === id;
+  const {
+    mutateAsync: deleteFriendship,
+    isLoading: isDeleteLoading,
+  } = useDeleteFriendshipById();
+  const { refetch: refetchSearchParticipants } = useGetSearchParticipants(
+    searchId
+  );
+  const {refetch: refetchSharedQuests} = useGetMySharedSearches()
+
+  // Handlers
+  async function removeFriendship() {
+    // Remove friendship
+    const response = await deleteFriendship({
+      searchId: searchId,
+      friendshipId: participant.friendshipId,
+    });
+    if (response) {
+      // Invalidate get participants query
+      await clientQuery.invalidateQueries(
+        getGetSearchParticipantsQueryKey(searchId)
+      );
+      // Refetch get participants by search Id
+      await refetchSearchParticipants();
+
+      // Invalidate get quest
+      await clientQuery.invalidateQueries(getGetSearchByIdQueryKey(searchId))
+
+      // Refetch get quest to update avatars
+      await refetchSearchById();
+
+      // If user is participant, refetch shared quest
+      if(participant?.id === id){
+
+        // Invalidate get my shared quests
+        await clientQuery.invalidateQueries(getGetMySharedSearchesQueryKey());
+
+        // Refetch get shared quest
+        await refetchSharedQuests();
+
+        // Go back home
+        router.push('/home')
+
+      }
+    }
+  }
 
   return (
     <Box
@@ -71,7 +127,7 @@ const QuestDetailsFriendCard = ({
             </Text>
           </Flex>
         </Flex>
-        {isOwner && (
+        {isOwnerOrFriend && (
           <Box
             px="18px"
             py="8px"
@@ -81,10 +137,19 @@ const QuestDetailsFriendCard = ({
             borderRadius={"8px"}
             border="1.5px solid #8F95B2"
             boxSizing="border-box"
+            onClick={removeFriendship}
+            disabled={isDeleteLoading}
+            cursor={"pointer"}
           >
-            <Text fontSize={"14px"} color="#8F95B2">
-              Unfollow
-            </Text>
+            {!isDeleteLoading ? (
+              <Text fontSize={"14px"} color="#8F95B2">
+                Unfollow
+              </Text>
+            ) : (
+              <Text fontSize={"14px"} color="#8F95B2">
+                Deleting...
+              </Text>
+            )}
           </Box>
         )}
       </Flex>

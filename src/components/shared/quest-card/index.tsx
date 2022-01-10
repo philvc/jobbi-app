@@ -1,4 +1,5 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { COLORS } from "../../../constants/colors";
 import { SearchDTO, SharedSearchDTO } from "../../../types/dtos";
 import { QuestCardHeader } from "./header";
@@ -11,6 +12,8 @@ interface QuestCardProps {
 }
 
 const QuestCard = ({ index, isFriend = false, quest }: QuestCardProps) => {
+  // Attributes
+  const router =useRouter();
   return (
     <Box
       background={"white"}
@@ -22,6 +25,8 @@ const QuestCard = ({ index, isFriend = false, quest }: QuestCardProps) => {
       padding={"15px"}
       minWidth={"269px"}
       height={"180px"}
+      cursor={"pointer"}
+      onClick={() => router.push(`/home/quests/${quest?.id}`)}
     >
       <Flex
         direction={"column"}

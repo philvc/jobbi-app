@@ -90,6 +90,7 @@ const AddPostDrawer = ({ isOpen, onClose }: AddPostDrawerProps) => {
               <Stack spacing={8}>
                 <Text>Créé un post</Text>
                 <Stack spacing={4}>
+                  <InputField placeholder="Type" name="type" />
                   <InputField placeholder="Titre" name="title" />
                   <InputField
                     type="textarea"

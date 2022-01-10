@@ -6,6 +6,7 @@ import EditPen from "../../../../../../components/shared/icons/edit-pen";
 import ShareIcon from "../../../../../../components/shared/icons/share";
 import { useUser } from "../../../../../../contexts/user";
 import { SearchDTO } from "../../../../../../types/dtos";
+import {Browser} from "@capacitor/browser";
 
 interface QuestDetailsHeaderIconsTopBarProps {
   quest: SearchDTO;
@@ -19,6 +20,12 @@ const QuestDetailsHeaderIconsTopBar = ({
   const { isOpen, onClose, onOpen } = useDisclosure();
   const { id } = useUser();
   const isOwner = quest?.userId === id;
+
+  // Handlers
+  async function handleShare() {
+    await Browser.open({url: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/join/${quest.id}`})
+
+  }
   return (
     <>
       <Flex
@@ -35,7 +42,7 @@ const QuestDetailsHeaderIconsTopBar = ({
           display={"flex"}
           justifyContent={"center"}
           alignItems={"center"}
-          onClick={() => router.back()}
+          onClick={() => router.push('/home')}
         >
           <Icons.BackArrow
             style={{ margin: "auto", alignSelf: "center" }}
@@ -73,7 +80,7 @@ const QuestDetailsHeaderIconsTopBar = ({
               display={"flex"}
               justifyContent={"center"}
               alignItems={"center"}
-              onClick={() => router.back()}
+              onClick={handleShare}
             >
               <ShareIcon fill="white" height={"1rem"} width={"1rem"} />
             </Box>
