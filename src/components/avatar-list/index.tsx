@@ -1,19 +1,13 @@
-import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
-import { OldAvatar } from "../../../shared/icons/old-avatar";
+import { Box, Flex, Text } from "@chakra-ui/react";
+import { UserDTO } from "../../types/dtos";
+import { OldAvatar } from "../shared/icons/old-avatar";
 
-interface Friend {
-  firstName?: string;
-  lastName?: string;
-  avatarUrl?: string;
-  id?: string;
+interface AvatarListProps {
+  users: UserDTO[]
 }
 
-interface MyQuestParticipantsProps {
-  friends: Friend[] | undefined;
-}
-
-const MyQuestParticipants = ({ friends }: MyQuestParticipantsProps) => {
-  // Handlers
+const AvatarList = ({users}:AvatarListProps) => {
+   // Handlers
   // random color for card icon
   const random_hex_color_code = () => {
     let n = (Math.random() * 0xfffff * 1000000).toString(16);
@@ -21,12 +15,12 @@ const MyQuestParticipants = ({ friends }: MyQuestParticipantsProps) => {
   };
   return (
     <Flex>
-      {friends &&
-        friends.map((participant, index, list) => {
+      {users &&
+        users.map((user, index, list) => {
           if (index < 2) {
             return (
               <OldAvatar
-                key={participant?.id}
+                key={user?.id}
                 style={{
                   borderRadius: "100%",
                   marginLeft: index !== 0 ? "-18px" : 0,
@@ -43,7 +37,7 @@ const MyQuestParticipants = ({ friends }: MyQuestParticipantsProps) => {
           if (index === 2) {
             return (
               <Box
-                key={participant?.id}
+                key={user?.id}
                 position={"relative"}
                 style={{
                   borderRadius: "100%",
@@ -77,6 +71,6 @@ const MyQuestParticipants = ({ friends }: MyQuestParticipantsProps) => {
         })}
     </Flex>
   );
-};
+}
 
-export default MyQuestParticipants;
+export default AvatarList;

@@ -24,6 +24,8 @@ import type {
   SearchDTOById,
   PutSearchResponseDTO,
   PutSearchRequestDTO,
+  FollowerDTO,
+  UserDTO,
   UpsertFriendshipResponseDTO,
   UpsertFriendshipRequestDTO,
   ParticipantDTOForSearchById,
@@ -246,6 +248,104 @@ export const modifySearch = (
     }
     /**
  * type id struct
+Post follower.
+Return follower.
+ */
+export const postFollower = (
+    searchId: string,
+ ) => {
+      return customInstance<FollowerDTO>(
+      {url: `/searches/${searchId}/followers`, method: 'post',
+      data: undefined
+    },
+      );
+    }
+  
+
+
+    export const usePostFollower = <TError = void,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof postFollower>, TError,{searchId: string}, TContext>, }
+) => {
+      const {mutation: mutationOptions} = options || {}
+
+      const mutationFn: MutationFunction<AsyncReturnType<typeof postFollower>, {searchId: string}> = (props) => {
+          const {searchId} = props || {};
+
+          return  postFollower(searchId,)
+        }
+
+      return useMutation<AsyncReturnType<typeof postFollower>, TError, {searchId: string}, TContext>(mutationFn, mutationOptions)
+    }
+    /**
+ * type id struct
+Delete follower.
+Return boolean
+ */
+export const deleteFollower = (
+    searchId: string,
+    followerId: string,
+ ) => {
+      return customInstance<boolean>(
+      {url: `/searches/${searchId}/followers/${followerId}`, method: 'delete'
+    },
+      );
+    }
+  
+
+
+    export const useDeleteFollower = <TError = void,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof deleteFollower>, TError,{searchId: string;followerId: string}, TContext>, }
+) => {
+      const {mutation: mutationOptions} = options || {}
+
+      const mutationFn: MutationFunction<AsyncReturnType<typeof deleteFollower>, {searchId: string;followerId: string}> = (props) => {
+          const {searchId,followerId} = props || {};
+
+          return  deleteFollower(searchId,followerId,)
+        }
+
+      return useMutation<AsyncReturnType<typeof deleteFollower>, TError, {searchId: string;followerId: string}, TContext>(mutationFn, mutationOptions)
+    }
+    /**
+ * type id struct
+Get friends by search id.
+Return friends
+ */
+export const getSearchFriends = (
+    searchId: string,
+ ) => {
+      return customInstance<UserDTO[]>(
+      {url: `/searches/${searchId}/friends`, method: 'get'
+    },
+      );
+    }
+  
+
+export const getGetSearchFriendsQueryKey = (searchId: string,) => [`/searches/${searchId}/friends`];
+
+    
+export const useGetSearchFriends = <TData = AsyncReturnType<typeof getSearchFriends>, TError = void>(
+ searchId: string, options?: { query?:UseQueryOptions<AsyncReturnType<typeof getSearchFriends>, TError, TData>, }
+
+  ) => {
+
+  const {query: queryOptions} = options || {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetSearchFriendsQueryKey(searchId);
+  const queryFn: QueryFunction<AsyncReturnType<typeof getSearchFriends>> = () => getSearchFriends(searchId, );
+
+  const query = useQuery<AsyncReturnType<typeof getSearchFriends>, TError, TData>(queryKey, queryFn, {enabled: !!(searchId), ...queryOptions})
+
+  return {
+    queryKey,
+    ...query
+  }
+}
+
+/**
+ * type id struct
 Delete friendship.
 Return boolean
  */
@@ -345,7 +445,7 @@ export const upsertFriendship = (
     }
     /**
  * type id struct
-Get participants by search id.
+Get participants (friends & followers) by search id.
 Return participants
  */
 export const getSearchParticipants = (

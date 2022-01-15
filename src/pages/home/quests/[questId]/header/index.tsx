@@ -63,7 +63,7 @@ const QuestDetailsHeader = () => {
           justifyContent={"space-between"}
           marginTop={"2.125rem"}
         >
-          <MyQuestParticipants participants={data?.participants} />
+          <MyQuestParticipants friends={data?.friends} />
           {data?.sector && <MyQuestTag sector={data?.sector} />}
         </Flex>
       </Skeleton>

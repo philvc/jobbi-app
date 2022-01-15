@@ -22,12 +22,12 @@ export interface SearchDTOById {
   email?: string;
   /** The firstName */
   firstName?: string;
+  /** The participants */
+  friends?: UserDTO[];
   /** The id */
   id: string;
   /** The lastName */
   lastName?: string;
-  /** The participants */
-  participants?: UserDTO[];
   /** The search sector */
   sector?: string;
   tags?: StringArray;

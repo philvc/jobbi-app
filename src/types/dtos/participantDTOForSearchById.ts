@@ -18,6 +18,8 @@ export interface ParticipantDTOForSearchById {
   email?: string;
   /** The firstName */
   firstName?: string;
+  /** The followerId */
+  followerId?: string;
   /** The friendship id */
   friendshipId?: string;
   /** The id */

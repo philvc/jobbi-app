@@ -14,10 +14,10 @@ import type { StringArray } from './stringArray';
  * My search
  */
 export interface MySearchDTO {
+  /** The friends */
+  friends?: UserDTO[];
   /** The id */
   id?: string;
-  /** The participants */
-  participants?: UserDTO[];
   /** The search sector */
   sector?: string;
   tags?: StringArray;

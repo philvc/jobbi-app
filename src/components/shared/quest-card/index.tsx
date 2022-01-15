@@ -1,7 +1,9 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { COLORS } from "../../../constants/colors";
+import { useGetSearchFriends } from "../../../services/searches/searches";
 import { SearchDTO, SharedSearchDTO } from "../../../types/dtos";
+import AvatarList from "../../avatar-list";
 import { QuestCardHeader } from "./header";
 import QuestCardTags from "./tag";
 
@@ -13,7 +15,10 @@ interface QuestCardProps {
 
 const QuestCard = ({ index, isFriend = false, quest }: QuestCardProps) => {
   // Attributes
-  const router =useRouter();
+  const router = useRouter();
+  const { data: friends, isLoading } = useGetSearchFriends(quest?.id, {
+    query: { enabled: !!quest?.id },
+  });
   return (
     <Box
       background={"white"}
@@ -24,6 +29,7 @@ const QuestCard = ({ index, isFriend = false, quest }: QuestCardProps) => {
       paddingY={"17px"}
       padding={"15px"}
       minWidth={"269px"}
+      width={"269px"}
       height={"180px"}
       cursor={"pointer"}
       onClick={() => router.push(`/home/quests/${quest?.id}`)}
@@ -44,11 +50,13 @@ const QuestCard = ({ index, isFriend = false, quest }: QuestCardProps) => {
             {quest?.description}
           </Text>
         </Box>
-        {quest?.sector && <QuestCardTags sector={quest?.sector} />}
+        <Flex direction={"row"} justifyContent={"space-between"}>
+          {friends?.length && <AvatarList users={friends} />}
+          {quest?.sector && <QuestCardTags sector={quest?.sector} />}
+        </Flex>
       </Flex>
     </Box>
   );
 };
 
 export default QuestCard;
-

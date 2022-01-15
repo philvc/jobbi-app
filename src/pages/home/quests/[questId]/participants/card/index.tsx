@@ -9,11 +9,12 @@ import {
   getGetMySharedSearchesQueryKey,
   getGetSearchByIdQueryKey,
   getGetSearchParticipantsQueryKey,
+  useDeleteFollower,
   useDeleteFriendshipById,
+  useGetMyFollowedSearches,
   useGetMySharedSearches,
   useGetSearchById,
   useGetSearchParticipants,
-  useUpsertFriendship,
 } from "../../../../../../services/searches/searches";
 import { ParticipantDTOForSearchById } from "../../../../../../types/dtos";
 
@@ -29,24 +30,40 @@ const QuestDetailsFriendCard = ({
   const clientQuery = useQueryClient();
   const router = useRouter();
   const searchId = router.query?.questId as string;
-  const { data: quest, refetch: refetchSearchById } = useGetSearchById(searchId);
-  const isOwnerOrFriend = quest?.userId === id || participant?.id === id;
+  const { data: quest, refetch: refetchSearchById } = useGetSearchById(
+    searchId
+  );
+  const isOwnerOrParticipant = quest?.userId === id || participant?.id === id;
+  const isFriendship = participant?.friendshipId;
   const {
     mutateAsync: deleteFriendship,
-    isLoading: isDeleteLoading,
+    isLoading: isDeleteFriendshipsLoading,
   } = useDeleteFriendshipById();
+  const {
+    mutateAsync: deleteFollower,
+    isLoading: isDeleteFollowerLoading,
+  } = useDeleteFollower();
   const { refetch: refetchSearchParticipants } = useGetSearchParticipants(
     searchId
   );
-  const {refetch: refetchSharedQuests} = useGetMySharedSearches()
+  const { refetch: refetchSharedQuests } = useGetMySharedSearches();
+  const {refetch: refetchFollowedQuests} = useGetMyFollowedSearches();
+  const isDeleteLoading = isDeleteFriendshipsLoading || isDeleteFollowerLoading;
 
   // Handlers
-  async function removeFriendship() {
-    // Remove friendship
-    const response = await deleteFriendship({
-      searchId: searchId,
-      friendshipId: participant.friendshipId,
-    });
+  // Remove participant from search
+  async function removeParticipant() {
+    // Remove friendship or follwer
+
+    const response = isFriendship
+      ? await deleteFriendship({
+          searchId: searchId,
+          friendshipId: participant.friendshipId,
+        })
+      : await deleteFollower({
+          searchId: searchId,
+          followerId: participant.followerId,
+        });
     if (response) {
       // Invalidate get participants query
       await clientQuery.invalidateQueries(
@@ -56,23 +73,21 @@ const QuestDetailsFriendCard = ({
       await refetchSearchParticipants();
 
       // Invalidate get quest
-      await clientQuery.invalidateQueries(getGetSearchByIdQueryKey(searchId))
+      await clientQuery.invalidateQueries(getGetSearchByIdQueryKey(searchId));
 
       // Refetch get quest to update avatars
       await refetchSearchById();
 
       // If user is participant, refetch shared quest
-      if(participant?.id === id){
-
+      if (participant?.id === id) {
         // Invalidate get my shared quests
         await clientQuery.invalidateQueries(getGetMySharedSearchesQueryKey());
 
-        // Refetch get shared quest
-        await refetchSharedQuests();
+        // Refetch get shared or followed quest
+        isFriendship ? await refetchSharedQuests() : await refetchFollowedQuests;
 
         // Go back home
-        router.push('/home')
-
+        router.push("/home");
       }
     }
   }
@@ -127,7 +142,7 @@ const QuestDetailsFriendCard = ({
             </Text>
           </Flex>
         </Flex>
-        {isOwnerOrFriend && (
+        {isOwnerOrParticipant && (
           <Box
             px="18px"
             py="8px"
@@ -137,7 +152,7 @@ const QuestDetailsFriendCard = ({
             borderRadius={"8px"}
             border="1.5px solid #8F95B2"
             boxSizing="border-box"
-            onClick={removeFriendship}
+            onClick={removeParticipant}
             disabled={isDeleteLoading}
             cursor={"pointer"}
           >

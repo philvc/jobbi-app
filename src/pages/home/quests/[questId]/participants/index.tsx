@@ -18,7 +18,7 @@ const QuestDetailsParticipants = () => {
   const hasParticipants = participants && participants?.length !== 0;
   return (
     <Box pb={"150px"}>
-      <QuestDetailsSectionHeader>Friends</QuestDetailsSectionHeader>
+      <QuestDetailsSectionHeader>{"Friends & followers"}</QuestDetailsSectionHeader>
       <Skeleton
         minWidth={isLoading ? "327px" : "fit-content"}
         height={isLoading ? "72px" : "fit-content"}

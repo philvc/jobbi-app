@@ -9,7 +9,7 @@ import PublicQuestBox from "./quest-box";
 const PublicQuestList = () => {
   // Queries
   const { data: quests, isLoading } = useGetMyFollowedSearches();
-  const hasSharedQuest = quests && quests?.length !== 0;
+  const hasFollowedQuests = quests && quests?.length !== 0;
   return (
     <Box background={"#F8F9FC"} pb={"200px"}>
       <Heading ml={"24px"} mb={"20px"} size={"800"} color={"#393360"}>
@@ -22,7 +22,7 @@ const PublicQuestList = () => {
         mx={isLoading ? "24px" : "initial"}
         mb={isLoading ? "47px" : "initial"}
       >
-        {hasSharedQuest && (
+        {hasFollowedQuests && (
           <Flex direction={"column"}>
             {quests?.map((quest) => (
               <PublicQuestBox mx={"24px"} mb={"20px"}>
@@ -31,7 +31,7 @@ const PublicQuestList = () => {
             ))}
           </Flex>
         )}
-        {!hasSharedQuest && (
+        {!hasFollowedQuests && (
           <SharedQuestBox ml={"24px"} mb={"47px"}>
             <PublicSearchPlaceholder />
           </SharedQuestBox>

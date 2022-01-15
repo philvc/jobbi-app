@@ -1,6 +1,7 @@
 import { Box, Flex, Heading, Skeleton, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useGetMySearch } from "../../../services/searches/searches";
+import AvatarList from "../../avatar-list";
 import MyQuestParticipants from "./participants";
 import MyQuestTag from "./tag";
 
@@ -47,7 +48,7 @@ const MyQuest = () => {
             direction={"row"}
             justifyContent={"space-between"}
           >
-            <MyQuestParticipants participants={quest?.participants} />
+            <AvatarList users={quest?.friends} />
             {quest?.sector && <MyQuestTag sector={quest?.sector} />}
           </Flex>
         </Flex>
@@ -57,35 +58,3 @@ const MyQuest = () => {
 };
 
 export default MyQuest;
-
-const participants: {
-  firstName?: string;
-  lastName?: string;
-  avatarUrl?: string;
-  id?: string;
-}[] = [
-  {
-    firstName: "",
-    lastName: "",
-    avatarUrl: "",
-    id: "",
-  },
-  {
-    firstName: "",
-    lastName: "",
-    avatarUrl: "",
-    id: "",
-  },
-  {
-    firstName: "",
-    lastName: "",
-    avatarUrl: "",
-    id: "",
-  },
-  {
-    firstName: "",
-    lastName: "",
-    avatarUrl: "",
-    id: "",
-  },
-];
