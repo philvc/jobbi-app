@@ -37,3 +37,4 @@ export * from './upsertFriendshipRequestDTO';
 export * from './upsertFriendshipResponseDTO';
 export * from './followerDTO';
 export * from './publicSearchDto';
+export * from './getSearchRole200';

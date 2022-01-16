@@ -21,7 +21,6 @@ export const UserProvider = (props: BoxProps) => {
   // Queries
   const { data: user, isLoading, isFetched } = useGetUserBySub();
 
-
   return (
     <UserContext.Provider
       value={{
@@ -30,7 +29,7 @@ export const UserProvider = (props: BoxProps) => {
         fistName: user?.firstName,
         lastName: user?.lastName,
         isLoading: isLoading,
-        isFetched: isFetched
+        isFetched: isFetched,
       }}
     >
       {props.children}

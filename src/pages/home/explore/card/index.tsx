@@ -1,14 +1,14 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { NumericDictionaryIterator } from "lodash";
 import { useRouter } from "next/router";
-import { useQueryClient } from "react-query";
+import { InfiniteQueryObserver, useQueryClient } from "react-query";
 import AvatarList from "../../../../components/avatar-list";
 import { QuestCardHeader } from "../../../../components/shared/quest-card/header";
 import QuestCardTags from "../../../../components/shared/quest-card/tag";
 import { COLORS } from "../../../../constants/colors";
 import { EnumReferer } from "../../../../constants/enums";
 import {
-    getGetPublicSearchesQueryKey,
+  getGetPublicSearchesQueryKey,
   useDeleteFollower,
   useGetPublicSearches,
   useGetSearchFriends,
@@ -24,9 +24,9 @@ interface PublicQuestCardProps {
 }
 
 enum EnumFollowButtonTitle {
-    FOLLOW ="FOLLOW",
-    FOLLOWER = "FOLLOWER",
-    FRIEND = "FRIEND"
+  FOLLOW = "FOLLOW",
+  UNFOLLOW = "UNFOLLOW",
+  FRIEND = "FRIEND",
 }
 
 const PublicQuestCard = ({ index, quest }: PublicQuestCardProps) => {
@@ -40,7 +40,7 @@ const PublicQuestCard = ({ index, quest }: PublicQuestCardProps) => {
     }
   );
   const buttonTitle: EnumFollowButtonTitle = quest?.followerId
-    ? EnumFollowButtonTitle.FOLLOWER
+    ? EnumFollowButtonTitle.UNFOLLOW
     : quest?.friendshipId
     ? EnumFollowButtonTitle.FRIEND
     : EnumFollowButtonTitle.FOLLOW;
@@ -52,38 +52,40 @@ const PublicQuestCard = ({ index, quest }: PublicQuestCardProps) => {
     mutateAsync: deleteFollower,
     isLoading: deleteFollowerIsLoading,
   } = useDeleteFollower();
-  const {refetch: refetchPublicSearches} = useGetPublicSearches()
-
+  const { refetch: refetchPublicSearches, isLoading: refetchPublicSearchesLoading } = useGetPublicSearches();
+  const followButtonDisabled = postIsLoading || deleteFollowerIsLoading || refetchPublicSearchesLoading
 
   // Handlers
   async function handleClick(e: React.MouseEvent<Element, MouseEvent>) {
 
-    // Stop event propagation
-    e.stopPropagation();
-    
-    // Post of delete follower
-    switch(buttonTitle){
+    // If user is a friend, do nothing & redirect to quest details
+    if (!quest?.friendshipId) {
+      // Stop event propagation
+      e.stopPropagation();
+
+      // Post of delete follower
+      switch (buttonTitle) {
         case EnumFollowButtonTitle.FOLLOW:
-            await postFollower({
-                searchId: quest?.id
-            })
-            break;
-        case EnumFollowButtonTitle.FOLLOWER:
-            await deleteFollower({
-                searchId: quest?.id, 
-                followerId: quest?.followerId
-            });
-            break;
+          await postFollower({
+            searchId: quest?.id,
+          });
+          break;
+        case EnumFollowButtonTitle.UNFOLLOW:
+          await deleteFollower({
+            searchId: quest?.id,
+            followerId: quest?.followerId,
+          });
+          break;
         case EnumFollowButtonTitle.FRIEND:
         default:
-            break;
+          break;
+      }
+
+      // Invalidate get public search query
+      await clientQuery.invalidateQueries(getGetPublicSearchesQueryKey());
+      // Refetch public quest
+      await refetchPublicSearches();
     }
-
-    // Invalidate get public search query
-    await clientQuery.invalidateQueries(getGetPublicSearchesQueryKey());
-    // Refetch public quest
-    await refetchPublicSearches();
-
   }
 
   return (
@@ -99,7 +101,9 @@ const PublicQuestCard = ({ index, quest }: PublicQuestCardProps) => {
       width={"269px"}
       height={"180px"}
       cursor={"pointer"}
-      onClick={() => router.push(`/home/quests/${quest?.id}?referer=${EnumReferer.EXPLORE}`)}
+      onClick={() =>
+        router.push(`/home/quests/${quest?.id}?referer=${EnumReferer.EXPLORE}`)
+      }
     >
       <Flex
         direction={"column"}
@@ -118,8 +122,9 @@ const PublicQuestCard = ({ index, quest }: PublicQuestCardProps) => {
             boxSizing="border-box"
             cursor={"pointer"}
             onClick={handleClick}
+            disabled={followButtonDisabled}
           >
-            {buttonTitle}
+            {followButtonDisabled ? "Saving..." : buttonTitle}
           </Box>
           <PublicQuestCardHeader quest={quest} />
           <Text

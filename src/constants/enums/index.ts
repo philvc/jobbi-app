@@ -9,3 +9,11 @@ export enum EnumReferer {
     SIGNUP = 'SIGNUP',
     HOME = 'HOME'
 }
+
+export enum EnumSearchRole {
+    OWNER = "OWNER",
+    VISITOR = "VISITOR",
+    FRIEND = "FRIEND",
+    FOLLOWER = "FOLLOWER",
+    UNKNOWN = "UNKNOWN"
+}

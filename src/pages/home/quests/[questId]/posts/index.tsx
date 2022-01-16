@@ -10,7 +10,12 @@ const QuestPosts = () => {
   // Attributes
   const router = useRouter();
   const searchId = router.query.questId as string;
-  const {isOpen: isNewPostOpen, onOpen: onNewPostOpen, onClose: onNewPostClose} = useDisclosure()
+  const {
+    isOpen: isNewPostOpen,
+    onOpen: onNewPostOpen,
+    onClose: onNewPostClose,
+  } = useDisclosure();
+  
 
   // Queries
   const { data: posts, isLoading } = useGetSearchPosts(searchId);
@@ -50,8 +55,10 @@ const QuestPosts = () => {
             <PlaceholderSharedQuest />
           </SharedQuestBox>
         )} */}
-        <QuestDetailsAddButton onClick={onNewPostOpen}>Add a post</QuestDetailsAddButton>
-        <AddPostDrawer onClose={onNewPostClose} isOpen={isNewPostOpen}/>
+        <QuestDetailsAddButton onClick={onNewPostOpen}>
+          Add a post
+        </QuestDetailsAddButton>
+        <AddPostDrawer onClose={onNewPostClose} isOpen={isNewPostOpen} />
       </Skeleton>
     </Box>
   );

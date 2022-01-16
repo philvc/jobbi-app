@@ -8,6 +8,7 @@ import { SupabaseContextProvider } from "use-supabase";
 import { useRouter } from "next/router";
 import { UITheme } from "../themes";
 import { UserProvider } from "../contexts/user";
+import RoleProvider from "../contexts/role";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -52,7 +53,9 @@ function MyApp({ Component, pageProps }) {
         <QueryClientProvider client={queryClientRef.current}>
           <ChakraProvider theme={UITheme}>
             <UserProvider>
-              <Component {...pageProps} />
+              <RoleProvider>
+                <Component {...pageProps} />
+              </RoleProvider>
             </UserProvider>
           </ChakraProvider>
         </QueryClientProvider>

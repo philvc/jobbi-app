@@ -34,7 +34,8 @@ import type {
   AddPostResponseDTO,
   AddPostRequestDTO,
   UpdatePostResponseDTO,
-  UpdatePostRequestDTO
+  UpdatePostRequestDTO,
+  GetSearchRole200
 } from '../../types/dtos'
 import { customInstance } from '.././config'
 
@@ -648,4 +649,39 @@ export const deletePostById = (
 
       return useMutation<AsyncReturnType<typeof deletePostById>, TError, {searchId: string;postId: string}, TContext>(mutationFn, mutationOptions)
     }
+    /**
+ * type id struct
+Get role by search id.
+Return search
+ */
+export const getSearchRole = (
+    searchId: string,
+ ) => {
+      return customInstance<GetSearchRole200>(
+      {url: `/searches/${searchId}/role`, method: 'get'
+    },
+      );
+    }
+  
+
+export const getGetSearchRoleQueryKey = (searchId: string,) => [`/searches/${searchId}/role`];
+
     
+export const useGetSearchRole = <TData = AsyncReturnType<typeof getSearchRole>, TError = void>(
+ searchId: string, options?: { query?:UseQueryOptions<AsyncReturnType<typeof getSearchRole>, TError, TData>, }
+
+  ) => {
+
+  const {query: queryOptions} = options || {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetSearchRoleQueryKey(searchId);
+  const queryFn: QueryFunction<AsyncReturnType<typeof getSearchRole>> = () => getSearchRole(searchId, );
+
+  const query = useQuery<AsyncReturnType<typeof getSearchRole>, TError, TData>(queryKey, queryFn, {enabled: !!(searchId), ...queryOptions})
+
+  return {
+    queryKey,
+    ...query
+  }
+}
+

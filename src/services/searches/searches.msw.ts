@@ -48,6 +48,8 @@ export const getUpdatePostByIdMock = () => ({description: faker.random.word(), i
 
 export const getDeletePostByIdMock = () => (faker.datatype.boolean())
 
+export const getGetSearchRoleMock = () => (faker.helpers.randomize(['owner','friend','follower','visitor']))
+
 export const getSearchesMSW = () => [
 rest.post('*/searches', (req, res, ctx) => {
         return res(
@@ -156,5 +158,11 @@ ctx.json(getUpdatePostByIdMock()),
           ctx.delay(1000),
           ctx.status(200, 'Mocked status'),
 ctx.json(getDeletePostByIdMock()),
+        )
+      }),rest.get('*/searches/:searchId/role', (req, res, ctx) => {
+        return res(
+          ctx.delay(1000),
+          ctx.status(200, 'Mocked status'),
+ctx.json(getGetSearchRoleMock()),
         )
       }),]
