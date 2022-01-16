@@ -18,6 +18,7 @@ import {
 import type {
   PostSearchResponseDTO,
   PostSearchRequestDTO,
+  PublicSearchDto,
   MySearchDTO,
   FollowedSearchDTO,
   SharedSearchDTO,
@@ -74,6 +75,42 @@ export const addSearch = (
       return useMutation<AsyncReturnType<typeof addSearch>, TError, {data: PostSearchRequestDTO}, TContext>(mutationFn, mutationOptions)
     }
     /**
+ * type id struct
+Get public searches
+Return searches
+ */
+export const getPublicSearches = (
+    
+ ) => {
+      return customInstance<PublicSearchDto[]>(
+      {url: `/searches/explore`, method: 'get'
+    },
+      );
+    }
+  
+
+export const getGetPublicSearchesQueryKey = () => [`/searches/explore`];
+
+    
+export const useGetPublicSearches = <TData = AsyncReturnType<typeof getPublicSearches>, TError = void>(
+  options?: { query?:UseQueryOptions<AsyncReturnType<typeof getPublicSearches>, TError, TData>, }
+
+  ) => {
+
+  const {query: queryOptions} = options || {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetPublicSearchesQueryKey();
+  const queryFn: QueryFunction<AsyncReturnType<typeof getPublicSearches>> = () => getPublicSearches();
+
+  const query = useQuery<AsyncReturnType<typeof getPublicSearches>, TError, TData>(queryKey, queryFn, queryOptions)
+
+  return {
+    queryKey,
+    ...query
+  }
+}
+
+/**
  * Return my search
  * @summary Get my search.
  */

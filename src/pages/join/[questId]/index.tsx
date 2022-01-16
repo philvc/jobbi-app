@@ -31,8 +31,6 @@ const JoinQuest = () => {
   const { mutateAsync: postFriendship } = useUpsertFriendship();
   const { refetch: refetchShareQuests } = useGetMySharedSearches();
 
-  console.log("id", id);
-
   // Effect
   useEffect(() => {
     // Redirect to signup if no user

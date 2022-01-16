@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 import InputField from "../../../components/shared/form/input-field";
 import { PrivateQuest, PublicQuest } from "../../../constants/contant";
+import { EnumReferer } from "../../../constants/enums";
 import { useAddSearch } from "../../../services/searches/searches";
 
 interface PostSearchRequestDTO {
@@ -40,7 +41,7 @@ const CreateQuest = () => {
 
         if(response?.id){
 
-            router.push('/home')
+            router.push(`/home?referer=${EnumReferer.SIGNUP}`)
         }
 
 

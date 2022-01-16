@@ -1,4 +1,5 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { COLORS } from "../../../constants/colors";
 import FriendsIcon from "../icons/friends";
 import { HomeIcon } from "../icons/home";
@@ -10,6 +11,9 @@ interface NavbarProps {
 }
 
 const Navbar = ({ menu }: NavbarProps) => {
+
+  // Attributes
+  const router =useRouter();
   return (
     <Flex
       boxShadow={"0px -6px 20px rgba(0, 0, 0, 0.06)"}
@@ -24,7 +28,7 @@ const Navbar = ({ menu }: NavbarProps) => {
       bottom={0}
       justifyContent={"space-between"}
     >
-      <Flex direction={"column"} alignItems={"center"}>
+      <Flex direction={"column"} alignItems={"center"} onClick={() => router.push('/home')}>
         <Box
           width={"22px"}
           height={"22px"}
@@ -44,7 +48,7 @@ const Navbar = ({ menu }: NavbarProps) => {
           Acceuil
         </Text>
       </Flex>
-      <Flex direction={"column"} alignItems={"center"}>
+      <Flex direction={"column"} alignItems={"center"} onClick={() => router.push('/home/explore')}>
         <Box
           width={"22px"}
           height={"22px"}
@@ -58,7 +62,7 @@ const Navbar = ({ menu }: NavbarProps) => {
           Explore
         </Text>
       </Flex>
-      <Flex direction={"column"} alignItems={"center"}>
+      <Flex direction={"column"} alignItems={"center"} onClick={() => router.push('/home/friends')}>
         <Box
           width={"22px"}
           height={"22px"}
@@ -72,7 +76,7 @@ const Navbar = ({ menu }: NavbarProps) => {
           Amis
         </Text>
       </Flex>
-      <Flex direction={"column"} alignItems={"center"}>
+      <Flex direction={"column"} alignItems={"center"} onClick={() => router.push('/home/profil')}>
         <Box
           width={"22px"}
           height={"22px"}

@@ -36,3 +36,4 @@ export * from './updatePostResponseDTO';
 export * from './upsertFriendshipRequestDTO';
 export * from './upsertFriendshipResponseDTO';
 export * from './followerDTO';
+export * from './publicSearchDto';

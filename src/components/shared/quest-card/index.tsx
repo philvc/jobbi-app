@@ -51,7 +51,7 @@ const QuestCard = ({ index, isFriend = false, quest }: QuestCardProps) => {
           </Text>
         </Box>
         <Flex direction={"row"} justifyContent={"space-between"}>
-          {friends?.length && <AvatarList users={friends} />}
+          {friends && <AvatarList users={friends} />}
           {quest?.sector && <QuestCardTags sector={quest?.sector} />}
         </Flex>
       </Flex>

@@ -6,7 +6,8 @@ import EditPen from "../../../../../../components/shared/icons/edit-pen";
 import ShareIcon from "../../../../../../components/shared/icons/share";
 import { useUser } from "../../../../../../contexts/user";
 import { SearchDTO } from "../../../../../../types/dtos";
-import {Browser} from "@capacitor/browser";
+import { Browser } from "@capacitor/browser";
+import { EnumReferer } from "../../../../../../constants/enums";
 
 interface QuestDetailsHeaderIconsTopBarProps {
   quest: SearchDTO;
@@ -20,11 +21,25 @@ const QuestDetailsHeaderIconsTopBar = ({
   const { isOpen, onClose, onOpen } = useDisclosure();
   const { id } = useUser();
   const isOwner = quest?.userId === id;
+  const referer = router.query.referer as string;
+
 
   // Handlers
   async function handleShare() {
-    await Browser.open({url: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/join/${quest.id}`})
+    await Browser.open({
+      url: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/join/${quest.id}`,
+    });
+  }
 
+  function handleGoBack(){
+    switch(referer){
+      case EnumReferer.EXPLORE:
+        return router.push('/home/explore');
+      case EnumReferer.SIGNUP:
+      case EnumReferer.HOME:
+      default:
+        return router.push('/home')
+    }
   }
   return (
     <>
@@ -42,7 +57,7 @@ const QuestDetailsHeaderIconsTopBar = ({
           display={"flex"}
           justifyContent={"center"}
           alignItems={"center"}
-          onClick={() => router.push('/home')}
+          onClick={handleGoBack}
         >
           <Icons.BackArrow
             style={{ margin: "auto", alignSelf: "center" }}

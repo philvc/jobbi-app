@@ -14,6 +14,8 @@ import faker from 'faker'
 
 export const getAddSearchMock = () => ({description: faker.random.word(), id: faker.random.word(), sector: faker.random.word(), tags: [...Array(faker.datatype.number({min: 1, max: 10}))].map(() => (faker.random.word())), title: faker.random.word(), type: faker.random.word(), userId: faker.random.word()})
 
+export const getGetPublicSearchesMock = () => ([...Array(faker.datatype.number({min: 1, max: 10}))].map(() => ({avatarUrl: faker.random.word(), description: faker.random.word(), email: faker.random.word(), firstName: faker.random.word(), followerId: faker.random.word(), friendshipId: faker.random.word(), id: faker.random.word(), lastName: faker.random.word(), sector: faker.random.word(), tags: [...Array(faker.datatype.number({min: 1, max: 10}))].map(() => (faker.random.word())), title: faker.random.word(), type: faker.random.word(), userId: faker.random.word()})))
+
 export const getGetMySearchMock = () => ({friends: [...Array(faker.datatype.number({min: 1, max: 10}))].map(() => ({avatarUrl: faker.random.word(), email: faker.random.word(), externalId: faker.random.word(), firstName: faker.random.word(), id: faker.random.word(), lastName: faker.random.word()})), id: faker.random.word(), sector: faker.random.word(), tags: [...Array(faker.datatype.number({min: 1, max: 10}))].map(() => (faker.random.word())), title: faker.random.word(), type: faker.random.word()})
 
 export const getGetMyFollowedSearchesMock = () => ([...Array(faker.datatype.number({min: 1, max: 10}))].map(() => ({avatarUrl: faker.random.word(), description: faker.random.word(), firstName: faker.random.word(), id: faker.random.word(), lastName: faker.random.word(), sector: faker.random.word(), tags: [...Array(faker.datatype.number({min: 1, max: 10}))].map(() => (faker.random.word())), title: faker.random.word(), type: faker.random.word(), userId: faker.random.word()})))
@@ -52,6 +54,12 @@ rest.post('*/searches', (req, res, ctx) => {
           ctx.delay(1000),
           ctx.status(200, 'Mocked status'),
 ctx.json(getAddSearchMock()),
+        )
+      }),rest.get('*/searches/explore', (req, res, ctx) => {
+        return res(
+          ctx.delay(1000),
+          ctx.status(200, 'Mocked status'),
+ctx.json(getGetPublicSearchesMock()),
         )
       }),rest.get('*/searches/me', (req, res, ctx) => {
         return res(

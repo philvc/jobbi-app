@@ -1,12 +1,12 @@
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import { capitalize } from "lodash";
 import { COLORS } from "../../../../constants/colors";
-import { SharedSearchDTO } from "../../../../types/dtos";
+import { PublicSearchDto, SharedSearchDTO } from "../../../../types/dtos";
 import { OldAvatar } from "../../icons/old-avatar";
 
 interface QuestCardHeaderProps {
   isFriend?: boolean,
-  quest?: SharedSearchDTO
+  quest?: SharedSearchDTO | PublicSearchDto
 }
 
 export const QuestCardHeader = ({ isFriend, quest }: QuestCardHeaderProps) => {
