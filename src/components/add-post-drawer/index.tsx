@@ -15,8 +15,11 @@ import { useRouter } from "next/router";
 import { useQueryClient } from "react-query";
 import { COLORS } from "../../constants/colors";
 import {
+  getGetSearchParticipantsQueryKey,
   getGetSearchPostsQueryKey,
+  getGetSearchRoleQueryKey,
   useAddPostForSearch,
+  useGetSearchParticipants,
   useGetSearchPosts,
 } from "../../services/searches/searches";
 import InputField from "../shared/form/input-field";
@@ -38,7 +41,8 @@ const AddPostDrawer = ({ isOpen, onClose }: AddPostDrawerProps) => {
   const router = useRouter();
   const searchId = router.query?.questId as string;
   const clientQuery = useQueryClient();
-  const { refetch } = useGetSearchPosts(searchId);
+  const { refetch: refetchPosts } = useGetSearchPosts(searchId);
+  const {refetch: refetchSearchParticipants} = useGetSearchParticipants(searchId)
 
   // Queries
   const { mutateAsync: addPost } = useAddPostForSearch();
@@ -58,9 +62,11 @@ const AddPostDrawer = ({ isOpen, onClose }: AddPostDrawerProps) => {
     if (response?.id) {
       // invalidate get posts by search id
       await clientQuery.invalidateQueries(getGetSearchPostsQueryKey(searchId));
+      await clientQuery.invalidateQueries(getGetSearchParticipantsQueryKey(searchId));
 
       // refetch get posts by search id
-      await refetch();
+      await refetchPosts();
+      await refetchSearchParticipants();
     }
 
     // toast success
