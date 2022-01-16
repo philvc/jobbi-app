@@ -1,5 +1,8 @@
 import { Box, Flex, Skeleton } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import { useContext } from "react";
+import { EnumSearchRole } from "../../../../../constants/enums";
+import { useSearchRoleContext } from "../../../../../contexts/role";
 import {
   useGetSearchParticipants,
 } from "../../../../../services/searches/searches";
@@ -16,6 +19,7 @@ const QuestDetailsParticipants = () => {
     searchId
   );
   const hasParticipants = participants && participants?.length !== 0;
+  const {role} = useSearchRoleContext();
   return (
     <Box pb={"150px"}>
       <QuestDetailsSectionHeader>{"Friends & followers"}</QuestDetailsSectionHeader>
@@ -52,7 +56,7 @@ const QuestDetailsParticipants = () => {
           </SharedQuestBox>
         )} */}
       </Skeleton>
-      <QuestDetailsAddButton>Invite friends</QuestDetailsAddButton>
+      {(role !== EnumSearchRole.VISITOR && role !== EnumSearchRole.UNKNOWN )&& <QuestDetailsAddButton>Invite friends</QuestDetailsAddButton>}
     </Box>
   );
 };
