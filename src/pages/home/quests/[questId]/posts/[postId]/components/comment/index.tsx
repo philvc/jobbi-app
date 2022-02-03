@@ -17,7 +17,6 @@ const CommentCard = ({ comment }: CommentCardProps) => {
   // Attributes
   const { id } = useUser();
   const isOwner = comment?.userId === id;
-  console.log("id", id, comment?.userId);
   
   const router = useRouter();
   const { questId, postId } = router.query;
