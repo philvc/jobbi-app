@@ -1,13 +1,13 @@
 import { Box, Flex, useDisclosure } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import SearchDrawer from "../../../../../../components/quest-drawer";
-import Icons from "../../../../../../components/shared/icons";
-import EditPen from "../../../../../../components/shared/icons/edit-pen";
-import ShareIcon from "../../../../../../components/shared/icons/share";
-import { useUser } from "../../../../../../contexts/user";
-import { SearchDTO } from "../../../../../../types/dtos";
+import SearchDrawer from "../../../../../../../components/quest-drawer";
+import Icons from "../../../../../../../components/shared/icons";
+import EditPen from "../../../../../../../components/shared/icons/edit-pen";
+import ShareIcon from "../../../../../../../components/shared/icons/share";
+import { useUser } from "../../../../../../../contexts/user";
+import { SearchDTO } from "../../../../../../../types/dtos";
 import { Browser } from "@capacitor/browser";
-import { EnumReferer } from "../../../../../../constants/enums";
+import { EnumReferer } from "../../../../../../../constants/enums";
 
 interface QuestDetailsHeaderIconsTopBarProps {
   quest: SearchDTO;

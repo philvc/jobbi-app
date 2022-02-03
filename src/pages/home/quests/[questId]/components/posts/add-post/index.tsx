@@ -1,5 +1,5 @@
 import { Box, BoxProps, Flex, Text } from "@chakra-ui/react";
-import AddCrossIcon from "../../../../../../components/shared/icons/add-cross";
+import AddCrossIcon from "../../../../../../../components/shared/icons/add-cross";
 
 const QuestDetailsAddButton = (props: BoxProps) => {
   return (

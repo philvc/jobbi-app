@@ -1,8 +1,8 @@
 import Page from "../../../../components/shared/layout/page";
 import React from "react";
-import QuestDetailsHeader from "./header";
-import QuestPosts from "./posts";
-import QuestDetailsParticipants from "./participants";
+import QuestDetailsHeader from "./components/header";
+import QuestPosts from "./components/posts";
+import QuestDetailsParticipants from "./components/participants";
 import Navbar from "../../../../components/shared/navbar";
 
 export default function Quests() {

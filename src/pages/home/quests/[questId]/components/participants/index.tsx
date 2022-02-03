@@ -1,11 +1,11 @@
 import { Box, Flex, Skeleton } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useContext } from "react";
-import { EnumSearchRole } from "../../../../../constants/enums";
-import { useSearchRoleContext } from "../../../../../contexts/role";
+import { EnumSearchRole } from "../../../../../../constants/enums";
+import { useSearchRoleContext } from "../../../../../../contexts/role";
 import {
   useGetSearchParticipants,
-} from "../../../../../services/searches/searches";
+} from "../../../../../../services/searches/searches";
 import QuestDetailsAddButton from "../posts/add-post";
 import QuestDetailsSectionHeader from "../posts/header";
 import QuestDetailsFriendCard from "./card";

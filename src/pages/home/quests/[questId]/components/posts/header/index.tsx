@@ -1,5 +1,5 @@
 import { BoxProps, Flex, Heading } from "@chakra-ui/react";
-import MoreButton from "../../../../../../components/shared/actions/more";
+import MoreButton from "../../../../../../../components/shared/actions/more";
 
 const QuestDetailsSectionHeader = (props: BoxProps) => {
   return (

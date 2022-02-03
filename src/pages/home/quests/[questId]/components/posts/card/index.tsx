@@ -1,7 +1,8 @@
 import { Box, Text, Flex, useDisclosure } from "@chakra-ui/react";
-import EditPostDrawer from "../../../../../../components/edit-post-drawer";
-import { OldAvatar } from "../../../../../../components/shared/icons/old-avatar";
-import { PostDTOBySearchId } from "../../../../../../types/dtos";
+import { useRouter } from "next/router";
+import EditPostDrawer from "../../../../../../../components/edit-post-drawer";
+import { OldAvatar } from "../../../../../../../components/shared/icons/old-avatar";
+import { PostDTOBySearchId } from "../../../../../../../types/dtos";
 
 interface QuestPostCardProps {
   post: PostDTOBySearchId;
@@ -10,6 +11,8 @@ interface QuestPostCardProps {
 const QuestPostCard = ({ post }: QuestPostCardProps) => {
   // Attributes
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const router = useRouter();
+  const { questId } = router.query;
   return (
     <>
       <Box
@@ -20,7 +23,7 @@ const QuestPostCard = ({ post }: QuestPostCardProps) => {
         }
         borderRadius={"0.75rem"}
         p={"1rem"}
-        onClick={onOpen}
+        onClick={() => router.push(`/home/quests/${questId}/posts/${post?.id}`)}
         cursor={"pointer"}
       >
         <Text color="#393360" fontSize={"16px"} fontWeight={"bold"}>
@@ -59,7 +62,7 @@ const QuestPostCard = ({ post }: QuestPostCardProps) => {
           )}
         </Flex>
       </Box>
-      <EditPostDrawer isOpen={isOpen} onClose={onClose} post={post}  />
+      <EditPostDrawer isOpen={isOpen} onClose={onClose} post={post} />
     </>
   );
 };

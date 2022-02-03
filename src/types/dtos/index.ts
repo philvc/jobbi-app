@@ -38,3 +38,8 @@ export * from './upsertFriendshipResponseDTO';
 export * from './followerDTO';
 export * from './publicSearchDto';
 export * from './getSearchRole200';
+export * from './commentForPostDto';
+export * from './commentUpdateRequestDto';
+export * from './createCommentResponseDto';
+export * from './commentCreateRequestDto';
+export * from './commentUpdateDto';

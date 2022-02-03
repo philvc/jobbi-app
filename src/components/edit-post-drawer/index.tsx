@@ -11,9 +11,11 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
+import { useRouter } from "next/router";
 import { useQueryClient } from "react-query";
 import { COLORS } from "../../constants/colors";
 import { useUser } from "../../contexts/user";
+import { useGetCommentsForPost } from "../../services/comments/comments";
 import {
   getGetSearchPostsQueryKey,
   useDeletePostById,
@@ -38,6 +40,8 @@ interface UpdatePostRequestDTO {
 
 const EditPostDrawer = ({ isOpen, onClose, post }: EditPostDrawerProps) => {
   // Attributes
+  const router = useRouter();
+  const {searchId, } = router.query;
   const queryClient = useQueryClient();
   const { id } = useUser();
   const isOwner = post?.userId === id;
@@ -45,8 +49,8 @@ const EditPostDrawer = ({ isOpen, onClose, post }: EditPostDrawerProps) => {
   // Query
   const { mutateAsync: editPost } = useUpdatePostById();
   const { refetch } = useGetSearchPosts(post?.searchId);
-  const {mutateAsync: deletePost} = useDeletePostById()
-
+  const { mutateAsync: deletePost } = useDeletePostById();
+  
   // Handler
   async function handleSubmit(values: UpdatePostRequestDTO) {
     // Upate post
@@ -73,15 +77,15 @@ const EditPostDrawer = ({ isOpen, onClose, post }: EditPostDrawerProps) => {
   }
 
   // Delete post
-  async function handleDeletePost(){
+  async function handleDeletePost() {
     const response = await deletePost({
       searchId: post?.searchId,
-      postId: post?.id
-    })
+      postId: post?.id,
+    });
 
     // Handle error
 
-    if (response){
+    if (response) {
       await queryClient.invalidateQueries(
         getGetSearchPostsQueryKey(post?.searchId)
       );
@@ -90,7 +94,7 @@ const EditPostDrawer = ({ isOpen, onClose, post }: EditPostDrawerProps) => {
 
     // Close drawer
     onClose();
-  } 
+  }
   return (
     <Drawer isOpen={isOpen} size="full" onClose={onClose}>
       <DrawerOverlay />

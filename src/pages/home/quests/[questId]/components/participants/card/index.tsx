@@ -2,9 +2,9 @@ import { Box, Flex, Text } from "@chakra-ui/react";
 import { capitalize } from "lodash";
 import { useRouter } from "next/router";
 import { useQueryClient } from "react-query";
-import { OldAvatar } from "../../../../../../components/shared/icons/old-avatar";
-import { friendTypeInvited } from "../../../../../../constants/contant";
-import { useUser } from "../../../../../../contexts/user";
+import { OldAvatar } from "../../../../../../../components/shared/icons/old-avatar";
+import { friendTypeInvited } from "../../../../../../../constants/contant";
+import { useUser } from "../../../../../../../contexts/user";
 import {
   getGetMySharedSearchesQueryKey,
   getGetSearchByIdQueryKey,
@@ -15,8 +15,8 @@ import {
   useGetMySharedSearches,
   useGetSearchById,
   useGetSearchParticipants,
-} from "../../../../../../services/searches/searches";
-import { ParticipantDTOForSearchById } from "../../../../../../types/dtos";
+} from "../../../../../../../services/searches/searches";
+import { ParticipantDTOForSearchById } from "../../../../../../../types/dtos";
 
 interface QuestDetailsFriendCardProps {
   participant: ParticipantDTOForSearchById;
