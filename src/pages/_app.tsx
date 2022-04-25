@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import { ChakraProvider } from "@chakra-ui/react";
 import { AnimateSharedLayout } from "framer-motion";
@@ -9,14 +9,12 @@ import { useRouter } from "next/router";
 import { UITheme } from "../themes";
 import { UserProvider } from "../contexts/user";
 import RoleProvider from "../contexts/role";
+import { supabase } from "../utils/supabaseClient";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const queryClientRef = React.useRef();
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_KEY
-  );
+  const [session, setSession] = useState(null);
 
   if (!queryClientRef.current) {
     // @ts-ignore
@@ -37,6 +35,16 @@ function MyApp({ Component, pageProps }) {
       localStorage.setItem("ACCESS_TOKEN", router.query.access_token as string);
       router.push("/auth/reset-password");
     }
+  }, []);
+
+  useEffect(() => {
+    setSession(supabase.auth.session());
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      console.log("session", session);
+
+      setSession(session);
+    });
   }, []);
 
   return (
