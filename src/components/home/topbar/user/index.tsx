@@ -7,7 +7,7 @@ import Paragraph from "../../../shared/typography/paragraph";
 const TopbarUser = () => {
   // Attributes
   const user = useUser();
-  const userName = user?.id ? user?.fistName ?? user?.email : "stranger";
+  const userName = user?.id ? user?.firstName ?? user?.email : "stranger";
 
   /**TODO: translation */
   return (

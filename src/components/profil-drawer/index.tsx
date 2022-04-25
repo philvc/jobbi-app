@@ -12,6 +12,7 @@ import { Skeleton } from "@chakra-ui/skeleton";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { useQueryClient } from "react-query";
+import { useUser } from "../../contexts/user";
 import {
   getGetUserBySubQueryKey,
   useGetUserBySub,
@@ -27,18 +28,13 @@ interface IProfile {
 }
 export default function ProfileDrawer({ isOpen, onClose }) {
   // Attributes
-  const { data: user, isLoading, refetch } = useGetUserBySub();
-  const clientQuery = useQueryClient();
-  const router = useRouter();
+  const { email, firstName, lastName, refetchUser } = useUser();
 
   // Mutation
   const { mutateAsync: modifyUser } = useModifyUser();
 
   // Function
   async function handleSubmit(values: IProfile) {
-    // invalidate key
-    clientQuery.invalidateQueries(getGetUserBySubQueryKey());
-
     // put
     await modifyUser({
       data: {
@@ -49,7 +45,7 @@ export default function ProfileDrawer({ isOpen, onClose }) {
     });
 
     // refetch user
-    await refetch();
+    await refetchUser();
 
     onClose();
   }
@@ -58,35 +54,37 @@ export default function ProfileDrawer({ isOpen, onClose }) {
     <Drawer isOpen={isOpen} size="full" onClose={onClose}>
       <DrawerOverlay />
       <DrawerContent>
-        <Skeleton isLoaded={!isLoading}>
-          <Formik<IProfile>
-            initialValues={{
-              email: user?.email,
-              firstName: user?.firstName,
-              lastName: user?.lastName,
-            }}
-            onSubmit={handleSubmit}
-          >
-            <Form>
-              <DrawerHeader>
-                <Heading>{`Modifier son profile`}</Heading>
-              </DrawerHeader>
+        <Formik<IProfile>
+          initialValues={{
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+          }}
+          onSubmit={handleSubmit}
+        >
+          <Form>
+            <DrawerHeader>
+              <Heading>{`Modifier son profile`}</Heading>
+            </DrawerHeader>
 
-              <DrawerBody>
-                <Stack spacing={8}>
-                  <Text>Ajoute des informations à ton profile.</Text>
-                  <Stack spacing={4}>
-                    <InputField placeholder="Email" name="email" />
-                    <InputField placeholder="Prénom" name="firstName" />
-                    <InputField placeholder="Nom" name="lastName" />
-                  </Stack>
+            <DrawerBody>
+              <Stack spacing={8}>
+                <Text>Ajoute des informations à ton profile.</Text>
+                <Stack spacing={4}>
+                  <InputField
+                    disabled={true}
+                    placeholder="Email"
+                    name="email"
+                  />
+                  <InputField placeholder="Prénom" name="firstName" />
+                  <InputField placeholder="Nom" name="lastName" />
                 </Stack>
-              </DrawerBody>
+              </Stack>
+            </DrawerBody>
 
-              <SearchDrawerFooter onClose={onClose} />
-            </Form>
-          </Formik>
-        </Skeleton>
+            <SearchDrawerFooter onClose={onClose} />
+          </Form>
+        </Formik>
       </DrawerContent>
     </Drawer>
   );

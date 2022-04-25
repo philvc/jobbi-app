@@ -15,8 +15,8 @@ import { Heading } from "@chakra-ui/react";
 import Image from "next/image";
 
 interface SignInForm {
-  email: string,
-  password: string,
+  email: string;
+  password: string;
 }
 
 export default function SignIn() {
@@ -53,7 +53,7 @@ export default function SignIn() {
 
   return (
     <Formik<SignInForm>
-      initialValues={{  email: "", password: "" }}
+      initialValues={{ email: "", password: "" }}
       onSubmit={handleSubmit}
     >
       <Form>

@@ -1,4 +1,5 @@
 import { Box, Flex, Heading } from "@chakra-ui/layout";
+import { useRouter } from "next/router";
 import React from "react";
 import MyQuest from "../../../components/home/my-quest";
 import TopbarNotification from "../../../components/home/topbar/notification";
@@ -7,6 +8,12 @@ import { COLORS } from "../../../constants/colors";
 
 const HomeTopBar = () => {
   // Attributes
+  const router = useRouter();
+
+  // Handlers
+  function redirectToProfile() {
+    router.push("/profile");
+  }
 
   return (
     <Box
@@ -24,7 +31,7 @@ const HomeTopBar = () => {
           justifyContent={"space-between"}
           alignItems={"center"}
         >
-          <Box>
+          <Box onClick={redirectToProfile}>
             <TopbarUser />
           </Box>
           <TopbarNotification />

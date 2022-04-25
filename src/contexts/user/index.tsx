@@ -1,14 +1,23 @@
 import { BoxProps } from "@chakra-ui/layout";
 import { createContext, useContext } from "react";
+import {
+  QueryObserverResult,
+  RefetchOptions,
+  RefetchQueryFilters,
+} from "react-query/types/core/types";
 import { useGetUserBySub } from "../../services/default/default";
+import { UserDTO } from "../../types/dtos/userDTO";
 
 interface IUserContext {
   id?: string;
   email?: string;
-  fistName?: string;
+  firstName?: string;
   lastName?: string;
   isLoading?: boolean;
   isFetched?: boolean;
+  refetchUser?: <TPageData>(
+    options?: RefetchOptions & RefetchQueryFilters<TPageData>
+  ) => Promise<QueryObserverResult<UserDTO, void>>;
 }
 
 const UserContext = createContext<IUserContext>({});
@@ -19,17 +28,18 @@ export const useUser = () => {
 
 export const UserProvider = (props: BoxProps) => {
   // Queries
-  const { data: user, isLoading, isFetched } = useGetUserBySub();
+  const { data: user, isLoading, isFetched, refetch } = useGetUserBySub();
 
   return (
     <UserContext.Provider
       value={{
         email: user?.email,
         id: user?.id,
-        fistName: user?.firstName,
+        firstName: user?.firstName,
         lastName: user?.lastName,
         isLoading: isLoading,
         isFetched: isFetched,
+        refetchUser: refetch,
       }}
     >
       {props.children}
