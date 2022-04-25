@@ -1,20 +1,16 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
-import { NumericDictionaryIterator } from "lodash";
 import { useRouter } from "next/router";
-import { InfiniteQueryObserver, useQueryClient } from "react-query";
+import { useQueryClient } from "react-query";
 import AvatarList from "../../../../components/avatar-list";
-import { QuestCardHeader } from "../../../../components/shared/quest-card/header";
 import QuestCardTags from "../../../../components/shared/quest-card/tag";
 import { COLORS } from "../../../../constants/colors";
 import { EnumReferer } from "../../../../constants/enums";
 import {
-  getGetPublicSearchesQueryKey,
   useDeleteFollower,
   useGetPublicSearches,
   useGetSearchFriends,
   usePostFollower,
 } from "../../../../services/searches/searches";
-import { Button } from "../../../../themes/components/button";
 import { PublicSearchDto } from "../../../../types/dtos/publicSearchDto";
 import PublicQuestCardHeader from "./header";
 
@@ -32,61 +28,12 @@ enum EnumFollowButtonTitle {
 const PublicQuestCard = ({ index, quest }: PublicQuestCardProps) => {
   // Attributes
   const router = useRouter();
-  const clientQuery = useQueryClient();
   const { data: friends, isLoading: getFriendsIsLoading } = useGetSearchFriends(
     quest?.id,
     {
       query: { enabled: !!quest?.id },
     }
   );
-  const buttonTitle: EnumFollowButtonTitle = quest?.followerId
-    ? EnumFollowButtonTitle.UNFOLLOW
-    : quest?.friendshipId
-    ? EnumFollowButtonTitle.FRIEND
-    : EnumFollowButtonTitle.FOLLOW;
-  const {
-    mutateAsync: postFollower,
-    isLoading: postIsLoading,
-  } = usePostFollower();
-  const {
-    mutateAsync: deleteFollower,
-    isLoading: deleteFollowerIsLoading,
-  } = useDeleteFollower();
-  const { refetch: refetchPublicSearches, isLoading: refetchPublicSearchesLoading } = useGetPublicSearches();
-  const followButtonDisabled = postIsLoading || deleteFollowerIsLoading || refetchPublicSearchesLoading
-
-  // Handlers
-  async function handleClick(e: React.MouseEvent<Element, MouseEvent>) {
-
-    // If user is a friend, do nothing & redirect to quest details
-    if (!quest?.friendshipId) {
-      // Stop event propagation
-      e.stopPropagation();
-
-      // Post of delete follower
-      switch (buttonTitle) {
-        case EnumFollowButtonTitle.FOLLOW:
-          await postFollower({
-            searchId: quest?.id,
-          });
-          break;
-        case EnumFollowButtonTitle.UNFOLLOW:
-          await deleteFollower({
-            searchId: quest?.id,
-            followerId: quest?.followerId,
-          });
-          break;
-        case EnumFollowButtonTitle.FRIEND:
-        default:
-          break;
-      }
-
-      // Invalidate get public search query
-      await clientQuery.invalidateQueries(getGetPublicSearchesQueryKey());
-      // Refetch public quest
-      await refetchPublicSearches();
-    }
-  }
 
   return (
     <Box
@@ -98,12 +45,13 @@ const PublicQuestCard = ({ index, quest }: PublicQuestCardProps) => {
       paddingY={"17px"}
       padding={"15px"}
       minWidth={"269px"}
-      width={"269px"}
       height={"180px"}
       cursor={"pointer"}
       onClick={() =>
         router.push(`/home/quests/${quest?.id}?referer=${EnumReferer.EXPLORE}`)
       }
+      mx={"24px"}
+      mb={"1rem"}
     >
       <Flex
         direction={"column"}
@@ -111,21 +59,6 @@ const PublicQuestCard = ({ index, quest }: PublicQuestCardProps) => {
         justifyContent={"space-between"}
       >
         <Box>
-          <Box
-            px="18px"
-            py="8px"
-            display={"flex"}
-            justifyContent={"center"}
-            alignItems={"center"}
-            borderRadius={"8px"}
-            border="1.5px solid #8F95B2"
-            boxSizing="border-box"
-            cursor={"pointer"}
-            onClick={handleClick}
-            disabled={followButtonDisabled}
-          >
-            {followButtonDisabled ? "Saving..." : buttonTitle}
-          </Box>
           <PublicQuestCardHeader quest={quest} />
           <Text
             mt={"20px"}

@@ -22,7 +22,7 @@ const Profile = () => {
     <Page>
       <ProfileHeader />
       <Box
-        mt={"50px"}
+        mt={"4rem"}
         mx={"1.5rem"}
         background={"white"}
         borderRadius={"12px"}

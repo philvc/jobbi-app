@@ -1,17 +1,16 @@
 import Page from "../../../components/shared/layout/page";
 import { useRouter } from "next/router";
 import React from "react";
-import { Box, Container, Flex, Stack, Text } from "@chakra-ui/layout";
+import { Box, Flex, Stack, Text } from "@chakra-ui/layout";
 import { useTranslation } from "react-i18next";
 import Paragraph from "../../../components/shared/typography/paragraph";
 import InputField from "../../../components/shared/form/input-field";
 import { Form, Formik, FormikContext } from "formik";
-import Button from "../../../components/shared/actions/button";
 import { useSupabase } from "use-supabase";
 import { useToast } from "@chakra-ui/toast";
 import { FONT_SIZES } from "../../../constants/typography";
 import { COLORS } from "../../../constants/colors";
-import { Heading } from "@chakra-ui/react";
+import { Button, Heading } from "@chakra-ui/react";
 import Image from "next/image";
 
 interface SignInForm {
@@ -83,7 +82,14 @@ export default function SignIn() {
                   Mot de passe oublié
                 </Text>
               </Stack>
-              <Button text="Se connecter" />
+              <Button
+                borderRadius={".75rem"}
+                type="submit"
+                color="white"
+                bg={"#6772E5"}
+              >
+                Se connecter
+              </Button>
             </Stack>
             <Flex onClick={handleSignUp} justify="center" mt={4}>
               <Text>S'inscrire</Text>

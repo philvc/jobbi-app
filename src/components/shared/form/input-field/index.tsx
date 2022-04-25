@@ -17,6 +17,7 @@ const InputField = ({
   placeholder,
   disabled,
   disableReset = false,
+  style,
 }: InputFieldProps) => {
   // Attributes
   const [isHovered, setIsHovered] = useState(false);
@@ -53,7 +54,7 @@ const InputField = ({
 
   if (type == "textarea") {
     return (
-      <Box>
+      <Box style={style}>
         <Box
           background={COLORS.WHITE.hex}
           outline="none"
@@ -126,7 +127,7 @@ const InputField = ({
 
   // Render
   return (
-    <Box>
+    <Box style={style}>
       <Box
         background={COLORS.WHITE.hex}
         outline="none"

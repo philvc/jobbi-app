@@ -11,9 +11,8 @@ interface NavbarProps {
 }
 
 const Navbar = ({ menu }: NavbarProps) => {
-
   // Attributes
-  const router =useRouter();
+  const router = useRouter();
   return (
     <Flex
       boxShadow={"0px -6px 20px rgba(0, 0, 0, 0.06)"}
@@ -28,7 +27,11 @@ const Navbar = ({ menu }: NavbarProps) => {
       bottom={0}
       justifyContent={"space-between"}
     >
-      <Flex direction={"column"} alignItems={"center"} onClick={() => router.push('/home')}>
+      <Flex
+        direction={"column"}
+        alignItems={"center"}
+        onClick={() => router.push("/home")}
+      >
         <Box
           width={"22px"}
           height={"22px"}
@@ -48,7 +51,11 @@ const Navbar = ({ menu }: NavbarProps) => {
           Acceuil
         </Text>
       </Flex>
-      <Flex direction={"column"} alignItems={"center"} onClick={() => router.push('/home/explore')}>
+      <Flex
+        direction={"column"}
+        alignItems={"center"}
+        onClick={() => router.push("/home/explore")}
+      >
         <Box
           width={"22px"}
           height={"22px"}
@@ -56,13 +63,23 @@ const Navbar = ({ menu }: NavbarProps) => {
           alignItems={"center"}
           justifyContent={"center"}
         >
-          <SearchIcon fill={menu === "explore" ? COLORS.BLACK.T800.hex : "#8F95B2"} width={"17px"} height={"18px"} />
+          <SearchIcon
+            fill={menu === "explore" ? COLORS.BLACK.T800.hex : "#8F95B2"}
+            width={"17px"}
+            height={"18px"}
+          />
         </Box>
-        <Text mt="4px" color={menu === "explore" ? COLORS.BLACK.T800.hex : COLORS.GREY.T500.hex} size="0.625rem">
+        <Text
+          mt="4px"
+          color={
+            menu === "explore" ? COLORS.BLACK.T800.hex : COLORS.GREY.T500.hex
+          }
+          size="0.625rem"
+        >
           Explore
         </Text>
       </Flex>
-      <Flex direction={"column"} alignItems={"center"} onClick={() => router.push('/home/friends')}>
+      {/* <Flex direction={"column"} alignItems={"center"} onClick={() => router.push('/home/friends')}>
         <Box
           width={"22px"}
           height={"22px"}
@@ -75,8 +92,12 @@ const Navbar = ({ menu }: NavbarProps) => {
         <Text mt="4px" color={menu === "friends" ? COLORS.BLACK.T800.hex : COLORS.GREY.T500.hex} size="0.625rem">
           Amis
         </Text>
-      </Flex>
-      <Flex direction={"column"} alignItems={"center"} onClick={() => router.push('/home/profil')}>
+      </Flex> */}
+      <Flex
+        direction={"column"}
+        alignItems={"center"}
+        onClick={() => router.push("/profile")}
+      >
         <Box
           width={"22px"}
           height={"22px"}
@@ -88,7 +109,13 @@ const Navbar = ({ menu }: NavbarProps) => {
             <OldAvatar width={"22px"} height={"22px"} />
           </Box>
         </Box>
-        <Text mt="4px" color={menu === "profil" ? COLORS.BLACK.T800.hex : COLORS.GREY.T500.hex} size="0.625rem">
+        <Text
+          mt="4px"
+          color={
+            menu === "profil" ? COLORS.BLACK.T800.hex : COLORS.GREY.T500.hex
+          }
+          size="0.625rem"
+        >
           Profil
         </Text>
       </Flex>
