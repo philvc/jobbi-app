@@ -1,7 +1,6 @@
 import { Box, Flex, Heading, Skeleton } from "@chakra-ui/react";
 import { useGetMyFollowedSearches } from "../../../services/searches/searches";
 import QuestCard from "../../shared/quest-card";
-import PlaceholderSharedQuest from "../shared/placeholder";
 import SharedQuestBox from "../shared/quest-box";
 import PublicSearchPlaceholder from "./placeholder";
 import PublicQuestBox from "./quest-box";

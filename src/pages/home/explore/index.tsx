@@ -49,7 +49,7 @@ const ExplorePage = () => {
       <Skeleton
         isLoaded={!isLoading}
         mx={isLoading ? "24px" : "0"}
-        h={isLoading ? "150px" : "fit-content"}
+        h={isLoading ? "150px" : "fit-f"}
       >
         {data &&
           list.map(() =>

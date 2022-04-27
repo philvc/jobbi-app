@@ -68,7 +68,7 @@ const PostDetails = () => {
       >
         <Box mx={"24px"}>
           <Text
-            mb={"14px"}
+            mb={"16px"}
             color={"#393360"}
             fontWeight="700"
             fontSize={"20px"}
@@ -102,12 +102,12 @@ const PostDetails = () => {
       </Skeleton>
 
       <Text
-        mb={"14px"}
+        mb={"16px"}
         mx={"24px"}
         color={"#393360"}
         fontWeight="700"
         fontSize={"20px"}
-        mt={"14px"}
+        mt={"16px"}
       >
         Commentaires
       </Text>

@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Skeleton, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useQueryClient } from "react-query";
 import AvatarList from "../../../../components/avatar-list";
@@ -69,10 +69,15 @@ const PublicQuestCard = ({ index, quest }: PublicQuestCardProps) => {
             {quest?.description}
           </Text>
         </Box>
-        <Flex direction={"row"} justifyContent={"space-between"}>
-          {friends && <AvatarList users={friends} />}
-          {quest?.sector && <QuestCardTags sector={quest?.sector} />}
-        </Flex>
+        <Skeleton
+          isLoaded={!getFriendsIsLoading}
+          h={getFriendsIsLoading ? "24px" : "fit-content"}
+        >
+          <Flex direction={"row"} justifyContent={"space-between"}>
+            {friends && <AvatarList users={friends} />}
+            {quest?.sector && <QuestCardTags sector={quest?.sector} />}
+          </Flex>
+        </Skeleton>
       </Flex>
     </Box>
   );

@@ -1,11 +1,8 @@
 import { Box, Flex, Skeleton } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useContext } from "react";
 import { EnumSearchRole } from "../../../../../../constants/enums";
 import { useSearchRoleContext } from "../../../../../../contexts/role";
-import {
-  useGetSearchParticipants,
-} from "../../../../../../services/searches/searches";
+import { useGetSearchParticipants } from "../../../../../../services/searches/searches";
 import QuestDetailsAddButton from "../posts/add-post";
 import QuestDetailsSectionHeader from "../posts/header";
 import QuestDetailsFriendCard from "./card";
@@ -19,16 +16,20 @@ const QuestDetailsParticipants = () => {
     searchId
   );
   const hasParticipants = participants && participants?.length !== 0;
-  const {role} = useSearchRoleContext();
+  const { role } = useSearchRoleContext();
   return (
     <Box pb={"150px"}>
-      <QuestDetailsSectionHeader>{"Friends & followers"}</QuestDetailsSectionHeader>
+      <QuestDetailsSectionHeader
+        onClick={() => router.push(`/home/quests/${searchId}/friends`)}
+      >
+        {"Friends & followers"}
+      </QuestDetailsSectionHeader>
       <Skeleton
         minWidth={isLoading ? "327px" : "fit-content"}
         height={isLoading ? "72px" : "fit-content"}
         mx={isLoading ? "24px" : "inherit"}
         mb={isLoading ? "1rem" : "inherit"}
-        borderRadius={isLoading ? "12px": "inherit"}
+        borderRadius={isLoading ? "12px" : "inherit"}
         isLoaded={!isLoading}
       >
         {hasParticipants && (
@@ -56,7 +57,9 @@ const QuestDetailsParticipants = () => {
           </SharedQuestBox>
         )} */}
       </Skeleton>
-      {(role !== EnumSearchRole.VISITOR && role !== EnumSearchRole.UNKNOWN )&& <QuestDetailsAddButton>Invite friends</QuestDetailsAddButton>}
+      {role !== EnumSearchRole.VISITOR && role !== EnumSearchRole.UNKNOWN && (
+        <QuestDetailsAddButton>Invite friends</QuestDetailsAddButton>
+      )}
     </Box>
   );
 };
