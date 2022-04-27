@@ -79,7 +79,11 @@ const Navbar = ({ menu }: NavbarProps) => {
           Explore
         </Text>
       </Flex>
-      {/* <Flex direction={"column"} alignItems={"center"} onClick={() => router.push('/home/friends')}>
+      {/* <Flex
+        direction={"column"}
+        alignItems={"center"}
+        onClick={() => router.push("/home/friends")}
+      >
         <Box
           width={"22px"}
           height={"22px"}
@@ -87,9 +91,19 @@ const Navbar = ({ menu }: NavbarProps) => {
           alignItems={"center"}
           justifyContent={"center"}
         >
-          <FriendsIcon fill={menu === "friends" ? COLORS.BLACK.T800.hex : "#8F95B2"} width={"19px"} height={"16px"} />
+          <FriendsIcon
+            fill={menu === "friends" ? COLORS.BLACK.T800.hex : "#8F95B2"}
+            width={"19px"}
+            height={"16px"}
+          />
         </Box>
-        <Text mt="4px" color={menu === "friends" ? COLORS.BLACK.T800.hex : COLORS.GREY.T500.hex} size="0.625rem">
+        <Text
+          mt="4px"
+          color={
+            menu === "friends" ? COLORS.BLACK.T800.hex : COLORS.GREY.T500.hex
+          }
+          size="0.625rem"
+        >
           Amis
         </Text>
       </Flex> */}

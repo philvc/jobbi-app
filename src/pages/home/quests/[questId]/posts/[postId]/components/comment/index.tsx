@@ -1,6 +1,7 @@
-import { Box, Button, Flex, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useQueryClient } from "react-query";
+import { OldAvatar } from "../../../../../../../../components/shared/icons/old-avatar";
 import { useUser } from "../../../../../../../../contexts/user";
 import {
   getGetCommentsForPostQueryKey,
@@ -15,45 +16,57 @@ interface CommentCardProps {
 
 const CommentCard = ({ comment }: CommentCardProps) => {
   // Attributes
-  const { id } = useUser();
-  const isOwner = comment?.userId === id;
-  
-  const router = useRouter();
-  const { questId, postId } = router.query;
-  const clientQuery = useQueryClient();
   const { isOpen, onClose, onOpen } = useDisclosure();
-  /*COMMENTS */
-  const { mutateAsync: deleteComment } = useDeteCommentById();
 
-  // Handlers
-  async function handleDelete() {
-    // Delete comment
-    await deleteComment({
-      searchId: questId as string,
-      postId: postId as string,
-      commentId: comment?.id,
-    });
-
-    // Refresh comment
-    await clientQuery.invalidateQueries(
-      getGetCommentsForPostQueryKey(questId as string, postId as string)
-    );
-
-    await clientQuery.refetchQueries(
-      getGetCommentsForPostQueryKey(questId as string, postId as string)
-    );
-  }
   return (
-    <Box>
-      <Box>{comment.content}</Box>
-      {isOwner && (
-        <Flex direction={"row"}>
-          <Button onClick={onOpen}>Edit</Button>
-          <Button onClick={handleDelete}>Delete</Button>
+    <>
+      <Box
+        minW={"200px"}
+        bgColor={"white"}
+        boxShadow={
+          "0px 2px 8px rgba(40, 41, 61, 0.04), 0px 26px 34px rgba(96, 97, 112, 0.06)"
+        }
+        borderRadius={"0.75rem"}
+        p={"1rem"}
+        onClick={onOpen}
+        cursor={"pointer"}
+      >
+        <Text
+          noOfLines={3}
+          color="#393360"
+          fontSize={"14px"}
+          fontWeight={"normal"}
+        >
+          {comment?.content}
+        </Text>
+
+        <Flex
+          direction="row"
+          alignItems={"center"}
+          justifyContent={"space-between"}
+          mt={"1.5rem"}
+        >
+          <Flex alignItems={"center"} direction={"row"}>
+            <Box
+              borderRadius={"4.75px"}
+              width={"19px"}
+              height={"19px"}
+              bgColor={"#5D44F2"}
+            >
+              <OldAvatar />
+            </Box>
+            <Text
+              fontSize={"12px"}
+              color={"#8F95B2"}
+              ml={"4px"}
+            >{`${comment?.firstName} ${comment?.lastName}`}</Text>
+          </Flex>
         </Flex>
+      </Box>
+      {isOpen && (
+        <EditCommentModal isOpen={isOpen} onClose={onClose} comment={comment} />
       )}
-      {isOpen && <EditCommentModal onClose={onClose} comment={comment} />}
-    </Box>
+    </>
   );
 };
 

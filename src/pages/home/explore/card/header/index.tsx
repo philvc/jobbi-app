@@ -90,6 +90,7 @@ const PublicQuestCardHeader = ({ quest }: PublicQuestCardHeaderProps) => {
         py={".4688rem"}
         borderRadius={".625rem"}
         border={"1.78571px solid #8F95B2"}
+        onClick={handleClick}
       >
         <Text color={"#8F95B2"} fontSize="14px" fontWeight={"400"}>
           {followButtonDisabled ? "Saving..." : buttonTitle}

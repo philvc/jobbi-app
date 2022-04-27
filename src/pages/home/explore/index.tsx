@@ -1,4 +1,4 @@
-import { Heading, Flex, Text, Box, Image } from "@chakra-ui/react";
+import { Heading, Flex, Text, Box, Image, Skeleton } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import Page from "../../../components/shared/layout/page";
 import Navbar from "../../../components/shared/navbar";
@@ -46,15 +46,21 @@ const ExplorePage = () => {
         Explore
       </Text>
 
-      {data &&
-        list.map(() =>
-          data?.map((quest, index) => {
-            return <PublicQuestCard index={index} quest={quest} />;
-          })
-        )}
-      {/* // data?.map((quest, index) => {
+      <Skeleton
+        isLoaded={!isLoading}
+        mx={isLoading ? "24px" : "0"}
+        h={isLoading ? "150px" : "fit-content"}
+      >
+        {data &&
+          list.map(() =>
+            data?.map((quest, index) => {
+              return <PublicQuestCard index={index} quest={quest} />;
+            })
+          )}
+        {/* // data?.map((quest, index) => {
         //   return <PublicQuestCard index={index} quest={quest} />;
         // })} */}
+      </Skeleton>
       <Navbar menu="explore" />
     </Page>
   );
