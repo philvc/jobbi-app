@@ -30,6 +30,8 @@ export const UserProvider = (props: BoxProps) => {
   // Queries
   const { data: user, isLoading, isFetched, refetch } = useGetUserBySub();
 
+  console.log("user", user);
+
   return (
     <UserContext.Provider
       value={{

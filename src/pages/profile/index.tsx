@@ -1,20 +1,25 @@
 import { Box, Text, Image, Flex } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import { useQueryClient } from "react-query";
 import { useSupabase } from "use-supabase";
 import ProfileHeader from "../../components/profile/header";
 import Page from "../../components/shared/layout/page";
 import { useUser } from "../../contexts/user";
+import { getGetUserBySubQueryKey } from "../../services/default/default";
 
 const Profile = () => {
   const { email, firstName, lastName } = useUser();
   const { auth } = useSupabase();
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   // Handler
   async function handleLogout() {
     // Signout
     await auth.signOut();
-
+    await queryClient.invalidateQueries(getGetUserBySubQueryKey());
+    localStorage.clear();
+    await queryClient.clear();
     // Redirect signin
     router.push("/auth/sign-in");
   }

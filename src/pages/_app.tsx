@@ -3,13 +3,13 @@ import Head from "next/head";
 import { ChakraProvider } from "@chakra-ui/react";
 import { AnimateSharedLayout } from "framer-motion";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { createClient } from "@supabase/supabase-js";
 import { SupabaseContextProvider } from "use-supabase";
 import { useRouter } from "next/router";
 import { UITheme } from "../themes";
 import { UserProvider } from "../contexts/user";
 import RoleProvider from "../contexts/role";
 import { supabase } from "../utils/supabaseClient";
+import SignIn from "./auth/sign-in";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -41,11 +41,15 @@ function MyApp({ Component, pageProps }) {
     setSession(supabase.auth.session());
 
     supabase.auth.onAuthStateChange((_event, session) => {
-      console.log("session", session);
-
       setSession(session);
     });
   }, []);
+
+  useEffect(() => {
+    if (!session && !router.pathname.includes("auth")) {
+      router.push("/auth/sign-in");
+    }
+  }, [router.pathname]);
 
   return (
     <SupabaseContextProvider client={supabase}>
@@ -62,7 +66,11 @@ function MyApp({ Component, pageProps }) {
           <ChakraProvider theme={UITheme}>
             <UserProvider>
               <RoleProvider>
-                <Component {...pageProps} />
+                {session ? (
+                  <Component {...pageProps} />
+                ) : (
+                  <SignIn {...pageProps} />
+                )}
               </RoleProvider>
             </UserProvider>
           </ChakraProvider>
