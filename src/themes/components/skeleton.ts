@@ -1,25 +1,35 @@
-import { fade } from "../../utils/animation";
+import { keyframes } from "@emotion/react";
+
+export const fade = (startColor: string, endColor: string) =>
+  keyframes({
+    from: { borderColor: startColor, background: startColor },
+    to: { borderColor: endColor, background: endColor },
+  });
 
 export const Skeleton = {
   baseStyle: ({
     isLoaded,
     speed,
+    startColor = "#EDEFF5",
+    endColor = "#E6E8F0",
   }) => {
     return {
+      height: "0.688rem",
       isLoaded,
+
       // skeleton animation
       opacity: 0.7,
-      borderRadius: '0.125rem',
-      borderColor: '#EDEFF5',
-      background: '#E6E8F0',
+      borderRadius: "0.125rem",
+      borderColor: "#EDEFF5",
+      background: "#E6E8F0",
       animation: `${speed}s linear infinite alternate ${fade(
-        '#EDEFF5',
-        '#E6E8F0',
+        startColor,
+        endColor
       )}`,
     };
   },
   defaultProps: {
-    colorScheme: 'neutral',
+    colorScheme: "neutral",
     speed: 1.5,
   },
 };

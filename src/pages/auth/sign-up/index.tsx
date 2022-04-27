@@ -12,10 +12,11 @@ import { Button } from "@chakra-ui/button";
 import { UserDTO } from "../../../types/dtos/userDTO";
 
 interface SignUpForm {
-  password: string,
-  email: string,
-  confirmPassword: string
-
+  password: string;
+  email: string;
+  confirmPassword: string;
+  firstName: string;
+  lastName: string;
 }
 
 export default function SignIn() {
@@ -49,6 +50,8 @@ export default function SignIn() {
       data: {
         email: data.email,
         externalId: signUpResponse.user.id,
+        firstName: data.firstName,
+        lastName: data.lastName,
       },
     });
 
@@ -58,7 +61,13 @@ export default function SignIn() {
 
   return (
     <Formik<SignUpForm>
-      initialValues={{ email: "", password: "",confirmPassword:""  }}
+      initialValues={{
+        email: "",
+        password: "",
+        confirmPassword: "",
+        firstName: "",
+        lastName: "",
+      }}
       onSubmit={handleSubmit}
     >
       <Form>
@@ -77,6 +86,8 @@ export default function SignIn() {
               job de rêve !{" "}
             </Heading>
             <Stack mt={8} spacing={4}>
+              <InputField placeholder="Prénom" name="firstName" />
+              <InputField placeholder="Nom" name="lastName" />
               <InputField placeholder="E-mail" name="email" />
               <InputField
                 placeholder="Mot de passe"
@@ -89,7 +100,12 @@ export default function SignIn() {
                 type="password"
               />
             </Stack>
-            <Button marginTop={"36px"} type="submit" backgroundColor="#00CC9D">
+            <Button
+              color={"white"}
+              marginTop={"36px"}
+              type="submit"
+              backgroundColor="#6772E5"
+            >
               S'inscrire
             </Button>
           </Flex>
