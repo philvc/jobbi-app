@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { useMemo } from "react";
 import MyQuestParticipants from "../../../../../../components/home/my-quest/participants";
 import MyQuestTag from "../../../../../../components/home/my-quest/tag";
-import { EnumReferer } from "../../../../../../constants/enums";
 import { useUser } from "../../../../../../contexts/user";
 import { useGetSearchById } from "../../../../../../services/searches/searches";
 import { SearchDTO } from "../../../../../../types/dtos";

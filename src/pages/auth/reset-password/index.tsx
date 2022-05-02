@@ -11,7 +11,10 @@ import { useTranslation } from "react-i18next";
 import { useCreateUser } from "../../../services/default/default";
 import { useAddFriendship } from "../../../services/friendships/friendships";
 import { UserDTO } from "../../../types/dtos/userDTO";
+import Cookies from "universal-cookie";
+import { ACCESS_TOKEN } from "../../../types/constant";
 
+const cookies = new Cookies();
 interface ResetPasswordForm {
   password: string;
 }
@@ -22,7 +25,7 @@ export default function SignIn() {
   const { auth } = useSupabase();
   const { t } = useTranslation();
   const { questId } = router.query;
-  
+
   const access_token = router.asPath
     ?.split("#access_token=")[1]
     ?.split("&expires_in=")[0];
@@ -33,17 +36,16 @@ export default function SignIn() {
   useEffect(() => {
     // if magic link with supabase access_token
     if (access_token) {
-      localStorage.setItem("ACCESS_TOKEN", access_token);
+      cookies.set(ACCESS_TOKEN, access_token, {path: '/'});
     }
   }, []);
 
   // Function
   async function updateSupabaseUser(password: string) {
     // update user in supabase
-    const resetResp = await auth.api.updateUser(
-      localStorage.getItem("ACCESS_TOKEN"),
-      { password: password }
-    );
+    const resetResp = await auth.api.updateUser(cookies.get(ACCESS_TOKEN), {
+      password: password,
+    });
 
     if (resetResp.error) {
       // toast error
@@ -91,7 +93,6 @@ export default function SignIn() {
 
       // create friendship with userId & searchId
       if (user) {
-
         const friendship = await createFriendship(user);
       }
     }

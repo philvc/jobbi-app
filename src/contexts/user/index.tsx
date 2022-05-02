@@ -1,5 +1,5 @@
 import { BoxProps } from "@chakra-ui/layout";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect } from "react";
 import {
   QueryObserverResult,
   RefetchOptions,
@@ -27,10 +27,17 @@ export const useUser = () => {
 };
 
 export const UserProvider = (props: BoxProps) => {
+  // Attributes
   // Queries
-  const { data: user, isLoading, isFetched, refetch } = useGetUserBySub();
+  const {
+    data: user,
+    isLoading,
+    isFetched,
+    refetch,
+    error,
+  } = useGetUserBySub();
 
-  console.log("user", user);
+  // Effect
 
   return (
     <UserContext.Provider

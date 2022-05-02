@@ -23,7 +23,6 @@ const QuestDetailsHeaderIconsTopBar = ({
   const isOwner = quest?.userId === id;
   const referer = router.query.referer as string;
 
-
   // Handlers
   async function handleShare() {
     await Browser.open({
@@ -31,14 +30,14 @@ const QuestDetailsHeaderIconsTopBar = ({
     });
   }
 
-  function handleGoBack(){
-    switch(referer){
+  function handleGoBack() {
+    switch (referer) {
       case EnumReferer.EXPLORE:
-        return router.push('/home/explore');
+        return router.push("/home/explore");
       case EnumReferer.SIGNUP:
       case EnumReferer.HOME:
       default:
-        return router.push('/home')
+        return router.push("/home");
     }
   }
   return (

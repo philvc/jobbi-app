@@ -18,7 +18,8 @@ const JoinQuest = () => {
   // Attributes
   const router = useRouter();
   const questId = router.query.questId as string;
-  const { id, isLoading: isUserLoading } = useUser();
+  const { id, isLoading: isUserLoading, isFetched } = useUser();
+
   const queryClient = useQueryClient();
   // Queries
   const {
@@ -30,14 +31,6 @@ const JoinQuest = () => {
   });
   const { mutateAsync: postFriendship } = useUpsertFriendship();
   const { refetch: refetchShareQuests } = useGetMySharedSearches();
-
-  // Effect
-  useEffect(() => {
-    // Redirect to signup if no user
-    if (!id && !isUserLoading) {
-      router.push("/auth/sign-in");
-    }
-  }, [isUserLoading, id]);
 
   // Handler
   async function joinQuest() {

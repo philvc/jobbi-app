@@ -19,7 +19,7 @@ interface SignUpForm {
   lastName: string;
 }
 
-export default function SignIn() {
+export default function SignUp() {
   // Attributes
   const router = useRouter();
   const { auth } = useSupabase();

@@ -12,7 +12,9 @@ import { FONT_SIZES } from "../../../constants/typography";
 import { COLORS } from "../../../constants/colors";
 import { Button, Heading } from "@chakra-ui/react";
 import Image from "next/image";
-
+import Cookies from "universal-cookie";
+import { ACCESS_TOKEN } from "../../../types/constant";
+const cookies = new Cookies();
 interface SignInForm {
   email: string;
   password: string;
@@ -37,7 +39,7 @@ export default function SignIn() {
       return;
     }
 
-    localStorage.setItem("ACCESS_TOKEN", signInResponse.data.access_token);
+    cookies.set("ACCESS_TOKEN", signInResponse.data.access_token, {path: "/"});
 
     router.push("/home");
   }

@@ -1,11 +1,14 @@
 import { Box, Text, Image, Flex } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useQueryClient } from "react-query";
+import Cookies from "universal-cookie";
 import { useSupabase } from "use-supabase";
 import ProfileHeader from "../../components/profile/header";
 import Page from "../../components/shared/layout/page";
 import { useUser } from "../../contexts/user";
 import { getGetUserBySubQueryKey } from "../../services/default/default";
+import { ACCESS_TOKEN } from "../../types/constant";
+const cookies = new Cookies();
 
 const Profile = () => {
   const { email, firstName, lastName } = useUser();
@@ -17,9 +20,21 @@ const Profile = () => {
   async function handleLogout() {
     // Signout
     await auth.signOut();
+
+    // Invalidate token
+    const token = cookies.get(ACCESS_TOKEN);
+    await auth.api.signOut(token);
+
+    // Invalidate client queries
     await queryClient.invalidateQueries(getGetUserBySubQueryKey());
+
+    // Clear local storage
     localStorage.clear();
+    cookies.remove(ACCESS_TOKEN, { path: "/" });
+
+    // Clear query client
     await queryClient.clear();
+
     // Redirect signin
     router.push("/auth/sign-in");
   }

@@ -37,19 +37,21 @@ function MyApp({ Component, pageProps }) {
     }
   }, []);
 
-  useEffect(() => {
-    setSession(supabase.auth.session());
+  // useEffect(() => {
+  //   setSession(supabase.auth.session());
 
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-  }, []);
+  //   supabase.auth.user
 
-  useEffect(() => {
-    if (!session && !router.pathname.includes("auth")) {
-      router.push("/auth/sign-in");
-    }
-  }, [router.pathname]);
+  //   supabase.auth.onAuthStateChange((_event, session) => {
+  //     setSession(session);
+  //   });
+  // }, []);
+
+  // useEffect(() => {
+  //   if (!session && !router.pathname.includes("auth")) {
+  //     router.push("/auth/sign-in");
+  //   }
+  // }, [router.pathname]);
 
   return (
     <SupabaseContextProvider client={supabase}>
@@ -66,11 +68,12 @@ function MyApp({ Component, pageProps }) {
           <ChakraProvider theme={UITheme}>
             <UserProvider>
               <RoleProvider>
-                {session ? (
+                {/* {session ? (
                   <Component {...pageProps} />
                 ) : (
                   <SignIn {...pageProps} />
-                )}
+                )} */}
+                <Component {...pageProps} />
               </RoleProvider>
             </UserProvider>
           </ChakraProvider>

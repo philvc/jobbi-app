@@ -7,7 +7,7 @@ import Navbar from "../../../../components/shared/navbar";
 
 export default function Quests() {
   // Attributes
-  
+
   return (
     <Page overflow={"scroll"}>
       <QuestDetailsHeader />
