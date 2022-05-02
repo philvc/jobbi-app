@@ -23,7 +23,7 @@ const MyQuestParticipants = ({ friends }: MyQuestParticipantsProps) => {
     <Flex>
       {friends &&
         friends.map((participant, index, list) => {
-          if (index < 2) {
+          if (index <= 2) {
             return (
               <OldAvatar
                 key={participant?.id}
@@ -40,7 +40,7 @@ const MyQuestParticipants = ({ friends }: MyQuestParticipantsProps) => {
               />
             );
           }
-          if (index === 2) {
+          if (index < 2) {
             return (
               <Box
                 key={participant?.id}

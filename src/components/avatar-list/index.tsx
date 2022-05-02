@@ -3,11 +3,11 @@ import { UserDTO } from "../../types/dtos";
 import { OldAvatar } from "../shared/icons/old-avatar";
 
 interface AvatarListProps {
-  users: UserDTO[]
+  users: UserDTO[];
 }
 
-const AvatarList = ({users}:AvatarListProps) => {
-   // Handlers
+const AvatarList = ({ users }: AvatarListProps) => {
+  // Handlers
   // random color for card icon
   const random_hex_color_code = () => {
     let n = (Math.random() * 0xfffff * 1000000).toString(16);
@@ -17,7 +17,7 @@ const AvatarList = ({users}:AvatarListProps) => {
     <Flex>
       {users &&
         users.map((user, index, list) => {
-          if (index < 2) {
+          if (index <= 2) {
             return (
               <OldAvatar
                 key={user?.id}
@@ -34,7 +34,7 @@ const AvatarList = ({users}:AvatarListProps) => {
               />
             );
           }
-          if (index === 2) {
+          if (index > 2) {
             return (
               <Box
                 key={user?.id}
@@ -71,6 +71,6 @@ const AvatarList = ({users}:AvatarListProps) => {
         })}
     </Flex>
   );
-}
+};
 
 export default AvatarList;

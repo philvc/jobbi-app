@@ -51,11 +51,7 @@ const QuestDetailsParticipants = () => {
             })}
           </Flex>
         )}
-        {/* {!hasPosts && (
-          <SharedQuestBox ml={"24px"} mb={"47px"}>
-            <PlaceholderSharedQuest />
-          </SharedQuestBox>
-        )} */}
+
       </Skeleton>
       {role !== EnumSearchRole.VISITOR && role !== EnumSearchRole.UNKNOWN && (
         <QuestDetailsAddButton>Invite friends</QuestDetailsAddButton>

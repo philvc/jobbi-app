@@ -47,7 +47,7 @@ const QuestDetailsFriendCard = ({
     searchId
   );
   const { refetch: refetchSharedQuests } = useGetMySharedSearches();
-  const {refetch: refetchFollowedQuests} = useGetMyFollowedSearches();
+  const { refetch: refetchFollowedQuests } = useGetMyFollowedSearches();
   const isDeleteLoading = isDeleteFriendshipsLoading || isDeleteFollowerLoading;
 
   // Handlers
@@ -84,7 +84,9 @@ const QuestDetailsFriendCard = ({
         await clientQuery.invalidateQueries(getGetMySharedSearchesQueryKey());
 
         // Refetch get shared or followed quest
-        isFriendship ? await refetchSharedQuests() : await refetchFollowedQuests;
+        isFriendship
+          ? await refetchSharedQuests()
+          : await refetchFollowedQuests;
 
         // Go back home
         router.push("/home");
@@ -107,6 +109,7 @@ const QuestDetailsFriendCard = ({
           <Box
             width={"40px"}
             height={"40px"}
+            minW={"2.5rem"}
             bgColor={"#6772E5"}
             borderRadius={"8px"}
           >
@@ -123,6 +126,8 @@ const QuestDetailsFriendCard = ({
               fontWeight={"bold"}
               fontSize={"16px"}
               color={"#393360"}
+              noOfLines={1}
+              h="fit-content"
             >
               {`${capitalize(participant?.firstName)} ${capitalize(
                 participant?.lastName

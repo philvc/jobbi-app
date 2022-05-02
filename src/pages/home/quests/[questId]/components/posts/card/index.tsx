@@ -38,11 +38,23 @@ const QuestPostCard = ({ post }: QuestPostCardProps) => {
         p={"1rem"}
         onClick={() => router.push(`/home/quests/${questId}/posts/${post?.id}`)}
         cursor={"pointer"}
+        maxH={"11.4375rem"}
       >
-        <Text color="#393360" fontSize={"16px"} fontWeight={"bold"}>
+        <Text
+          color="#393360"
+          noOfLines={2}
+          fontSize={"16px"}
+          fontWeight={"bold"}
+        >
           {post?.title}
         </Text>
-        <Text mt="1rem" color="#393360" fontSize={"14px"} fontWeight={"normal"}>
+        <Text
+          mt="1rem"
+          color="#393360"
+          fontSize={"14px"}
+          fontWeight={"normal"}
+          noOfLines={2}
+        >
           {post?.description}
         </Text>
         <Flex
@@ -56,6 +68,7 @@ const QuestPostCard = ({ post }: QuestPostCardProps) => {
               borderRadius={"4.75px"}
               width={"19px"}
               height={"19px"}
+              minW={"1.1875rem"}
               bgColor={"#5D44F2"}
             >
               <OldAvatar />
@@ -64,7 +77,8 @@ const QuestPostCard = ({ post }: QuestPostCardProps) => {
               fontSize={"12px"}
               color={"#8F95B2"}
               ml={"4px"}
-            >{`${post?.userFirstName} ${post?.userLastName}`}</Text>
+              noOfLines={1}
+            >{`${post?.userFirstName} ${post?.userLastName} sdkjfmlqsjk mlsqdkjflmqsk m qsdmfkjsqmlkj sqdm lfkjsqmlkjsdfsml kjm`}</Text>
           </Flex>
           {post?.url && (
             <Box onClick={handleLink}>
