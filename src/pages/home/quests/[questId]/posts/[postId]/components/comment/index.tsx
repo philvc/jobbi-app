@@ -22,6 +22,7 @@ const CommentCard = ({ comment }: CommentCardProps) => {
     <>
       <Box
         minW={"200px"}
+        maxW={"17.5rem"}
         bgColor={"white"}
         boxShadow={
           "0px 2px 8px rgba(40, 41, 61, 0.04), 0px 26px 34px rgba(96, 97, 112, 0.06)"
@@ -36,8 +37,13 @@ const CommentCard = ({ comment }: CommentCardProps) => {
           color="#393360"
           fontSize={"14px"}
           fontWeight={"normal"}
+          maxH={"11.4375rem"}
         >
           {comment?.content}
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque id
+          sunt est soluta vero quia temporibus! Ullam deleniti assumenda
+          perferendis nesciunt! Blanditiis quam corporis praesentium et
+          repellendus aliquam? Rem, repudiandae?
         </Text>
 
         <Flex

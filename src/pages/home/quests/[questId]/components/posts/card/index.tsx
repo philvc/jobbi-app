@@ -29,7 +29,7 @@ const QuestPostCard = ({ post }: QuestPostCardProps) => {
   return (
     <>
       <Box
-        minW={"280px"}
+        minW={"200px"}
         bgColor={"white"}
         boxShadow={
           "0px 2px 8px rgba(40, 41, 61, 0.04), 0px 26px 34px rgba(96, 97, 112, 0.06)"
@@ -39,6 +39,7 @@ const QuestPostCard = ({ post }: QuestPostCardProps) => {
         onClick={() => router.push(`/home/quests/${questId}/posts/${post?.id}`)}
         cursor={"pointer"}
         maxH={"11.4375rem"}
+        maxW={"17.5rem"}
       >
         <Text
           color="#393360"
@@ -78,7 +79,7 @@ const QuestPostCard = ({ post }: QuestPostCardProps) => {
               color={"#8F95B2"}
               ml={"4px"}
               noOfLines={1}
-            >{`${post?.userFirstName} ${post?.userLastName} sdkjfmlqsjk mlsqdkjflmqsk m qsdmfkjsqmlkj sqdm lfkjsqmlkjsdfsml kjm`}</Text>
+            >{`${post?.userFirstName} ${post?.userLastName}`}</Text>
           </Flex>
           {post?.url && (
             <Box onClick={handleLink}>

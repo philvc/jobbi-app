@@ -1,6 +1,6 @@
 import { Box, Text, Image, Flex } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useQueryClient } from "react-query";
+import { QueryMeta, useQueryClient } from "react-query";
 import Cookies from "universal-cookie";
 import { useSupabase } from "use-supabase";
 import ProfileHeader from "../../components/profile/header";

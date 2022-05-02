@@ -80,7 +80,13 @@ const PublicQuestCardHeader = ({ quest }: PublicQuestCardHeaderProps) => {
           <OldAvatar width={"40px"} height={"40px"} />
         </Box>
         <Flex ml={"10px"} direction={"column"} justifyContent={"center"}>
-          <Heading mt={"3px"} lineHeight={"16px"} color={"#393360"} size="600">
+          <Heading
+            noOfLines={2}
+            mt={"3px"}
+            lineHeight={"16px"}
+            color={"#393360"}
+            size="600"
+          >
             {`${capitalize(quest?.firstName)} ${capitalize(quest?.lastName)}`}
           </Heading>
         </Flex>
