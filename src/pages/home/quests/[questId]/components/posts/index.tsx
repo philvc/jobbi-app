@@ -52,11 +52,6 @@ const QuestPosts = () => {
             })}
           </Flex>
         )}
-        {/* {!hasPosts && (
-          <SharedQuestBox ml={"24px"} mb={"47px"}>
-            <PlaceholderSharedQuest />
-          </SharedQuestBox>
-        )} */}
         {role !== EnumSearchRole.VISITOR && role !== EnumSearchRole.UNKNOWN && (
           <QuestDetailsAddButton onClick={onNewPostOpen}>
             Add a post

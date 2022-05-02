@@ -1,6 +1,10 @@
 import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useState } from "react";
-import { useQueryClient } from "react-query";
+import {
+  QueryObserverResult,
+  RefetchOptions,
+  RefetchQueryFilters,
+} from "react-query/types/core/types";
 import { EnumSearchRole } from "../../constants/enums";
 import {
   getGetSearchRoleQueryKey,
@@ -10,6 +14,9 @@ import { GetSearchRole200 } from "../../types/dtos";
 
 interface SearchRoleContext {
   role: EnumSearchRole;
+  refetchRole: <TPageData>(
+    options?: RefetchOptions & RefetchQueryFilters<TPageData>
+  ) => Promise<QueryObserverResult<GetSearchRole200, void>>;
 }
 
 interface RoleProviderProps {
@@ -21,7 +28,7 @@ const SearchRoleContext = createContext<SearchRoleContext>(null);
 
 // search role context hook
 export function useSearchRoleContext() {
-    return useContext(SearchRoleContext)
+  return useContext(SearchRoleContext);
 }
 
 const RoleProvider = ({ children }: RoleProviderProps) => {
@@ -77,7 +84,7 @@ const RoleProvider = ({ children }: RoleProviderProps) => {
   }
 
   return (
-    <SearchRoleContext.Provider value={{ role }}>
+    <SearchRoleContext.Provider value={{ role, refetchRole }}>
       {children}
     </SearchRoleContext.Provider>
   );

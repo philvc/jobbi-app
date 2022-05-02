@@ -5,6 +5,7 @@ import { useQueryClient } from "react-query";
 import Skeleton from "../../../components/shared/indicators/skeleton";
 import Page from "../../../components/shared/layout/page";
 import { EnumFriendshipType } from "../../../constants/enums";
+import { useSearchRoleContext } from "../../../contexts/role";
 import { useUser } from "../../../contexts/user";
 import { useAddFriendship } from "../../../services/friendships/friendships";
 import {
@@ -34,6 +35,7 @@ const JoinQuest = () => {
   });
   const { mutateAsync: postFriendship } = useUpsertFriendship();
   const { refetch: refetchShareQuests } = useGetMySharedSearches();
+  const { refetchRole } = useSearchRoleContext();
 
   // Handler
   async function joinQuest() {
@@ -51,6 +53,9 @@ const JoinQuest = () => {
       await queryClient.invalidateQueries(getGetMySharedSearchesQueryKey());
       // Refetch shared quest
       await refetchShareQuests();
+
+      // Refetch role
+      await refetchRole();
       // Redirect to quest page
       router.push(`/home/quests/${questId}`);
     }

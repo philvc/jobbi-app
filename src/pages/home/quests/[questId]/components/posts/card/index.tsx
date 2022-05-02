@@ -1,5 +1,7 @@
+import { Browser } from "@capacitor/browser";
 import { Box, Text, Flex, useDisclosure } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import { ChangeEvent, MouseEventHandler } from "react";
 import EditPostDrawer from "../../../../../../../components/edit-post-drawer";
 import { OldAvatar } from "../../../../../../../components/shared/icons/old-avatar";
 import { PostDTOBySearchId } from "../../../../../../../types/dtos";
@@ -13,6 +15,17 @@ const QuestPostCard = ({ post }: QuestPostCardProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
   const { questId } = router.query;
+
+  // Handlers
+  function handleLink(e: any): MouseEventHandler<HTMLDivElement> {
+    // Stop event
+    e.stopPropagation();
+
+    Browser.open({
+      url: post?.url,
+    });
+    return;
+  }
   return (
     <>
       <Box
@@ -54,7 +67,7 @@ const QuestPostCard = ({ post }: QuestPostCardProps) => {
             >{`${post?.userFirstName} ${post?.userLastName}`}</Text>
           </Flex>
           {post?.url && (
-            <Box>
+            <Box onClick={handleLink}>
               <Text color="#393360" fontSize={"16px"} fontWeight={"bold"}>
                 LINK
               </Text>

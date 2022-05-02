@@ -13,8 +13,8 @@ import {
   UseQueryOptions,
   UseMutationOptions,
   QueryFunction,
-  MutationFunction
-} from 'react-query'
+  MutationFunction,
+} from "react-query";
 import type {
   PostSearchResponseDTO,
   PostSearchRequestDTO,
@@ -35,222 +35,262 @@ import type {
   AddPostRequestDTO,
   UpdatePostResponseDTO,
   UpdatePostRequestDTO,
-  GetSearchRole200
-} from '../../types/dtos'
-import { customInstance } from '.././config'
+  GetSearchRole200,
+} from "../../types/dtos";
+import { customInstance } from ".././config";
 
-type AsyncReturnType<
-T extends (...args: any) => Promise<any>
-> = T extends (...args: any) => Promise<infer R> ? R : any;
-
+type AsyncReturnType<T extends (...args: any) => Promise<any>> = T extends (
+  ...args: any
+) => Promise<infer R>
+  ? R
+  : any;
 
 /**
  * type id struct
 Create search.
 Return search
  */
-export const addSearch = (
-    postSearchRequestDTO: PostSearchRequestDTO,
- ) => {
-      return customInstance<PostSearchResponseDTO>(
-      {url: `/searches`, method: 'post',
-      data: postSearchRequestDTO
-    },
-      );
-    }
-  
+export const addSearch = (postSearchRequestDTO: PostSearchRequestDTO) => {
+  return customInstance<PostSearchResponseDTO>({
+    url: `/searches`,
+    method: "post",
+    data: postSearchRequestDTO,
+  });
+};
 
+export const useAddSearch = <TError = void, TContext = unknown>(options?: {
+  mutation?: UseMutationOptions<
+    AsyncReturnType<typeof addSearch>,
+    TError,
+    { data: PostSearchRequestDTO },
+    TContext
+  >;
+}) => {
+  const { mutation: mutationOptions } = options || {};
 
-    export const useAddSearch = <TError = void,
-    
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof addSearch>, TError,{data: PostSearchRequestDTO}, TContext>, }
-) => {
-      const {mutation: mutationOptions} = options || {}
+  const mutationFn: MutationFunction<
+    AsyncReturnType<typeof addSearch>,
+    { data: PostSearchRequestDTO }
+  > = (props) => {
+    const { data } = props || {};
 
-      const mutationFn: MutationFunction<AsyncReturnType<typeof addSearch>, {data: PostSearchRequestDTO}> = (props) => {
-          const {data} = props || {};
+    return addSearch(data);
+  };
 
-          return  addSearch(data,)
-        }
-
-      return useMutation<AsyncReturnType<typeof addSearch>, TError, {data: PostSearchRequestDTO}, TContext>(mutationFn, mutationOptions)
-    }
-    /**
+  return useMutation<
+    AsyncReturnType<typeof addSearch>,
+    TError,
+    { data: PostSearchRequestDTO },
+    TContext
+  >(mutationFn, mutationOptions);
+};
+/**
  * type id struct
 Get public searches
 Return searches
  */
-export const getPublicSearches = (
-    
- ) => {
-      return customInstance<PublicSearchDto[]>(
-      {url: `/searches/explore`, method: 'get'
-    },
-      );
-    }
-  
+export const getPublicSearches = () => {
+  return customInstance<PublicSearchDto[]>({
+    url: `/searches/explore`,
+    method: "get",
+  });
+};
 
 export const getGetPublicSearchesQueryKey = () => [`/searches/explore`];
 
-    
-export const useGetPublicSearches = <TData = AsyncReturnType<typeof getPublicSearches>, TError = void>(
-  options?: { query?:UseQueryOptions<AsyncReturnType<typeof getPublicSearches>, TError, TData>, }
-
-  ) => {
-
-  const {query: queryOptions} = options || {}
+export const useGetPublicSearches = <
+  TData = AsyncReturnType<typeof getPublicSearches>,
+  TError = void
+>(options?: {
+  query?: UseQueryOptions<
+    AsyncReturnType<typeof getPublicSearches>,
+    TError,
+    TData
+  >;
+}) => {
+  const { query: queryOptions } = options || {};
 
   const queryKey = queryOptions?.queryKey ?? getGetPublicSearchesQueryKey();
-  const queryFn: QueryFunction<AsyncReturnType<typeof getPublicSearches>> = () => getPublicSearches();
+  const queryFn: QueryFunction<
+    AsyncReturnType<typeof getPublicSearches>
+  > = () => getPublicSearches();
 
-  const query = useQuery<AsyncReturnType<typeof getPublicSearches>, TError, TData>(queryKey, queryFn, queryOptions)
+  const query = useQuery<
+    AsyncReturnType<typeof getPublicSearches>,
+    TError,
+    TData
+  >(queryKey, queryFn, queryOptions);
 
   return {
     queryKey,
-    ...query
-  }
-}
+    ...query,
+  };
+};
 
 /**
  * Return my search
  * @summary Get my search.
  */
-export const getMySearch = (
-    
- ) => {
-      return customInstance<MySearchDTO>(
-      {url: `/searches/me`, method: 'get'
-    },
-      );
-    }
-  
+export const getMySearch = () => {
+  return customInstance<MySearchDTO>({ url: `/searches/me`, method: "get" });
+};
 
 export const getGetMySearchQueryKey = () => [`/searches/me`];
 
-    
-export const useGetMySearch = <TData = AsyncReturnType<typeof getMySearch>, TError = void>(
-  options?: { query?:UseQueryOptions<AsyncReturnType<typeof getMySearch>, TError, TData>, }
-
-  ) => {
-
-  const {query: queryOptions} = options || {}
+export const useGetMySearch = <
+  TData = AsyncReturnType<typeof getMySearch>,
+  TError = void
+>(options?: {
+  query?: UseQueryOptions<AsyncReturnType<typeof getMySearch>, TError, TData>;
+}) => {
+  const { query: queryOptions } = options || {};
 
   const queryKey = queryOptions?.queryKey ?? getGetMySearchQueryKey();
-  const queryFn: QueryFunction<AsyncReturnType<typeof getMySearch>> = () => getMySearch();
+  const queryFn: QueryFunction<AsyncReturnType<typeof getMySearch>> = () =>
+    getMySearch();
 
-  const query = useQuery<AsyncReturnType<typeof getMySearch>, TError, TData>(queryKey, queryFn, queryOptions)
+  const query = useQuery<AsyncReturnType<typeof getMySearch>, TError, TData>(
+    queryKey,
+    queryFn,
+    queryOptions
+  );
 
   return {
     queryKey,
-    ...query
-  }
-}
+    ...query,
+  };
+};
 
 /**
  * Return my followed searches
  * @summary Get my followed searches.
  */
-export const getMyFollowedSearches = (
-    
- ) => {
-      return customInstance<FollowedSearchDTO[]>(
-      {url: `/searches/public`, method: 'get'
-    },
-      );
-    }
-  
+export const getMyFollowedSearches = () => {
+  return customInstance<FollowedSearchDTO[]>({
+    url: `/searches/public`,
+    method: "get",
+  });
+};
 
 export const getGetMyFollowedSearchesQueryKey = () => [`/searches/public`];
 
-    
-export const useGetMyFollowedSearches = <TData = AsyncReturnType<typeof getMyFollowedSearches>, TError = void>(
-  options?: { query?:UseQueryOptions<AsyncReturnType<typeof getMyFollowedSearches>, TError, TData>, }
-
-  ) => {
-
-  const {query: queryOptions} = options || {}
+export const useGetMyFollowedSearches = <
+  TData = AsyncReturnType<typeof getMyFollowedSearches>,
+  TError = void
+>(options?: {
+  query?: UseQueryOptions<
+    AsyncReturnType<typeof getMyFollowedSearches>,
+    TError,
+    TData
+  >;
+}) => {
+  const { query: queryOptions } = options || {};
 
   const queryKey = queryOptions?.queryKey ?? getGetMyFollowedSearchesQueryKey();
-  const queryFn: QueryFunction<AsyncReturnType<typeof getMyFollowedSearches>> = () => getMyFollowedSearches();
+  const queryFn: QueryFunction<
+    AsyncReturnType<typeof getMyFollowedSearches>
+  > = () => getMyFollowedSearches();
 
-  const query = useQuery<AsyncReturnType<typeof getMyFollowedSearches>, TError, TData>(queryKey, queryFn, queryOptions)
+  const query = useQuery<
+    AsyncReturnType<typeof getMyFollowedSearches>,
+    TError,
+    TData
+  >(queryKey, queryFn, queryOptions);
 
   return {
     queryKey,
-    ...query
-  }
-}
+    ...query,
+  };
+};
 
 /**
  * Return my shared searches
  * @summary Get my shared searches.
  */
-export const getMySharedSearches = (
-    
- ) => {
-      return customInstance<SharedSearchDTO[]>(
-      {url: `/searches/shared`, method: 'get'
-    },
-      );
-    }
-  
+export const getMySharedSearches = () => {
+  return customInstance<SharedSearchDTO[]>({
+    url: `/searches/shared`,
+    method: "get",
+  });
+};
 
 export const getGetMySharedSearchesQueryKey = () => [`/searches/shared`];
 
-    
-export const useGetMySharedSearches = <TData = AsyncReturnType<typeof getMySharedSearches>, TError = void>(
-  options?: { query?:UseQueryOptions<AsyncReturnType<typeof getMySharedSearches>, TError, TData>, }
-
-  ) => {
-
-  const {query: queryOptions} = options || {}
+export const useGetMySharedSearches = <
+  TData = AsyncReturnType<typeof getMySharedSearches>,
+  TError = void
+>(options?: {
+  query?: UseQueryOptions<
+    AsyncReturnType<typeof getMySharedSearches>,
+    TError,
+    TData
+  >;
+}) => {
+  const { query: queryOptions } = options || {};
 
   const queryKey = queryOptions?.queryKey ?? getGetMySharedSearchesQueryKey();
-  const queryFn: QueryFunction<AsyncReturnType<typeof getMySharedSearches>> = () => getMySharedSearches();
+  const queryFn: QueryFunction<
+    AsyncReturnType<typeof getMySharedSearches>
+  > = () => getMySharedSearches();
 
-  const query = useQuery<AsyncReturnType<typeof getMySharedSearches>, TError, TData>(queryKey, queryFn, queryOptions)
+  const query = useQuery<
+    AsyncReturnType<typeof getMySharedSearches>,
+    TError,
+    TData
+  >(queryKey, queryFn, queryOptions);
 
   return {
     queryKey,
-    ...query
-  }
-}
+    ...query,
+  };
+};
 
 /**
  * type id struct
 Get search by id.
 Return search
  */
-export const getSearchById = (
-    searchId: string,
- ) => {
-      return customInstance<SearchDTOById>(
-      {url: `/searches/${searchId}`, method: 'get'
-    },
-      );
-    }
-  
+export const getSearchById = (searchId: string) => {
+  return customInstance<SearchDTOById>({
+    url: `/searches/${searchId}`,
+    method: "get",
+  });
+};
 
-export const getGetSearchByIdQueryKey = (searchId: string,) => [`/searches/${searchId}`];
+export const getGetSearchByIdQueryKey = (searchId: string) => [
+  `/searches/${searchId}`,
+];
 
-    
-export const useGetSearchById = <TData = AsyncReturnType<typeof getSearchById>, TError = void>(
- searchId: string, options?: { query?:UseQueryOptions<AsyncReturnType<typeof getSearchById>, TError, TData>, }
-
-  ) => {
-
-  const {query: queryOptions} = options || {}
+export const useGetSearchById = <
+  TData = AsyncReturnType<typeof getSearchById>,
+  TError = void
+>(
+  searchId: string,
+  options?: {
+    query?: UseQueryOptions<
+      AsyncReturnType<typeof getSearchById>,
+      TError,
+      TData
+    >;
+  }
+) => {
+  const { query: queryOptions } = options || {};
 
   const queryKey = queryOptions?.queryKey ?? getGetSearchByIdQueryKey(searchId);
-  const queryFn: QueryFunction<AsyncReturnType<typeof getSearchById>> = () => getSearchById(searchId, );
+  const queryFn: QueryFunction<AsyncReturnType<typeof getSearchById>> = () =>
+    getSearchById(searchId);
 
-  const query = useQuery<AsyncReturnType<typeof getSearchById>, TError, TData>(queryKey, queryFn, {enabled: !!(searchId), ...queryOptions})
+  const query = useQuery<AsyncReturnType<typeof getSearchById>, TError, TData>(
+    queryKey,
+    queryFn,
+    { enabled: !!searchId, ...queryOptions }
+  );
 
   return {
     queryKey,
-    ...query
-  }
-}
+    ...query,
+  };
+};
 
 /**
  * type id struct
@@ -258,129 +298,166 @@ Create search.
 Return search
  */
 export const modifySearch = (
-    searchId: string,
-    putSearchRequestDTO: PutSearchRequestDTO,
- ) => {
-      return customInstance<PutSearchResponseDTO>(
-      {url: `/searches/${searchId}`, method: 'put',
-      data: putSearchRequestDTO
-    },
-      );
-    }
-  
-
-
-    export const useModifySearch = <TError = void,
-    
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof modifySearch>, TError,{searchId: string;data: PutSearchRequestDTO}, TContext>, }
+  searchId: string,
+  putSearchRequestDTO: PutSearchRequestDTO
 ) => {
-      const {mutation: mutationOptions} = options || {}
+  return customInstance<PutSearchResponseDTO>({
+    url: `/searches/${searchId}`,
+    method: "put",
+    data: putSearchRequestDTO,
+  });
+};
 
-      const mutationFn: MutationFunction<AsyncReturnType<typeof modifySearch>, {searchId: string;data: PutSearchRequestDTO}> = (props) => {
-          const {searchId,data} = props || {};
+export const useModifySearch = <TError = void, TContext = unknown>(options?: {
+  mutation?: UseMutationOptions<
+    AsyncReturnType<typeof modifySearch>,
+    TError,
+    { searchId: string; data: PutSearchRequestDTO },
+    TContext
+  >;
+}) => {
+  const { mutation: mutationOptions } = options || {};
 
-          return  modifySearch(searchId,data,)
-        }
+  const mutationFn: MutationFunction<
+    AsyncReturnType<typeof modifySearch>,
+    { searchId: string; data: PutSearchRequestDTO }
+  > = (props) => {
+    const { searchId, data } = props || {};
 
-      return useMutation<AsyncReturnType<typeof modifySearch>, TError, {searchId: string;data: PutSearchRequestDTO}, TContext>(mutationFn, mutationOptions)
-    }
-    /**
+    return modifySearch(searchId, data);
+  };
+
+  return useMutation<
+    AsyncReturnType<typeof modifySearch>,
+    TError,
+    { searchId: string; data: PutSearchRequestDTO },
+    TContext
+  >(mutationFn, mutationOptions);
+};
+/**
  * type id struct
 Post follower.
 Return follower.
  */
-export const postFollower = (
-    searchId: string,
- ) => {
-      return customInstance<FollowerDTO>(
-      {url: `/searches/${searchId}/followers`, method: 'post',
-      data: undefined
-    },
-      );
-    }
-  
+export const postFollower = (searchId: string) => {
+  return customInstance<FollowerDTO>({
+    url: `/searches/${searchId}/followers`,
+    method: "post",
+    data: undefined,
+  });
+};
 
+export const usePostFollower = <TError = void, TContext = unknown>(options?: {
+  mutation?: UseMutationOptions<
+    AsyncReturnType<typeof postFollower>,
+    TError,
+    { searchId: string },
+    TContext
+  >;
+}) => {
+  const { mutation: mutationOptions } = options || {};
 
-    export const usePostFollower = <TError = void,
-    
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof postFollower>, TError,{searchId: string}, TContext>, }
-) => {
-      const {mutation: mutationOptions} = options || {}
+  const mutationFn: MutationFunction<
+    AsyncReturnType<typeof postFollower>,
+    { searchId: string }
+  > = (props) => {
+    const { searchId } = props || {};
 
-      const mutationFn: MutationFunction<AsyncReturnType<typeof postFollower>, {searchId: string}> = (props) => {
-          const {searchId} = props || {};
+    return postFollower(searchId);
+  };
 
-          return  postFollower(searchId,)
-        }
-
-      return useMutation<AsyncReturnType<typeof postFollower>, TError, {searchId: string}, TContext>(mutationFn, mutationOptions)
-    }
-    /**
+  return useMutation<
+    AsyncReturnType<typeof postFollower>,
+    TError,
+    { searchId: string },
+    TContext
+  >(mutationFn, mutationOptions);
+};
+/**
  * type id struct
 Delete follower.
 Return boolean
  */
-export const deleteFollower = (
-    searchId: string,
-    followerId: string,
- ) => {
-      return customInstance<boolean>(
-      {url: `/searches/${searchId}/followers/${followerId}`, method: 'delete'
-    },
-      );
-    }
-  
+export const deleteFollower = (searchId: string, followerId: string) => {
+  return customInstance<boolean>({
+    url: `/searches/${searchId}/followers/${followerId}`,
+    method: "delete",
+  });
+};
 
+export const useDeleteFollower = <TError = void, TContext = unknown>(options?: {
+  mutation?: UseMutationOptions<
+    AsyncReturnType<typeof deleteFollower>,
+    TError,
+    { searchId: string; followerId: string },
+    TContext
+  >;
+}) => {
+  const { mutation: mutationOptions } = options || {};
 
-    export const useDeleteFollower = <TError = void,
-    
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof deleteFollower>, TError,{searchId: string;followerId: string}, TContext>, }
-) => {
-      const {mutation: mutationOptions} = options || {}
+  const mutationFn: MutationFunction<
+    AsyncReturnType<typeof deleteFollower>,
+    { searchId: string; followerId: string }
+  > = (props) => {
+    const { searchId, followerId } = props || {};
 
-      const mutationFn: MutationFunction<AsyncReturnType<typeof deleteFollower>, {searchId: string;followerId: string}> = (props) => {
-          const {searchId,followerId} = props || {};
+    return deleteFollower(searchId, followerId);
+  };
 
-          return  deleteFollower(searchId,followerId,)
-        }
-
-      return useMutation<AsyncReturnType<typeof deleteFollower>, TError, {searchId: string;followerId: string}, TContext>(mutationFn, mutationOptions)
-    }
-    /**
+  return useMutation<
+    AsyncReturnType<typeof deleteFollower>,
+    TError,
+    { searchId: string; followerId: string },
+    TContext
+  >(mutationFn, mutationOptions);
+};
+/**
  * type id struct
 Get friends by search id.
 Return friends
  */
-export const getSearchFriends = (
-    searchId: string,
- ) => {
-      return customInstance<UserDTO[]>(
-      {url: `/searches/${searchId}/friends`, method: 'get'
-    },
-      );
-    }
-  
+export const getSearchFriends = (searchId: string) => {
+  return customInstance<UserDTO[]>({
+    url: `/searches/${searchId}/friends`,
+    method: "get",
+  });
+};
 
-export const getGetSearchFriendsQueryKey = (searchId: string,) => [`/searches/${searchId}/friends`];
+export const getGetSearchFriendsQueryKey = (searchId: string) => [
+  `/searches/${searchId}/friends`,
+];
 
-    
-export const useGetSearchFriends = <TData = AsyncReturnType<typeof getSearchFriends>, TError = void>(
- searchId: string, options?: { query?:UseQueryOptions<AsyncReturnType<typeof getSearchFriends>, TError, TData>, }
+export const useGetSearchFriends = <
+  TData = AsyncReturnType<typeof getSearchFriends>,
+  TError = void
+>(
+  searchId: string,
+  options?: {
+    query?: UseQueryOptions<
+      AsyncReturnType<typeof getSearchFriends>,
+      TError,
+      TData
+    >;
+  }
+) => {
+  const { query: queryOptions } = options || {};
 
-  ) => {
+  const queryKey =
+    queryOptions?.queryKey ?? getGetSearchFriendsQueryKey(searchId);
+  const queryFn: QueryFunction<AsyncReturnType<typeof getSearchFriends>> = () =>
+    getSearchFriends(searchId);
 
-  const {query: queryOptions} = options || {}
-
-  const queryKey = queryOptions?.queryKey ?? getGetSearchFriendsQueryKey(searchId);
-  const queryFn: QueryFunction<AsyncReturnType<typeof getSearchFriends>> = () => getSearchFriends(searchId, );
-
-  const query = useQuery<AsyncReturnType<typeof getSearchFriends>, TError, TData>(queryKey, queryFn, {enabled: !!(searchId), ...queryOptions})
+  const query = useQuery<
+    AsyncReturnType<typeof getSearchFriends>,
+    TError,
+    TData
+  >(queryKey, queryFn, { enabled: !!searchId, ...queryOptions });
 
   return {
     queryKey,
-    ...query
-  }
-}
+    ...query,
+  };
+};
 
 /**
  * type id struct
@@ -388,66 +465,92 @@ Delete friendship.
 Return boolean
  */
 export const deleteFriendshipById = (
-    searchId: string,
-    friendshipId: string,
- ) => {
-      return customInstance<boolean>(
-      {url: `/searches/${searchId}/friendships/${friendshipId}`, method: 'delete'
-    },
-      );
-    }
-  
-
-
-    export const useDeleteFriendshipById = <TError = void,
-    
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof deleteFriendshipById>, TError,{searchId: string;friendshipId: string}, TContext>, }
+  searchId: string,
+  friendshipId: string
 ) => {
-      const {mutation: mutationOptions} = options || {}
+  return customInstance<boolean>({
+    url: `/searches/${searchId}/friendships/${friendshipId}`,
+    method: "delete",
+  });
+};
 
-      const mutationFn: MutationFunction<AsyncReturnType<typeof deleteFriendshipById>, {searchId: string;friendshipId: string}> = (props) => {
-          const {searchId,friendshipId} = props || {};
+export const useDeleteFriendshipById = <
+  TError = void,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    AsyncReturnType<typeof deleteFriendshipById>,
+    TError,
+    { searchId: string; friendshipId: string },
+    TContext
+  >;
+}) => {
+  const { mutation: mutationOptions } = options || {};
 
-          return  deleteFriendshipById(searchId,friendshipId,)
-        }
+  const mutationFn: MutationFunction<
+    AsyncReturnType<typeof deleteFriendshipById>,
+    { searchId: string; friendshipId: string }
+  > = (props) => {
+    const { searchId, friendshipId } = props || {};
 
-      return useMutation<AsyncReturnType<typeof deleteFriendshipById>, TError, {searchId: string;friendshipId: string}, TContext>(mutationFn, mutationOptions)
-    }
-    /**
+    return deleteFriendshipById(searchId, friendshipId);
+  };
+
+  return useMutation<
+    AsyncReturnType<typeof deleteFriendshipById>,
+    TError,
+    { searchId: string; friendshipId: string },
+    TContext
+  >(mutationFn, mutationOptions);
+};
+/**
  * type id struct
 Get search by id.
 Return search
  */
-export const getSearchByIdForInvitation = (
-    searchId: string,
- ) => {
-      return customInstance<SearchDTOById>(
-      {url: `/searches/${searchId}/invitations`, method: 'get'
-    },
-      );
-    }
-  
+export const getSearchByIdForInvitation = (searchId: string) => {
+  return customInstance<SearchDTOById>({
+    url: `/searches/${searchId}/invitations`,
+    method: "get",
+  });
+};
 
-export const getGetSearchByIdForInvitationQueryKey = (searchId: string,) => [`/searches/${searchId}/invitations`];
+export const getGetSearchByIdForInvitationQueryKey = (searchId: string) => [
+  `/searches/${searchId}/invitations`,
+];
 
-    
-export const useGetSearchByIdForInvitation = <TData = AsyncReturnType<typeof getSearchByIdForInvitation>, TError = void>(
- searchId: string, options?: { query?:UseQueryOptions<AsyncReturnType<typeof getSearchByIdForInvitation>, TError, TData>, }
+export const useGetSearchByIdForInvitation = <
+  TData = AsyncReturnType<typeof getSearchByIdForInvitation>,
+  TError = void
+>(
+  searchId: string,
+  options?: {
+    query?: UseQueryOptions<
+      AsyncReturnType<typeof getSearchByIdForInvitation>,
+      TError,
+      TData
+    >;
+  }
+) => {
+  const { query: queryOptions } = options || {};
 
-  ) => {
+  const queryKey =
+    queryOptions?.queryKey ?? getGetSearchByIdForInvitationQueryKey(searchId);
+  const queryFn: QueryFunction<
+    AsyncReturnType<typeof getSearchByIdForInvitation>
+  > = () => getSearchByIdForInvitation(searchId);
 
-  const {query: queryOptions} = options || {}
-
-  const queryKey = queryOptions?.queryKey ?? getGetSearchByIdForInvitationQueryKey(searchId);
-  const queryFn: QueryFunction<AsyncReturnType<typeof getSearchByIdForInvitation>> = () => getSearchByIdForInvitation(searchId, );
-
-  const query = useQuery<AsyncReturnType<typeof getSearchByIdForInvitation>, TError, TData>(queryKey, queryFn, {enabled: !!(searchId), ...queryOptions})
+  const query = useQuery<
+    AsyncReturnType<typeof getSearchByIdForInvitation>,
+    TError,
+    TData
+  >(queryKey, queryFn, { enabled: !!searchId, ...queryOptions });
 
   return {
     queryKey,
-    ...query
-  }
-}
+    ...query,
+  };
+};
 
 /**
  * type id struct
@@ -455,103 +558,141 @@ Upsert friendship.
 Return friendship.
  */
 export const upsertFriendship = (
-    searchId: string,
-    upsertFriendshipRequestDTO: UpsertFriendshipRequestDTO,
- ) => {
-      return customInstance<UpsertFriendshipResponseDTO>(
-      {url: `/searches/${searchId}/invitations`, method: 'post',
-      data: upsertFriendshipRequestDTO
-    },
-      );
-    }
-  
-
-
-    export const useUpsertFriendship = <TError = void,
-    
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof upsertFriendship>, TError,{searchId: string;data: UpsertFriendshipRequestDTO}, TContext>, }
+  searchId: string,
+  upsertFriendshipRequestDTO: UpsertFriendshipRequestDTO
 ) => {
-      const {mutation: mutationOptions} = options || {}
+  return customInstance<UpsertFriendshipResponseDTO>({
+    url: `/searches/${searchId}/invitations`,
+    method: "post",
+    data: upsertFriendshipRequestDTO,
+  });
+};
 
-      const mutationFn: MutationFunction<AsyncReturnType<typeof upsertFriendship>, {searchId: string;data: UpsertFriendshipRequestDTO}> = (props) => {
-          const {searchId,data} = props || {};
+export const useUpsertFriendship = <
+  TError = void,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    AsyncReturnType<typeof upsertFriendship>,
+    TError,
+    { searchId: string; data: UpsertFriendshipRequestDTO },
+    TContext
+  >;
+}) => {
+  const { mutation: mutationOptions } = options || {};
 
-          return  upsertFriendship(searchId,data,)
-        }
+  const mutationFn: MutationFunction<
+    AsyncReturnType<typeof upsertFriendship>,
+    { searchId: string; data: UpsertFriendshipRequestDTO }
+  > = (props) => {
+    const { searchId, data } = props || {};
 
-      return useMutation<AsyncReturnType<typeof upsertFriendship>, TError, {searchId: string;data: UpsertFriendshipRequestDTO}, TContext>(mutationFn, mutationOptions)
-    }
-    /**
+    return upsertFriendship(searchId, data);
+  };
+
+  return useMutation<
+    AsyncReturnType<typeof upsertFriendship>,
+    TError,
+    { searchId: string; data: UpsertFriendshipRequestDTO },
+    TContext
+  >(mutationFn, mutationOptions);
+};
+/**
  * type id struct
 Get participants (friends & followers) by search id.
 Return participants
  */
-export const getSearchParticipants = (
-    searchId: string,
- ) => {
-      return customInstance<ParticipantDTOForSearchById[]>(
-      {url: `/searches/${searchId}/participants`, method: 'get'
-    },
-      );
-    }
-  
+export const getSearchParticipants = (searchId: string) => {
+  return customInstance<ParticipantDTOForSearchById[]>({
+    url: `/searches/${searchId}/participants`,
+    method: "get",
+  });
+};
 
-export const getGetSearchParticipantsQueryKey = (searchId: string,) => [`/searches/${searchId}/participants`];
+export const getGetSearchParticipantsQueryKey = (searchId: string) => [
+  `/searches/${searchId}/participants`,
+];
 
-    
-export const useGetSearchParticipants = <TData = AsyncReturnType<typeof getSearchParticipants>, TError = void>(
- searchId: string, options?: { query?:UseQueryOptions<AsyncReturnType<typeof getSearchParticipants>, TError, TData>, }
+export const useGetSearchParticipants = <
+  TData = AsyncReturnType<typeof getSearchParticipants>,
+  TError = void
+>(
+  searchId: string,
+  options?: {
+    query?: UseQueryOptions<
+      AsyncReturnType<typeof getSearchParticipants>,
+      TError,
+      TData
+    >;
+  }
+) => {
+  const { query: queryOptions } = options || {};
 
-  ) => {
+  const queryKey =
+    queryOptions?.queryKey ?? getGetSearchParticipantsQueryKey(searchId);
+  const queryFn: QueryFunction<
+    AsyncReturnType<typeof getSearchParticipants>
+  > = () => getSearchParticipants(searchId);
 
-  const {query: queryOptions} = options || {}
-
-  const queryKey = queryOptions?.queryKey ?? getGetSearchParticipantsQueryKey(searchId);
-  const queryFn: QueryFunction<AsyncReturnType<typeof getSearchParticipants>> = () => getSearchParticipants(searchId, );
-
-  const query = useQuery<AsyncReturnType<typeof getSearchParticipants>, TError, TData>(queryKey, queryFn, {enabled: !!(searchId), ...queryOptions})
+  const query = useQuery<
+    AsyncReturnType<typeof getSearchParticipants>,
+    TError,
+    TData
+  >(queryKey, queryFn, { enabled: !!searchId, ...queryOptions });
 
   return {
     queryKey,
-    ...query
-  }
-}
+    ...query,
+  };
+};
 
 /**
  * type id struct
 Get posts by search id.
 Return posts
  */
-export const getSearchPosts = (
-    searchId: string,
- ) => {
-      return customInstance<PostDTOBySearchId[]>(
-      {url: `/searches/${searchId}/posts`, method: 'get'
-    },
-      );
-    }
-  
+export const getSearchPosts = (searchId: string) => {
+  return customInstance<PostDTOBySearchId[]>({
+    url: `/searches/${searchId}/posts`,
+    method: "get",
+  });
+};
 
-export const getGetSearchPostsQueryKey = (searchId: string,) => [`/searches/${searchId}/posts`];
+export const getGetSearchPostsQueryKey = (searchId: string) => [
+  `/searches/${searchId}/posts`,
+];
 
-    
-export const useGetSearchPosts = <TData = AsyncReturnType<typeof getSearchPosts>, TError = void>(
- searchId: string, options?: { query?:UseQueryOptions<AsyncReturnType<typeof getSearchPosts>, TError, TData>, }
+export const useGetSearchPosts = <
+  TData = AsyncReturnType<typeof getSearchPosts>,
+  TError = void
+>(
+  searchId: string,
+  options?: {
+    query?: UseQueryOptions<
+      AsyncReturnType<typeof getSearchPosts>,
+      TError,
+      TData
+    >;
+  }
+) => {
+  const { query: queryOptions } = options || {};
 
-  ) => {
+  const queryKey =
+    queryOptions?.queryKey ?? getGetSearchPostsQueryKey(searchId);
+  const queryFn: QueryFunction<AsyncReturnType<typeof getSearchPosts>> = () =>
+    getSearchPosts(searchId);
 
-  const {query: queryOptions} = options || {}
-
-  const queryKey = queryOptions?.queryKey ?? getGetSearchPostsQueryKey(searchId);
-  const queryFn: QueryFunction<AsyncReturnType<typeof getSearchPosts>> = () => getSearchPosts(searchId, );
-
-  const query = useQuery<AsyncReturnType<typeof getSearchPosts>, TError, TData>(queryKey, queryFn, {enabled: !!(searchId), ...queryOptions})
+  const query = useQuery<AsyncReturnType<typeof getSearchPosts>, TError, TData>(
+    queryKey,
+    queryFn,
+    { enabled: !!searchId, ...queryOptions }
+  );
 
   return {
     queryKey,
-    ...query
-  }
-}
+    ...query,
+  };
+};
 
 /**
  * type id struct
@@ -559,129 +700,169 @@ Create search.
 Return search
  */
 export const addPostForSearch = (
-    searchId: string,
-    addPostRequestDTO: AddPostRequestDTO,
- ) => {
-      return customInstance<AddPostResponseDTO>(
-      {url: `/searches/${searchId}/posts`, method: 'post',
-      data: addPostRequestDTO
-    },
-      );
-    }
-  
-
-
-    export const useAddPostForSearch = <TError = void,
-    
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof addPostForSearch>, TError,{searchId: string;data: AddPostRequestDTO}, TContext>, }
+  searchId: string,
+  addPostRequestDTO: AddPostRequestDTO
 ) => {
-      const {mutation: mutationOptions} = options || {}
+  return customInstance<AddPostResponseDTO>({
+    url: `/searches/${searchId}/posts`,
+    method: "post",
+    data: addPostRequestDTO,
+  });
+};
 
-      const mutationFn: MutationFunction<AsyncReturnType<typeof addPostForSearch>, {searchId: string;data: AddPostRequestDTO}> = (props) => {
-          const {searchId,data} = props || {};
+export const useAddPostForSearch = <
+  TError = void,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    AsyncReturnType<typeof addPostForSearch>,
+    TError,
+    { searchId: string; data: AddPostRequestDTO },
+    TContext
+  >;
+}) => {
+  const { mutation: mutationOptions } = options || {};
 
-          return  addPostForSearch(searchId,data,)
-        }
+  const mutationFn: MutationFunction<
+    AsyncReturnType<typeof addPostForSearch>,
+    { searchId: string; data: AddPostRequestDTO }
+  > = (props) => {
+    const { searchId, data } = props || {};
 
-      return useMutation<AsyncReturnType<typeof addPostForSearch>, TError, {searchId: string;data: AddPostRequestDTO}, TContext>(mutationFn, mutationOptions)
-    }
-    /**
+    return addPostForSearch(searchId, data);
+  };
+
+  return useMutation<
+    AsyncReturnType<typeof addPostForSearch>,
+    TError,
+    { searchId: string; data: AddPostRequestDTO },
+    TContext
+  >(mutationFn, mutationOptions);
+};
+/**
  * type id struct
 Update post.
 Return post
  */
 export const updatePostById = (
-    searchId: string,
-    postId: string,
-    updatePostRequestDTO: UpdatePostRequestDTO,
- ) => {
-      return customInstance<UpdatePostResponseDTO>(
-      {url: `/searches/${searchId}/posts/${postId}`, method: 'put',
-      data: updatePostRequestDTO
-    },
-      );
-    }
-  
-
-
-    export const useUpdatePostById = <TError = void,
-    
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof updatePostById>, TError,{searchId: string;postId: string;data: UpdatePostRequestDTO}, TContext>, }
+  searchId: string,
+  postId: string,
+  updatePostRequestDTO: UpdatePostRequestDTO
 ) => {
-      const {mutation: mutationOptions} = options || {}
+  return customInstance<UpdatePostResponseDTO>({
+    url: `/searches/${searchId}/posts/${postId}`,
+    method: "put",
+    data: updatePostRequestDTO,
+  });
+};
 
-      const mutationFn: MutationFunction<AsyncReturnType<typeof updatePostById>, {searchId: string;postId: string;data: UpdatePostRequestDTO}> = (props) => {
-          const {searchId,postId,data} = props || {};
+export const useUpdatePostById = <TError = void, TContext = unknown>(options?: {
+  mutation?: UseMutationOptions<
+    AsyncReturnType<typeof updatePostById>,
+    TError,
+    { searchId: string; postId: string; data: UpdatePostRequestDTO },
+    TContext
+  >;
+}) => {
+  const { mutation: mutationOptions } = options || {};
 
-          return  updatePostById(searchId,postId,data,)
-        }
+  const mutationFn: MutationFunction<
+    AsyncReturnType<typeof updatePostById>,
+    { searchId: string; postId: string; data: UpdatePostRequestDTO }
+  > = (props) => {
+    const { searchId, postId, data } = props || {};
 
-      return useMutation<AsyncReturnType<typeof updatePostById>, TError, {searchId: string;postId: string;data: UpdatePostRequestDTO}, TContext>(mutationFn, mutationOptions)
-    }
-    /**
+    return updatePostById(searchId, postId, data);
+  };
+
+  return useMutation<
+    AsyncReturnType<typeof updatePostById>,
+    TError,
+    { searchId: string; postId: string; data: UpdatePostRequestDTO },
+    TContext
+  >(mutationFn, mutationOptions);
+};
+/**
  * type id struct
 Update post.
 Return post
  */
-export const deletePostById = (
-    searchId: string,
-    postId: string,
- ) => {
-      return customInstance<boolean>(
-      {url: `/searches/${searchId}/posts/${postId}`, method: 'delete'
-    },
-      );
-    }
-  
+export const deletePostById = (searchId: string, postId: string) => {
+  return customInstance<boolean>({
+    url: `/searches/${searchId}/posts/${postId}`,
+    method: "delete",
+  });
+};
 
+export const useDeletePostById = <TError = void, TContext = unknown>(options?: {
+  mutation?: UseMutationOptions<
+    AsyncReturnType<typeof deletePostById>,
+    TError,
+    { searchId: string; postId: string },
+    TContext
+  >;
+}) => {
+  const { mutation: mutationOptions } = options || {};
 
-    export const useDeletePostById = <TError = void,
-    
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<AsyncReturnType<typeof deletePostById>, TError,{searchId: string;postId: string}, TContext>, }
-) => {
-      const {mutation: mutationOptions} = options || {}
+  const mutationFn: MutationFunction<
+    AsyncReturnType<typeof deletePostById>,
+    { searchId: string; postId: string }
+  > = (props) => {
+    const { searchId, postId } = props || {};
 
-      const mutationFn: MutationFunction<AsyncReturnType<typeof deletePostById>, {searchId: string;postId: string}> = (props) => {
-          const {searchId,postId} = props || {};
+    return deletePostById(searchId, postId);
+  };
 
-          return  deletePostById(searchId,postId,)
-        }
-
-      return useMutation<AsyncReturnType<typeof deletePostById>, TError, {searchId: string;postId: string}, TContext>(mutationFn, mutationOptions)
-    }
-    /**
+  return useMutation<
+    AsyncReturnType<typeof deletePostById>,
+    TError,
+    { searchId: string; postId: string },
+    TContext
+  >(mutationFn, mutationOptions);
+};
+/**
  * type id struct
 Get role by search id.
 Return search
  */
-export const getSearchRole = (
-    searchId: string,
- ) => {
-      return customInstance<GetSearchRole200>(
-      {url: `/searches/${searchId}/role`, method: 'get'
-    },
-      );
-    }
-  
+export const getSearchRole = (searchId: string) => {
+  return customInstance<GetSearchRole200>({
+    url: `/searches/${searchId}/role`,
+    method: "get",
+  });
+};
 
-export const getGetSearchRoleQueryKey = (searchId: string,) => [`/searches/${searchId}/role`];
+export const getGetSearchRoleQueryKey = (searchId: string) => [
+  `/searches/${searchId}/role`,
+];
 
-    
-export const useGetSearchRole = <TData = AsyncReturnType<typeof getSearchRole>, TError = void>(
- searchId: string, options?: { query?:UseQueryOptions<AsyncReturnType<typeof getSearchRole>, TError, TData>, }
-
-  ) => {
-
-  const {query: queryOptions} = options || {}
+export const useGetSearchRole = <
+  TData = AsyncReturnType<typeof getSearchRole>,
+  TError = void
+>(
+  searchId: string,
+  options?: {
+    query?: UseQueryOptions<
+      AsyncReturnType<typeof getSearchRole>,
+      TError,
+      TData
+    >;
+  }
+) => {
+  const { query: queryOptions } = options || {};
 
   const queryKey = queryOptions?.queryKey ?? getGetSearchRoleQueryKey(searchId);
-  const queryFn: QueryFunction<AsyncReturnType<typeof getSearchRole>> = () => getSearchRole(searchId, );
+  const queryFn: QueryFunction<AsyncReturnType<typeof getSearchRole>> = () =>
+    getSearchRole(searchId);
 
-  const query = useQuery<AsyncReturnType<typeof getSearchRole>, TError, TData>(queryKey, queryFn, {enabled: !!(searchId), ...queryOptions})
+  const query = useQuery<AsyncReturnType<typeof getSearchRole>, TError, TData>(
+    queryKey,
+    queryFn,
+    { enabled: !!searchId, ...queryOptions }
+  );
 
   return {
     queryKey,
-    ...query
-  }
-}
-
+    ...query,
+  };
+};
