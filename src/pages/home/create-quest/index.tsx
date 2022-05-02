@@ -7,6 +7,7 @@ import Page from "../../../components/shared/layout/page";
 import { PrivateQuest, PublicQuest } from "../../../constants/contant";
 import { EnumReferer } from "../../../constants/enums";
 import { useAddSearch } from "../../../services/searches/searches";
+import { getAuthRedirect } from "../../../utils/auth";
 
 interface PostSearchRequestDTO {
   title: string;
@@ -15,6 +16,8 @@ interface PostSearchRequestDTO {
   tags?: [string];
   type: string;
 }
+
+export const getServerSideProps = getAuthRedirect;
 
 const CreateQuest = () => {
   // Attributes

@@ -4,6 +4,9 @@ import Page from "../../../components/shared/layout/page";
 import Navbar from "../../../components/shared/navbar";
 import { useGetPublicSearches } from "../../../services/searches/searches";
 import PublicQuestCard from "./card";
+import { getAuthRedirect } from "../../../utils/auth";
+
+export const getServerSideProps = getAuthRedirect;
 
 const ExplorePage = () => {
   // Attributes

@@ -8,6 +8,9 @@ import Page from "../../components/shared/layout/page";
 import { useUser } from "../../contexts/user";
 import { getGetUserBySubQueryKey } from "../../services/default/default";
 import { ACCESS_TOKEN } from "../../types/constant";
+import { getAuthRedirect } from "../../utils/auth";
+
+export const getServerSideProps = getAuthRedirect;
 const cookies = new Cookies();
 
 const Profile = () => {

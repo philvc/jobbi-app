@@ -13,6 +13,9 @@ import {
   useGetSearchByIdForInvitation,
   useUpsertFriendship,
 } from "../../../services/searches/searches";
+import { getAuthRedirect } from "../../../utils/auth";
+
+export const getServerSideProps = getAuthRedirect;
 
 const JoinQuest = () => {
   // Attributes

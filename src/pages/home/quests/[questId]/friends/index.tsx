@@ -3,7 +3,10 @@ import { useRouter } from "next/router";
 import Page from "../../../../../components/shared/layout/page";
 import { useGetSearchParticipants } from "../../../../../services/searches/searches";
 import { ParticipantDTOForSearchById } from "../../../../../types/dtos";
+import { getAuthRedirect } from "../../../../../utils/auth";
 import QuestDetailsFriendCard from "../components/participants/card";
+
+export const getServerSideProps = getAuthRedirect;
 
 const mocks: ParticipantDTOForSearchById[] = [
   {

@@ -13,7 +13,10 @@ import AddCrossIcon from "../../../../../../components/shared/icons/add-cross";
 import Page from "../../../../../../components/shared/layout/page";
 import { useGetCommentsForPost } from "../../../../../../services/comments/comments";
 import { useGetPostById } from "../../../../../../services/posts/posts";
+import { getAuthRedirect } from "../../../../../../utils/auth";
 import CommentCard from "./components/comment";
+
+export const getServerSideProps = getAuthRedirect;
 
 const PostDetails = () => {
   // Attributes

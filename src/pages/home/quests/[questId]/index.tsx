@@ -4,6 +4,9 @@ import QuestDetailsHeader from "./components/header";
 import QuestPosts from "./components/posts";
 import QuestDetailsParticipants from "./components/participants";
 import Navbar from "../../../../components/shared/navbar";
+import { getAuthRedirect } from "../../../../utils/auth";
+
+export const getServerSideProps = getAuthRedirect;
 
 export default function Quests() {
   // Attributes
