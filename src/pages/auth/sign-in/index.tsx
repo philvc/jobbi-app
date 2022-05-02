@@ -1,19 +1,18 @@
 import Page from "../../../components/shared/layout/page";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import { Box, Flex, Stack, Text } from "@chakra-ui/layout";
 import { useTranslation } from "react-i18next";
-import Paragraph from "../../../components/shared/typography/paragraph";
 import InputField from "../../../components/shared/form/input-field";
-import { Form, Formik, FormikContext } from "formik";
+import { Form, Formik,  } from "formik";
 import { useSupabase } from "use-supabase";
 import { useToast } from "@chakra-ui/toast";
 import { FONT_SIZES } from "../../../constants/typography";
 import { COLORS } from "../../../constants/colors";
 import { Button, Heading } from "@chakra-ui/react";
-import Image from "next/image";
 import Cookies from "universal-cookie";
-import { ACCESS_TOKEN } from "../../../types/constant";
+import {  COLOR_SCHEME } from "../../../types/constant";
+import { useUser } from "../../../contexts/user";
 const cookies = new Cookies();
 interface SignInForm {
   email: string;
@@ -26,9 +25,15 @@ export default function SignIn() {
   const { t } = useTranslation();
   const { auth } = useSupabase();
   const toast = useToast();
+  const [isLoading, setIsLoading] = useState(false);
+  const { refetchUser } = useUser();
 
   // Function
   async function handleSubmit(data: SignInForm) {
+    // Load state
+    setIsLoading(true);
+
+    // Call supabase signin
     const signInResponse = await auth.signIn({
       email: data.email,
       password: data.password,
@@ -36,11 +41,17 @@ export default function SignIn() {
 
     if (signInResponse.error) {
       toast({ title: "Mauvaise combinaison" });
+      setIsLoading(false);
       return;
     }
 
-    cookies.set("ACCESS_TOKEN", signInResponse.data.access_token, {path: "/"});
+    cookies.set("ACCESS_TOKEN", signInResponse.data.access_token, {
+      path: "/",
+    });
 
+    await refetchUser();
+
+    setIsLoading(false);
     router.push("/home");
   }
 
@@ -51,6 +62,7 @@ export default function SignIn() {
   function handleForgotPassword() {
     router.push("/auth/forgot-password");
   }
+  console.log("loading", isLoading);
 
   return (
     <Formik<SignInForm>
@@ -74,7 +86,11 @@ export default function SignIn() {
             <Stack spacing={4} width="full">
               <InputField placeholder="E-mail" name="email" />
               <Stack>
-                <InputField placeholder="Mot de passe" name="password" />
+                <InputField
+                  type={"password"}
+                  placeholder="Mot de passe"
+                  name="password"
+                />
                 <Text
                   onClick={handleForgotPassword}
                   fontSize={FONT_SIZES.SMALL}
@@ -85,10 +101,10 @@ export default function SignIn() {
                 </Text>
               </Stack>
               <Button
-                borderRadius={".75rem"}
                 type="submit"
-                color="white"
-                bg={"#6772E5"}
+                variant={"solid"}
+                isLoading={isLoading}
+                colorScheme={COLOR_SCHEME.PRIMARY}
               >
                 Se connecter
               </Button>
@@ -96,14 +112,6 @@ export default function SignIn() {
             <Flex onClick={handleSignUp} justify="center" mt={4}>
               <Text>S'inscrire</Text>
             </Flex>
-            <Box h={"1px"} backgroundColor={"#E1E1E1"} mt={"21px"} w="80%" />
-            <Box marginTop={"21px"}>
-              <Image
-                src={"/assets/images/apple.png"}
-                width={"48px"}
-                height={"48px"}
-              />
-            </Box>
           </Flex>
           <Heading pb={"43px"} visibility="hidden" size="800">
             Jobbi
