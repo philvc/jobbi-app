@@ -62,7 +62,6 @@ export default function SignIn() {
   function handleForgotPassword() {
     router.push("/auth/forgot-password");
   }
-  console.log("loading", isLoading);
 
   return (
     <Formik<SignInForm>

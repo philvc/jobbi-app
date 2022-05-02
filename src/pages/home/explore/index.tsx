@@ -12,7 +12,6 @@ const ExplorePage = () => {
   // Attributes
   const router = useRouter();
   const { data, isLoading } = useGetPublicSearches();
-  const list = new Array(10).fill(undefined);
 
   function redirectHome() {
     router.push("/home");
@@ -54,15 +53,9 @@ const ExplorePage = () => {
         mx={isLoading ? "24px" : "0"}
         h={isLoading ? "150px" : "fit-f"}
       >
-        {data &&
-          list.map(() =>
-            data?.map((quest, index) => {
-              return <PublicQuestCard index={index} quest={quest} />;
-            })
-          )}
-        {/* // data?.map((quest, index) => {
-        //   return <PublicQuestCard index={index} quest={quest} />;
-        // })} */}
+        {data?.map((quest, index) => {
+          return <PublicQuestCard index={index} quest={quest} />;
+        })}
       </Skeleton>
       <Navbar menu="explore" />
     </Page>

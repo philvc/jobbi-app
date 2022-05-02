@@ -1,16 +1,13 @@
 import Page from "../../../components/shared/layout/page";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
-import { Box, Container, Flex, Stack } from "@chakra-ui/layout";
+import React, { useEffect, useState } from "react";
+import { Flex, Stack } from "@chakra-ui/layout";
 import InputField from "../../../components/shared/form/input-field";
-import { Form, Formik, FormikContext } from "formik";
+import { Form, Formik } from "formik";
 import ArrowDown from "../../../components/shared/icons/arrow-down";
 import { useSupabase } from "use-supabase";
-import { Button, Heading } from "@chakra-ui/react";
+import { Button, Heading, useToast } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
-import { useCreateUser } from "../../../services/default/default";
-import { useAddFriendship } from "../../../services/friendships/friendships";
-import { UserDTO } from "../../../types/dtos/userDTO";
 import Cookies from "universal-cookie";
 import { ACCESS_TOKEN } from "../../../types/constant";
 
@@ -23,79 +20,32 @@ export default function SignIn() {
   // Attributes
   const router = useRouter();
   const { auth } = useSupabase();
-  const { t } = useTranslation();
-  const { questId } = router.query;
+  const toast = useToast();
+  const [isLoading, setIsLoading] = useState(false);
 
   const access_token = router.asPath
     ?.split("#access_token=")[1]
     ?.split("&expires_in=")[0];
-  const { mutateAsync: postUser } = useCreateUser();
-  const { mutateAsync: postFriendship } = useAddFriendship();
 
-  // Effect
-  useEffect(() => {
-    // if magic link with supabase access_token
-    if (access_token) {
-      cookies.set(ACCESS_TOKEN, access_token, {path: '/'});
-    }
-  }, []);
 
-  // Function
-  async function updateSupabaseUser(password: string) {
-    // update user in supabase
-    const resetResp = await auth.api.updateUser(cookies.get(ACCESS_TOKEN), {
-      password: password,
-    });
-
-    if (resetResp.error) {
-      // toast error
-    }
-
-    return resetResp.user;
-  }
-
-  async function createUser(email: string, externalId: string) {
-    if (email && externalId) {
-      const user = await postUser({
-        data: {
-          email,
-          externalId,
-        },
-      });
-      return user;
-    }
-
-    // toast error missing email or id
-  }
-
-  async function createFriendship(user: UserDTO) {
-    if (questId) {
-      const friendship = await postFriendship({
-        searchId: questId as string,
-        data: {
-          userId: user.id,
-          searchId: questId as string,
-          state: 1,
-        },
-      });
-      return friendship;
-    }
+  if (access_token) {
+    cookies.set(ACCESS_TOKEN, access_token, { path: "/" });
   }
 
   async function handleSubmit(data: ResetPasswordForm) {
+    setIsLoading(true);
     // update user
-    const supUser = await updateSupabaseUser(data.password);
-
-    // if magic link, create new user
-    if (access_token) {
-      // create user with email & external_id
-      const user = await createUser(supUser.email, supUser.id);
-
-      // create friendship with userId & searchId
-      if (user) {
-        const friendship = await createFriendship(user);
-      }
+    try {
+      await auth.api.updateUser(cookies.get(ACCESS_TOKEN), {
+        password: data.password,
+      });
+    } catch (e) {
+      setIsLoading(false);
+      toast({
+        title: "Une erreur est survenue.",
+      });
     }
+    setIsLoading(false);
     // redirect to home
     router.push("/home");
   }
@@ -123,7 +73,7 @@ export default function SignIn() {
             <Stack mt={8} spacing={4}>
               <InputField placeholder="Nouveau mot de passe" name="password" />
             </Stack>
-            <Button marginTop={"36px"} type="submit" backgroundColor="#00CC9D">
+            <Button isLoading={isLoading} marginTop={"36px"} type="submit">
               Changer mot de passe
             </Button>
           </Flex>

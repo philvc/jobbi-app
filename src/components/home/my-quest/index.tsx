@@ -10,49 +10,56 @@ const MyQuest = () => {
   const { data: quest, isLoading, refetch } = useGetMySearch();
   const router = useRouter();
 
+  // Handler
+  function handleOnClick() {
+    if (quest && quest?.id) {
+      router.push(`/home/quests/${quest?.id}`);
+    } else {
+      router.push(`/home/create-quest`);
+    }
+  }
+
   return (
     <Skeleton isLoaded={!isLoading}>
-      {quest && (
-        <Flex
-          bgColor={"#6772E5"}
-          borderRadius={"26px"}
-          direction={"column"}
-          justifyContent={"space-between"}
-          minH={"167px"}
-          paddingX={"20px"}
-          paddingY={"24px"}
-          mt={"-107px"}
-          onClick={() => router.push(`/home/quests/${quest?.id}`)}
-        >
-          <Box>
-            <Text
-              textAlign={"center"}
-              fontSize={14}
-              fontWeight={400}
-              color={"#C5CAF6"}
-            >
-              {"Your quest"}
-            </Text>
-            <Heading
-              color={"white"}
-              size="18px"
-              fontWeight={700}
-              mt={"2px"}
-              textAlign={"center"}
-            >
-              {quest?.title}
-            </Heading>
-          </Box>
-          <Flex
-            alignItems={"center"}
-            direction={"row"}
-            justifyContent={"space-between"}
+      <Flex
+        bgColor={"#6772E5"}
+        borderRadius={"26px"}
+        direction={"column"}
+        justifyContent={"space-between"}
+        minH={"167px"}
+        paddingX={"20px"}
+        paddingY={"24px"}
+        mt={"-107px"}
+        onClick={handleOnClick}
+      >
+        <Box>
+          <Text
+            textAlign={"center"}
+            fontSize={14}
+            fontWeight={400}
+            color={"#C5CAF6"}
           >
-            <AvatarList users={quest?.friends} />
-            {quest?.sector && <MyQuestTag sector={quest?.sector} />}
-          </Flex>
+            {"Your quest"}
+          </Text>
+          <Heading
+            color={"white"}
+            size="18px"
+            fontWeight={700}
+            mt={"2px"}
+            textAlign={"center"}
+          >
+            {quest?.id ? quest?.title : "Clique ici pour créer ta quête"}
+          </Heading>
+        </Box>
+        <Flex
+          alignItems={"center"}
+          direction={"row"}
+          justifyContent={"space-between"}
+        >
+          <AvatarList users={quest?.friends} />
+          {quest?.sector && <MyQuestTag sector={quest?.sector} />}
         </Flex>
-      )}
+      </Flex>
     </Skeleton>
   );
 };

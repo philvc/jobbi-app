@@ -95,16 +95,26 @@ const CreateQuest = () => {
               isChecked={isPrivate}
             />
           </Box>
-          <Button
-            mt={"1.5rem"}
-            bg={"#6772E5"}
-            color="white"
-            mx={"1.5rem"}
-            type="submit"
-            borderRadius={".75rem"}
-          >
-            Submit
-          </Button>
+          <Box>
+            <Button
+              mt={"1.5rem"}
+              bg={"#6772E5"}
+              color="white"
+              mx={"1.5rem"}
+              type="submit"
+              borderRadius={".75rem"}
+            >
+              Submit
+            </Button>
+            <Button
+              onClick={() => router.push("/home")}
+              mt={"1.5rem"}
+              variant={"ghost"}
+              mx={"1.5rem"}
+            >
+              Skip
+            </Button>
+          </Box>
         </Page>
       </Form>
     </Formik>

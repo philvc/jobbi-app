@@ -1,6 +1,6 @@
 import Page from "../../../components/shared/layout/page";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import { Box, Container, Flex, Heading, Stack } from "@chakra-ui/layout";
 import InputField from "../../../components/shared/form/input-field";
 import { Form, Formik, FormikContext } from "formik";
@@ -10,6 +10,9 @@ import { useToast } from "@chakra-ui/toast";
 import { useCreateUser } from "../../../services/default/default";
 import { Button } from "@chakra-ui/button";
 import { UserDTO } from "../../../types/dtos/userDTO";
+import Cookies from "universal-cookie";
+import { ACCESS_TOKEN } from "../../../types/constant";
+import { useUser } from "../../../contexts/user";
 
 interface SignUpForm {
   password: string;
@@ -19,43 +22,59 @@ interface SignUpForm {
   lastName: string;
 }
 
+const cookies = new Cookies();
+
 export default function SignUp() {
   // Attributes
   const router = useRouter();
   const { auth } = useSupabase();
+  const { refetchUser } = useUser();
   const toast = useToast();
   const { mutateAsync: createUser } = useCreateUser();
+  const [isLoading, setIsLoading] = useState(false);
 
   // Function
   async function handleSubmit(data: SignUpForm) {
-    const signUpResponse = await auth.signUp({
-      email: data.email,
-      password: data.password,
-    });
+    setIsLoading(true);
 
-    if (signUpResponse.error) {
+    try {
+      // Create user in supabase
+      await auth.signUp({
+        email: data.email,
+        password: data.password,
+      });
+
+      // Sign in new user
+      const signInResponse = await auth.signIn({
+        email: data.email,
+        password: data.password,
+      });
+
+      // Save token in cookies
+      cookies.set(ACCESS_TOKEN, signInResponse.data.access_token, {
+        path: "/",
+      });
+
+      // Create user in DB
+      await createUser({
+        data: {
+          email: data.email,
+          externalId: signInResponse.user.id,
+          firstName: data.firstName,
+          lastName: data.lastName,
+        },
+      });
+
+      // Refetch user for user context
+      await refetchUser();
+    } catch (e) {
       toast({ title: "Impossible de créer le compte" });
-      return;
+      setIsLoading(false);
     }
 
-    // Sign in new user
-    const signInResponse = await auth.signIn({
-      email: data.email,
-      password: data.password,
-    });
-    localStorage.setItem("ACCESS_TOKEN", signInResponse.data.access_token);
+    setIsLoading(false);
 
-    // Create user
-    await createUser({
-      data: {
-        email: data.email,
-        externalId: signUpResponse.user.id,
-        firstName: data.firstName,
-        lastName: data.lastName,
-      },
-    });
-
-    // Create user in the API
+    // Redirect
     router.push("/home/create-quest");
   }
 
@@ -73,7 +92,7 @@ export default function SignUp() {
       <Form>
         <Page p={4}>
           <ArrowDown
-            onClick={() => router.push("/auth/sign-in")}
+            onClick={() => router.back()}
             style={{ marginTop: 50 }}
             height="16px"
             width="16px"
@@ -105,6 +124,7 @@ export default function SignUp() {
               marginTop={"36px"}
               type="submit"
               backgroundColor="#6772E5"
+              isLoading={isLoading}
             >
               S'inscrire
             </Button>

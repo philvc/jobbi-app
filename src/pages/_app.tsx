@@ -1,20 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Head from "next/head";
 import { ChakraProvider } from "@chakra-ui/react";
 import { AnimateSharedLayout } from "framer-motion";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { SupabaseContextProvider } from "use-supabase";
-import { useRouter } from "next/router";
 import { UITheme } from "../themes";
 import { UserProvider } from "../contexts/user";
 import RoleProvider from "../contexts/role";
 import { supabase } from "../utils/supabaseClient";
-import SignIn from "./auth/sign-in";
 
 function MyApp({ Component, pageProps }) {
-  const router = useRouter();
   const queryClientRef = React.useRef();
-  const [session, setSession] = useState(null);
 
   if (!queryClientRef.current) {
     // @ts-ignore
@@ -29,29 +25,6 @@ function MyApp({ Component, pageProps }) {
       },
     });
   }
-
-  useEffect(() => {
-    if (router?.query?.type === "recovery") {
-      localStorage.setItem("ACCESS_TOKEN", router.query.access_token as string);
-      router.push("/auth/reset-password");
-    }
-  }, []);
-
-  // useEffect(() => {
-  //   setSession(supabase.auth.session());
-
-  //   supabase.auth.user
-
-  //   supabase.auth.onAuthStateChange((_event, session) => {
-  //     setSession(session);
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   if (!session && !router.pathname.includes("auth")) {
-  //     router.push("/auth/sign-in");
-  //   }
-  // }, [router.pathname]);
 
   return (
     <SupabaseContextProvider client={supabase}>
@@ -68,11 +41,6 @@ function MyApp({ Component, pageProps }) {
           <ChakraProvider theme={UITheme}>
             <UserProvider>
               <RoleProvider>
-                {/* {session ? (
-                  <Component {...pageProps} />
-                ) : (
-                  <SignIn {...pageProps} />
-                )} */}
                 <Component {...pageProps} />
               </RoleProvider>
             </UserProvider>

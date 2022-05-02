@@ -15,7 +15,6 @@ export const Button: ComponentStyleConfig = {
   },
   variants: {
     solid: ({ theme, colorScheme }) => {
-      console.log("colorscheme", colorScheme);
 
       let bgOnHover = "";
       let bg = "";
@@ -33,9 +32,11 @@ export const Button: ComponentStyleConfig = {
         backgroundColor: bg,
         _hover: {
           bg: bgOnHover,
+          borderWidth: 0,
         },
         _active: {
           outline: "none !important",
+          borderWidth: 0,
         },
         _focus: {
           outline: "none !important",
@@ -47,6 +48,6 @@ export const Button: ComponentStyleConfig = {
   defaultProps: {
     size: "base",
     variant: "solid",
-    colorScheme: "primary",
+    colorScheme: COLOR_SCHEME.PRIMARY,
   },
 };

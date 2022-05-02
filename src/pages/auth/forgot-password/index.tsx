@@ -1,23 +1,42 @@
 import Page from "../../../components/shared/layout/page";
 import { useRouter } from "next/router";
-import React from "react";
-import { Box, Container, Flex, Heading, Stack } from "@chakra-ui/layout";
-import { useTranslation } from "react-i18next";
+import React, { useState } from "react";
+import {  Flex, Heading, Stack } from "@chakra-ui/layout";
 import InputField from "../../../components/shared/form/input-field";
-import { Form, Formik, FormikContext } from "formik";
+import { Form, Formik } from "formik";
 import ArrowDown from "../../../components/shared/icons/arrow-down";
 import { useSupabase } from "use-supabase";
-import { Button } from "@chakra-ui/react";
+import { Button, useToast } from "@chakra-ui/react";
+import { COLOR_SCHEME } from "../../../types/constant";
 
 export default function SignIn() {
   // Attributes
   const router = useRouter();
-  const { t } = useTranslation();
   const { auth } = useSupabase();
+  const [isLoading, setIsLoading] = useState(false);
+  const toast = useToast();
 
   // Function
-  function handleSubmit(data: { email: string }) {
-    auth.api.resetPasswordForEmail(data.email);
+  async function handleSubmit(data: { email: string }) {
+    // Loading state
+    setIsLoading(true);
+
+    // Send reset password email
+    try {
+      await auth.api.resetPasswordForEmail(data.email, {
+        redirectTo: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/auth/reset-password`,
+      });
+    } catch (e) {
+      // Show error message
+      toast({
+        title: "Oups, Il y a eu une erreur.",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+
+    // Redirect to success page
+    router.push("/auth/forgot-password-success");
   }
 
   return (
@@ -43,7 +62,12 @@ export default function SignIn() {
             <Stack mt={8} spacing={4}>
               <InputField placeholder="E-mail" name="email" />
             </Stack>
-            <Button marginTop={"36px"} type="submit" backgroundColor="#00CC9D">
+            <Button
+              marginTop={"36px"}
+              type="submit"
+              colorScheme={COLOR_SCHEME.PRIMARY}
+              isLoading={isLoading}
+            >
               Envoyer le lien
             </Button>
           </Flex>

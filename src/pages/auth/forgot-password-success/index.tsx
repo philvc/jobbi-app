@@ -19,9 +19,8 @@ export default function ForgotPasswordSuccess() {
           <Button
             marginTop={"52px"}
             onClick={() => router.push("/auth/sign-in")}
-            backgroundColor="#00CC9D"
           >
-            Aller à la boîte email
+            Retour à la page de login
           </Button>
         </Flex>
       </Flex>

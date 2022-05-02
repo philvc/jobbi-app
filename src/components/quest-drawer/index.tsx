@@ -8,9 +8,12 @@ import {
   DrawerHeader,
   DrawerOverlay,
 } from "@chakra-ui/modal";
+import { Box, Switch } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
+import { ChangeEvent, useState } from "react";
 import { useQueryClient } from "react-query";
 import { COLORS } from "../../constants/colors";
+import { PrivateQuest, PublicQuest } from "../../constants/contant";
 import {
   getGetMySearchQueryKey,
   useGetMySearch,
@@ -39,10 +42,18 @@ export default function SearchDrawer({
 }: SearchDrawerProps) {
   // Attributes
   const clientQuery = useQueryClient();
+  const [isPrivate, setIsPrivate] = useState(quest?.type === "private");
 
   // Queries
   const { mutateAsync: modifySearch } = useModifySearch();
-  const { refetch } = useGetSearchById(quest?.id, {query: {enabled: !! quest?.id}});
+  const { refetch } = useGetSearchById(quest?.id, {
+    query: { enabled: !!quest?.id },
+  });
+
+  // Handlers
+  function handleSwitchChange(e: ChangeEvent<HTMLInputElement>) {
+    setIsPrivate(e.target.checked);
+  }
 
   async function handleSubmit(values: PutSearchRequestDTO) {
     // Invalidate query
@@ -56,7 +67,7 @@ export default function SearchDrawer({
         description: values.description,
         tags: [],
         sector: values.sector,
-        type: values.type,
+        type: isPrivate ? PrivateQuest : PublicQuest,
       },
     });
 
@@ -97,6 +108,12 @@ export default function SearchDrawer({
                     name="description"
                   />
                   <InputField placeholder="Sector" name="sector" />
+                  <Box mb={".25rem"}>Is private ?</Box>
+                  <Switch
+                    onChange={handleSwitchChange}
+                    defaultChecked={isPrivate}
+                    isChecked={isPrivate}
+                  />
                 </Stack>
               </Stack>
             </DrawerBody>
