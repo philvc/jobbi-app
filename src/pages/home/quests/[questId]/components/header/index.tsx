@@ -32,11 +32,10 @@ const QuestDetailsHeader = () => {
       borderBottomRadius={"1.5rem"}
       width={"full"}
       bgColor={"#6772E5"}
-      pt={"4.3rem"}
+      pt={"2rem"}
       px={"1.5rem"}
       pb={"1.375rem"}
       minH={"16.5625rem"}
-      overflow={"hidden"}
     >
       <Skeleton isLoaded={!isLoading} opacity={isLoading ? 0.3 : "initial"}>
         <QuestDetailsHeaderIconsTopBar quest={questDTO} />
