@@ -35,6 +35,8 @@ const QuestDetailsHeader = () => {
       pt={"4.3rem"}
       px={"1.5rem"}
       pb={"1.375rem"}
+      minH={"16.5625rem"}
+      overflow={"hidden"}
     >
       <Skeleton isLoaded={!isLoading} opacity={isLoading ? 0.3 : "initial"}>
         <QuestDetailsHeaderIconsTopBar quest={questDTO} />
@@ -56,6 +58,16 @@ const QuestDetailsHeader = () => {
           >
             {data?.title}
           </Heading>
+          <Text
+            textAlign={"center"}
+            fontSize={14}
+            fontWeight={400}
+            color={"#C5CAF6"}
+            mt={2}
+            noOfLines={3}
+          >
+            {`${data?.description}`}
+          </Text>
         </Box>
         <Flex
           alignItems={"center"}

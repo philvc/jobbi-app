@@ -12,7 +12,12 @@ import {
 } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
-import { useQueryClient } from "react-query";
+import {
+  QueryObserverResult,
+  RefetchOptions,
+  RefetchQueryFilters,
+  useQueryClient,
+} from "react-query";
 import { COLORS } from "../../constants/colors";
 import { useUser } from "../../contexts/user";
 import { useGetCommentsForPost } from "../../services/comments/comments";
@@ -22,13 +27,20 @@ import {
   useGetSearchPosts,
   useUpdatePostById,
 } from "../../services/searches/searches";
-import { PostDTOBySearchId, UpdatePostResponseDTO } from "../../types/dtos";
+import {
+  PostDTO,
+  PostDTOBySearchId,
+  UpdatePostResponseDTO,
+} from "../../types/dtos";
 import InputField from "../shared/form/input-field";
 
 interface EditPostDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   post: PostDTOBySearchId;
+  refetchPost?: <TPageData>(
+    options?: RefetchOptions & RefetchQueryFilters<TPageData>
+  ) => Promise<QueryObserverResult<PostDTOBySearchId, void>>;
 }
 
 interface UpdatePostRequestDTO {
@@ -38,10 +50,15 @@ interface UpdatePostRequestDTO {
   url: string;
 }
 
-const EditPostDrawer = ({ isOpen, onClose, post }: EditPostDrawerProps) => {
+const EditPostDrawer = ({
+  isOpen,
+  onClose,
+  post,
+  refetchPost,
+}: EditPostDrawerProps) => {
   // Attributes
   const router = useRouter();
-  const {searchId, } = router.query;
+  const { searchId } = router.query;
   const queryClient = useQueryClient();
   const { id } = useUser();
   const isOwner = post?.userId === id;
@@ -50,7 +67,7 @@ const EditPostDrawer = ({ isOpen, onClose, post }: EditPostDrawerProps) => {
   const { mutateAsync: editPost } = useUpdatePostById();
   const { refetch } = useGetSearchPosts(post?.searchId);
   const { mutateAsync: deletePost } = useDeletePostById();
-  
+
   // Handler
   async function handleSubmit(values: UpdatePostRequestDTO) {
     // Upate post
@@ -69,9 +86,9 @@ const EditPostDrawer = ({ isOpen, onClose, post }: EditPostDrawerProps) => {
       await queryClient.invalidateQueries(
         getGetSearchPostsQueryKey(post?.searchId)
       );
+      await refetchPost();
       await refetch();
     }
-
     // Close drawer
     onClose();
   }

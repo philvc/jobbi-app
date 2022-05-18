@@ -77,8 +77,8 @@ const PasswordInputField = ({
               background={COLORS.TRANSPARENT.hex}
               w="full"
               border="none"
-              _placeholder={{ fontSize: FONT_SIZES.SMALL }}
-              fontSize={FONT_SIZES.SMALL}
+              _placeholder={{ fontSize: FONT_SIZES.REGULAR }}
+              fontSize={FONT_SIZES.REGULAR}
               value={value}
               {...rest}
             />

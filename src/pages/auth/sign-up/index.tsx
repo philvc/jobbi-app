@@ -88,6 +88,7 @@ export default function SignUp() {
         lastName: "",
       }}
       onSubmit={handleSubmit}
+      enableReinitialize={true}
     >
       <Form>
         <Page p={4}>

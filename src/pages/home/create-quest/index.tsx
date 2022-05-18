@@ -80,6 +80,7 @@ const CreateQuest = () => {
             />
             <InputField
               placeholder="description"
+              type={"textarea"}
               style={{ marginBottom: "16px" }}
               name="description"
             />

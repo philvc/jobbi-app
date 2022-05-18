@@ -69,7 +69,9 @@ const JoinQuest = () => {
     <Page>
       <Heading>Join Quest</Heading>
       <Skeleton isLoading={isQuestLoading || isUserLoading}>
+        <Text>{`${quest?.firstName} ${quest?.lastName}`}</Text>
         <Text>{quest?.title}</Text>
+        <Text>{quest?.description}</Text>
       </Skeleton>
       <Skeleton isLoading={isQuestLoading || isUserLoading}>
         <Flex direction={"row"} alignItems={"center"}>

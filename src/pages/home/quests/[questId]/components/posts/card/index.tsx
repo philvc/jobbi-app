@@ -43,7 +43,7 @@ const QuestPostCard = ({ post }: QuestPostCardProps) => {
       >
         <Text
           color="#393360"
-          noOfLines={2}
+          noOfLines={1}
           fontSize={"16px"}
           fontWeight={"bold"}
         >
