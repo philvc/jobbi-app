@@ -40,10 +40,6 @@ const CommentCard = ({ comment }: CommentCardProps) => {
           maxH={"11.4375rem"}
         >
           {comment?.content}
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque id
-          sunt est soluta vero quia temporibus! Ullam deleniti assumenda
-          perferendis nesciunt! Blanditiis quam corporis praesentium et
-          repellendus aliquam? Rem, repudiandae?
         </Text>
 
         <Flex

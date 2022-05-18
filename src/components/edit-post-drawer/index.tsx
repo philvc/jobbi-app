@@ -108,7 +108,8 @@ const EditPostDrawer = ({
       );
       await refetch();
     }
-
+    // Redirect to quest
+    router.push(`/home/quests/${post?.searchId}`);
     // Close drawer
     onClose();
   }
