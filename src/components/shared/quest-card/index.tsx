@@ -46,6 +46,7 @@ const QuestCard = ({ index, isFriend = false, quest }: QuestCardProps) => {
             color={COLORS.BLACK.T800.hex}
             fontSize={"14px"}
             fontWeight={400}
+            noOfLines={2}
           >
             {quest?.description}
           </Text>
