@@ -37,45 +37,58 @@ const QuestDetailsHeader = () => {
       pb={"1.375rem"}
       minH={"16.5625rem"}
     >
-      <Skeleton isLoaded={!isLoading} opacity={isLoading ? 0.3 : "initial"}>
-        <QuestDetailsHeaderIconsTopBar quest={questDTO} />
-        <Box mt={"1.5rem"}>
-          <Text
-            textAlign={"center"}
-            fontSize={14}
-            fontWeight={400}
-            color={"#C5CAF6"}
-          >
-            {isOwner ? "Your quest" : `${data?.firstName} ${data?.lastName}`}
-          </Text>
-          <Heading
-            color={"white"}
-            size="18px"
-            fontWeight={700}
-            mt={"2px"}
-            textAlign={"center"}
-          >
-            {data?.title}
-          </Heading>
-          <Text
-            textAlign={"center"}
-            fontSize={14}
-            fontWeight={400}
-            color={"#C5CAF6"}
-            mt={2}
-            noOfLines={3}
-          >
-            {`${data?.description}`}
-          </Text>
-        </Box>
+      <Skeleton
+        isLoaded={!isLoading}
+        opacity={isLoading ? 0.3 : "initial"}
+        height={"100%"}
+      >
         <Flex
-          alignItems={"center"}
-          direction={"row"}
-          justifyContent={"space-between"}
-          marginTop={"2.125rem"}
+          height={"100%"}
+          direction={"column"}
+          justifyContent="space-between"
         >
-          <MyQuestParticipants friends={data?.friends} />
-          {data?.sector && <MyQuestTag sector={data?.sector} />}
+          <Box>
+            <QuestDetailsHeaderIconsTopBar quest={questDTO} />
+            <Box mt={"1.5rem"}>
+              <Text
+                textAlign={"center"}
+                fontSize={14}
+                fontWeight={400}
+                color={"#C5CAF6"}
+              >
+                {isOwner
+                  ? "Your quest"
+                  : `${data?.firstName} ${data?.lastName}`}
+              </Text>
+              <Heading
+                color={"white"}
+                size="18px"
+                fontWeight={700}
+                mt={"2px"}
+                textAlign={"center"}
+              >
+                {data?.title}
+              </Heading>
+              <Text
+                textAlign={"center"}
+                fontSize={14}
+                fontWeight={400}
+                color={"#C5CAF6"}
+                mt={2}
+                noOfLines={2}
+              >
+                {`${data?.description}`}
+              </Text>
+            </Box>
+          </Box>
+          <Flex
+            alignItems={"center"}
+            direction={"row"}
+            justifyContent={"space-between"}
+          >
+            <MyQuestParticipants friends={data?.friends} />
+            {data?.sector && <MyQuestTag sector={data?.sector} />}
+          </Flex>
         </Flex>
       </Skeleton>
     </Box>

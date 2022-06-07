@@ -5,8 +5,8 @@ import { PublicSearchDto, SharedSearchDTO } from "../../../../types/dtos";
 import { OldAvatar } from "../../icons/old-avatar";
 
 interface QuestCardHeaderProps {
-  isFriend?: boolean,
-  quest?: SharedSearchDTO | PublicSearchDto
+  isFriend?: boolean;
+  quest?: SharedSearchDTO | PublicSearchDto;
 }
 
 export const QuestCardHeader = ({ isFriend, quest }: QuestCardHeaderProps) => {

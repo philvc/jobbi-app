@@ -1,5 +1,9 @@
 import { Box, Flex, Heading, Skeleton } from "@chakra-ui/react";
-import { useGetMyFollowedSearches } from "../../../services/searches/searches";
+import PublicQuestCard from "../../../pages/home/explore/card";
+import {
+  useGetMyFollowedSearches,
+  useGetPublicSearches,
+} from "../../../services/searches/searches";
 import QuestCard from "../../shared/quest-card";
 import SharedQuestBox from "../shared/quest-box";
 import PublicSearchPlaceholder from "./placeholder";
@@ -7,8 +11,8 @@ import PublicQuestBox from "./quest-box";
 
 const PublicQuestList = () => {
   // Queries
-  const { data: quests, isLoading } = useGetMyFollowedSearches();
-  const hasFollowedQuests = quests && quests?.length !== 0;
+  // Attributes
+  const { data, isLoading } = useGetPublicSearches();
   return (
     <Box background={"#F8F9FC"} pb={"200px"}>
       <Heading ml={"24px"} mb={"20px"} size={"800"} color={"#393360"}>
@@ -21,20 +25,11 @@ const PublicQuestList = () => {
         mx={isLoading ? "24px" : "initial"}
         mb={isLoading ? "47px" : "initial"}
       >
-        {hasFollowedQuests && (
-          <Flex direction={"column"}>
-            {quests?.map((quest) => (
-              <PublicQuestBox mx={"24px"} mb={"20px"}>
-                <QuestCard quest={quest} />
-              </PublicQuestBox>
-            ))}
-          </Flex>
-        )}
-        {!hasFollowedQuests && (
-          <SharedQuestBox ml={"24px"} mb={"47px"}>
-            <PublicSearchPlaceholder />
-          </SharedQuestBox>
-        )}
+        {data
+          ?.filter((quest) => !quest.followerId && !quest.friendshipId)
+          .map((quest, index) => {
+            return <PublicQuestCard index={index} quest={quest} />;
+          })}
       </Skeleton>
     </Box>
   );

@@ -4,14 +4,14 @@ import {
   useGetMySharedSearches,
 } from "../../../services/searches/searches";
 import QuestCard from "../../shared/quest-card";
+import FollowedQuests from "./followed-quests";
 import PlaceholderSharedQuest from "./placeholder";
 import SharedQuestBox from "./quest-box";
 
 const SharedQuestList = () => {
   // Queries
   const { data: quests, isLoading, refetch } = useGetMySharedSearches();
-  const hasSharedQuest = quests && quests?.length !== 0
-  
+  const hasSharedQuest = quests && quests?.length !== 0;
 
   return (
     <Box background={"#F8F9FC"} mt={"94px"}>
@@ -26,7 +26,7 @@ const SharedQuestList = () => {
         mb={isLoading ? "47px" : "initial"}
       >
         {hasSharedQuest && (
-          <Flex direction={"row"} overflow={"scroll"} pr={"20px"}>
+          <Flex direction={"column"} overflow={"scroll"} pr={"20px"}>
             {quests?.map((quest, index) => {
               if (index === 0) {
                 return (
@@ -50,6 +50,7 @@ const SharedQuestList = () => {
           </SharedQuestBox>
         )}
       </Skeleton>
+      <FollowedQuests />
     </Box>
   );
 };
