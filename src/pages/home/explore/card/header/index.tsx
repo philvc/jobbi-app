@@ -4,6 +4,7 @@ import { OldAvatar } from "../../../../../components/shared/icons/old-avatar";
 import {
   getGetPublicSearchesQueryKey,
   useDeleteFollower,
+  useGetMyFollowedSearches,
   useGetPublicSearches,
   usePostFollower,
 } from "../../../../../services/searches/searches";
@@ -41,6 +42,10 @@ const PublicQuestCardHeader = ({ quest }: PublicQuestCardHeaderProps) => {
   } = useGetPublicSearches();
   const followButtonDisabled =
     postIsLoading || deleteFollowerIsLoading || refetchPublicSearchesLoading;
+  const {
+    refetch: refetchFollowedQuests,
+    isLoading,
+  } = useGetMyFollowedSearches();
 
   // Handlers
   async function handleClick(e: React.MouseEvent<Element, MouseEvent>) {
@@ -71,6 +76,9 @@ const PublicQuestCardHeader = ({ quest }: PublicQuestCardHeaderProps) => {
       await clientQuery.invalidateQueries(getGetPublicSearchesQueryKey());
       // Refetch public quest
       await refetchPublicSearches();
+
+      // Refetch followed quests
+      await refetchFollowedQuests();
     }
   }
   return (
